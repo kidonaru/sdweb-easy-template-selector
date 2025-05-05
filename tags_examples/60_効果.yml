@@ -1,0 +1,15 @@
+リムライトと被写界深度を活かした暗めの照明: dark,rim light,depth of field,detailed eyes,volumetric lighting,ray tracing,vignetting
+波紋の影が肌に揺らめき,そよ風が髪を優しく撫でる: shadows of ripples on her body,soft breeze stirring hair
+緊張感漂う日常空間演出: sunlight highlighting soft sheen of sweat, floor subtly reflecting her outline, atmosphere of quiet normalcy undercut by overwhelming hidden tension
+
+被写界深度: depth of field
+被写界深度/空間光: depth of field,volumetric lighting
+激しい呼吸: heavybreath
+被写界深度と背景のぼかし: depth of field,blurry background
+暗めの照明: dark
+モノクロの影とハート: monochrome,shadow,heart
+モーションライン: motion lines
+ハートと無修正: heart,uncensored
+細部まで表現された布地: fine fabric emphasis
+Negative_for_anime: (negative_v2 Color_Balance_Calibration:0.8)
+前面ライトアップ: <lora:facelightup_xl_v10:1>

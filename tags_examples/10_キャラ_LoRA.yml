@@ -1,0 +1,90 @@
+学マス:
+  篠澤 広: <lora:shinosawa hiro_gakuen idolmaster_IllustriousXL_epoch-000078:1> hiro-default,shinosawa hiro,slender,orange eyes,white eyelashes,blonde hair,brown hair,long hair,hairclip
+  篠澤 広(コート): <lora:shinosawa hiro_gakuen idolmaster_IllustriousXL_epoch-000078:1> hiro-default,shinosawa hiro,slender,orange eyes,white eyelashes,blonde hair,brown hair,long hair,hairclip
+  篠澤 広(練習着): <lora:shinosawa hiro_other outfit_gakuen idolmaster_IllustriousXL_epoch-000069:1> hiro-gym,shinosawa hiro,slender,orange eyes,white eyelashes,blonde hair,brown hair,long hair,hairclip
+  篠澤 広(水着): <lora:shinosawa hiro_other outfit_gakuen idolmaster_IllustriousXL_epoch-000069:1> hiro-swim,shinosawa hiro,slender,orange eyes,white eyelashes,blonde hair,brown hair,long hair,hairclip
+  篠澤 広(制服): <lora:shinosawa hiro_other outfit_gakuen idolmaster_IllustriousXL_epoch-000069:1> hiro-schoolunifrom,shinosawa hiro,slender,orange eyes,white eyelashes,blonde hair,brown hair,long hair,hairclip
+  藤田 ことね: <lora:fujita kotone_IllustriousXL_epoch-000078:1> kotone-default,fujita kotone,brown eyes, blonde hair, twin braids,hair ornament,(white hairclip:1.2)
+  藤田 ことね(制服): <lora:fujita kotone_other outfit_gakuen idolmaster_IllustriousXL_epoch-000077:1> kotone-schooluniform, fujita kotone,brown eyes, blonde hair, twin braids,hair ornament,(white hairclip:1.2)
+  藤田 ことね(練習着): <lora:fujita kotone_other outfit_gakuen idolmaster_IllustriousXL_epoch-000077:1> kotone-gym, fujita kotone,brown eyes, blonde hair, twin braids,hair ornament,(white hairclip:1.2)
+  藤田 ことね(水着): <lora:fujita kotone_other outfit_gakuen idolmaster_IllustriousXL_epoch-000077:1> kotone-swimsuit, fujita kotone,brown eyes, blonde hair, twin braids,hair ornament,(white hairclip:1.2)
+  倉本 千奈: <lora:kuramoto china_gakuen idolmaster_IllustriousXL_epoch-000077:1> china-default,brown eyes,brown hair,long hair,hair ornament,kuramoto china
+  倉本 千奈(制服): <lora:kuramoto china_other outfit_gakuen idolmaster_IllustriousXL_last:1> china-schooluniform,kuramoto china,brown eyes,brown hair,long hair,hair ornament
+  倉本 千奈(練習着): <lora:kuramoto china_other outfit_gakuen idolmaster_IllustriousXL_last:1> china-gym,kuramoto china,brown eyes,brown hair,long hair,hair ornament
+  倉本 千奈(水着): <lora:kuramoto china_other outfit_gakuen idolmaster_IllustriousXL_last:1> china-swim,kuramoto china,brown eyes,brown hair,long hair,hair ornament
+  花海 佑芽: <lora:hanami ume_gakuen idolmaster_IllustriousXL_epoch-000099:1> ume-default,brown eyes,brown hair,medium hair,single hairbun,ahoge,
+
+推しの子:
+  星野 アイ: <lora:ai-hoshino-s1-illustriousxl-lora-nochekaiser:1> ai hoshino, hoshino ai, long hair, bangs, purple eyes, purple hair, symbol-shaped pupils, mature female, medium breasts, anime screencap
+  星野 アイ(ワンサイドアップ): <lora:ai-hoshino-s1-illustriousxl-lora-nochekaiser:1> ai hoshino, hoshino ai, long hair, bangs, purple eyes, purple hair, symbol-shaped pupils, one side up, hair ornament, hair ribbon, mature female, medium breasts, anime screencap
+  星野 アイ(サイドポニー): <lora:ai-hoshino-s1-illustriousxl-lora-nochekaiser:1> ai hoshino, hoshini ai, long hair, bangs, purple eyes, purple hair, symbol-shaped pupils, side ponytail, mature female, medium breasts, anime screencap
+  有馬 かな: <lora:kana-arima-s1s2-illustriousxl-lora-nochekaiser:1> kana arima, arima kana, short hair, bangs, red eyes, red hair, bob cut, mature female, medium breasts, anime screencap
+  ツルギ: <lora:kana-arima-s1s2-illustriousxl-lora-nochekaiser:1> tsurugi, brown hair, yellow eyes, ponytail, parted bangs, short hair, hair ribbon, mature female, medium breasts, anime screencap
+  MEMちょ: <lora:memcho-s1s2-illustriousxl-lora-nochekaiser:1> memcho, blonde hair, blue eyes, blunt bangs, demon horns, fake horns, horns, short hair, mature female, medium breasts, anime screencap
+  ルビー: <lora:ruby-hoshino-s1s2-illustriousxl-lora-nochekaiser:1> ruby hoshino, hoshino ruby, long hair, bangs, blonde hair, pink eyes, sidelocks, symbol-shaped pupils, multicolored hair, two-tone hair, mature female, medium breasts, anime screencap
+  ルビー(ツインテール): <lora:ruby-hoshino-s1s2-illustriousxl-lora-nochekaiser:1> ruby hoshino, hoshino ruby, long hair, bangs, blonde hair, pink eyes, sidelocks, symbol-shaped pupils, multicolored hair, two-tone hair, twintails, low twintails, mature female, medium breasts, anime screencap
+  ルビー(サイドポニー): <lora:ruby-hoshino-s1s2-illustriousxl-lora-nochekaiser:1> ruby hoshino, hoshino ruby, long hair, bangs, blonde hair, pink eyes, sidelocks, symbol-shaped pupils, multicolored hair, two-tone hair, side ponytail, mature female, medium breasts, anime screencap
+  黒川 あかね: <lora:akane-kurokawa-s1s2-illustriousxl-lora-nochekaiser:1> akane kurokawa, kurokawa akane, bangs, green eyes, blue eyes, blue hair, medium hair, dark blue hair, mature female, breasts, anime screencap
+  黒川 あかね(ロング): <lora:akane-kurokawa-s1s2-illustriousxl-lora-nochekaiser:1> akane kurokawa, kurokawa akane, long hair, bangs, blue eyes, green eyes, black hair, blue hair, multicolored hair, gradient hair, mature female, breasts, anime screencap
+  鞘姫: <lora:akane-kurokawa-s1s2-illustriousxl-lora-nochekaiser:1> sayahime, long hair, bangs, hair ornament, purple eyes, white hair, hair stick, mature female, breasts, anime screencap
+
+ToLOVEる:
+  ララ: <lora:lala_ilxl_v1.1:1> lala,ahoge,pink hair,long hair,green eyes,demon tail,
+  ララ(ヘアクリップ): <lora:lala_ilxl_v1.1:1> lala,ahoge,pink hair,long hair,green eyes,demon tail,l_peke,@ @,hairornament,
+  ナナ: <lora:nana_ilxl_v1.1:1> nana,pink hair,purple eyes,twintails,
+  モモ: <lora:momo_ilxl_v1.8:1> momo,pink hair,purple eyes,low twintails,h_o,hair ornaments,
+  モモ(ツイン): <lora:momo_ilxl_v1.8:1> momo,pink hair,purple eyes,short hair,h_o,hair ornaments,
+  古手川 唯: <lora:kotegawa_yui_ilxl_v1.2> yui,black hair,long hair,orange eyes,
+  結城 美柑: <lora:y_mikan_ilxl_v1.8:1> y_mikan,brown hair,long hair,yellow eyes,hair ornament,hair bobbles,
+  九条 凛: <lora:kujou_rin_ilxl_v1.1:1> rin,brown eyes,black hair,parted bangs,ponytail,
+  黒咲 メア: <lora:k_mea_ilxl_v1.1:1> mea,red hair,braid,
+
+天音かなた:
+  天音かなた: <lora:amane_kanata_ilxl_v1:1> aakanata, short hair, multicolored hair, grey hair, yellow halo, purple eyes, wings,
+  天音かなた(Tシャツ): <lora:amane_kanata_ilxl_v1:1> aakanata, short hair, multicolored hair, grey hair, yellow halo, purple eyes, wings,
+  天音かなた(正月): <lora:amane_kanata_ilxl_v1:1> bbkanata, short hair, multicolored hair, grey hair, braid, single hair bun, animal ears, hair flower, x hair ornament, purple eyes,
+  天音かなた(仕事服): <lora:amane_kanata_ilxl_v1:1> cckanata, long hair, multicolored hair, grey hair, hair rings, low twintails, blue halo, hairclip, purple eyes, wings,
+  天音かなた(仕事服/ジャケット): <lora:amane_kanata_ilxl_v1:1> cckanata, long hair, multicolored hair, grey hair, hair rings, low twintails, beret, white headwear, hairclip, purple eyes, wings,
+  天音かなた(仕事服/ツーサイドアップ): <lora:amane_kanata_ilxl_v1:1> cckanata, long hair, multicolored hair, grey hair, two side up, blue halo, hairclip, purple eyes, wings,
+  天音かなた(仕事服/ジャケット/ツーサイドアップ): <lora:amane_kanata_ilxl_v1:1> cckanata, long hair, multicolored hair, grey hair, two side up, beret, white headwear, hairclip, purple eyes, wings,
+  天音かなた(ナース): <lora:amane_kanata_ilxl_v1:1> ddkanata, long hair, multicolored hair, grey hair, twintails, nurse cap, x hair ornament, purple eyes, wings,
+  天音かなた(ナース/ミディアムヘア): <lora:amane_kanata_ilxl_v1:1> ddkanata, medium hair, multicolored hair, grey hair, nurse cap, x hair ornament, purple eyes, wings,
+  天音かなた(堕天使): <lora:amane_kanata_ilxl_v1:1> eekanata, long hair, multicolored hair, grey hair, double bun, blue halo, hair ornament, purple eyes, blue wings,
+  天音かなた(地雷系): <lora:amane_kanata_ilxl_v1:1> ffkanata, medium hair, multicolored hair, grey hair, blue halo, hair ornament, hairclip, purple eyes, wings, black choker, o-ring,
+  天音かなた(地雷系/ジャケット): <lora:amane_kanata_ilxl_v1:1> ffkanata, medium hair, multicolored hair, grey hair, hood up, hair ornament, hairclip, purple eyes, wings, black choker, o-ring,
+  天音かなた(水着): <lora:amane_kanata_ilxl_v1:1> ggkanata, short hair, multicolored hair, grey hair, double bun, hair bow, hair ornament, purple eyes, wings, black choker,
+  天音かなた(水着/ジャケット): <lora:amane_kanata_ilxl_v1:1> ggkanata, short hair, multicolored hair, grey hair, double bun, hair bow, hair ornament, purple eyes, wings, black choker,
+  天音かなた(天界警備): <lora:amane_kanata_ilxl_v1:1> hhkanata, long hair, multicolored hair, grey hair, one side up, pink halo, purple eyes, wings,
+  天音かなた(天界警備/ジャケット): <lora:amane_kanata_ilxl_v1:1> hhkanata, long hair, multicolored hair, grey hair, one side up, peaked cap, white headwear, purple eyes, wings,
+
+ボーカロイド:
+  初音ミク: <lora:Hatsune Miku(voc)-Illus-Remake:2> hatsune miku,absurdly long hair,aqua hair,twintails,hair ornament,sidelocks,hair between eyes,parted bangs,aqua eyes
+  歌愛 ユキ: <lora:kaai yuki_kyoufuu all back_IllustriousXL_epoch-000099:1> kaaiyuki-default,kaai yuki,yellow eyes,black hair,short low twintails
+  重音 テト: <lora:teto-kasane-ponyxl-lora-nochekaiser:1> teto kasane, ahoge, pink eyes, drill hair, pink hair,
+
+アニメ:
+  乾 紗寿叶: <lora:inui sajuna_kisekoi_IllustriousXL_epoch-000057:1> sajuna-default,inui sajuna,pink eyes,pink hair,straight hair,long hair,
+  乾 紗寿叶(制服): <lora:inui sajuna_kisekoi_IllustriousXL_epoch-000057:1> sajuna-schooluniform,inui sajuna,pink eyes,pink hair,two side up,hair flower,long hair,
+  乾 紗寿叶(パジャマ): <lora:inui sajuna_kisekoi_IllustriousXL_epoch-000057:1> sajuna-pajamas,inui sajuna,pink eyes,pink hair,straight hair,long hair,
+  乾 紗寿叶(私服): <lora:inui sajuna_kisekoi_IllustriousXL_epoch-000057:1> sajuna-casual,inui sajuna,pink eyes,pink hair,one side up,hair ribbon,long hair,
+  湊 智花: <lora:Tomoka_Minato湊_智花ロウきゅーぶ:0.7> Tomoka Minato,pink_hair, short_hair, short_side tail,hair ribbon, purple eyes, small breasts, short body,
+  袴田ひなた: <lora:Hinata_Hakamada袴田ひなたロウきゅーぶ:0.7> Hinata Hakamada,pink_hair, long_hair, pink eyes, small breasts, short body,
+  アーリャ(ロシデレ): <lora:Hoseki_Roshidere_AlisaMikhailovnaKujou_IllustriousXL_v1:1> amkkj, large breasts, long hair, silver hair, crossed bangs, blue eyes, ahoge, hair ribbon
+  九重 りん: <lora:rin-kokonoe-s1-ponyxl-lora-nochekaiser:1> rin kokonoe, long hair, brown hair, hair ornament, twintails, brown eyes, very long hair, hair bobbles,
+
+ゲーム:
+  バーニス: <lora:Hoseki_ZenlessZoneZero_BurniceWhite_IllustriousXL_v2:1> brncwht, red eyes, blonde hair, medium hair, two side up, hair ornament, large breasts
+  ニコ・デマラ: <lora:Hoseki_ZenlessZoneZero_NicoleDemara_IllustriousXL_v1:1> n1c0le, large breasts, green eyes, multicolored nails, pink hair, asymmetrical bangs, long hair, two side up, hair ribbon, black ribbon, hairclip, yellow heart earrings, heart necklace, black necklace
+  星見雅: <lora:Hoseki_ZenlessZoneZero_HoshimiMiyabi_IllustriousXL_v1:1> hsmyb, fox ears, red eyes, white pupils, bright pupils, black hair, long hair, blunt bangs, sidelocks, half up braid, medium breasts
+  ノエル・コルネール: <lora:noelle_alice in cradle_IllustriousXL_last:1> noelle-default,blue eyes,blonde hair,pointy ears
+  ノエル・コルネール(ルームウェア): <lora:noelle_alice in cradle_IllustriousXL_last:1> noelle-troom,blue eyes,blonde hair,long hair, pointy ears,animal ears
+  ノエル・コルネール(道場): <lora:noelle_alice in cradle_IllustriousXL_last:1> noelle-dojo,blue eyes,blonde hair,long hair,pointy ears,animal ears
+  新海 天: <lora:niimi sora_PONY_last:1> sora-default,niimi sora,purple eyes, white hair, side ponytail,braid,ahoge,
+  新海 天(私服): <lora:niimi sora_PONY_last:1> sora-casual,niimi sora,purple eyes, white hair, side ponytail,braid,ahoge,hair scrunchie,hair ornament,
+  新海 天(寝巻): <lora:niimi sora_PONY_last:1> sora-pajamas,niimi sora,purple eyes, white hair,long hair,straight hair,ahoge,
+  九條 都: <lora:kujou miyako_nine_PONY_last:1> miyako-default,kujou miyako,blue eyes, brown hair, long hair,hair ornament,
+  九條 都(私服): <lora:kujou miyako_nine_PONY_last:1> miyako-casual,kujou miyako,blue eyes, brown hair,long hair,
+  九條 都(メイド服): <lora:kujou miyako_nine_PONY_last:1> miyako-maid,kujou miyako,blue eyes, brown hair,twintails,
+  錦 あすみ: <lora:nishiki asumi_hamidashi creative_IllustriousXL_epoch-000075:1> asumi-default,green eyes,blue hair,short hair,hair ribbon,
+  錦 あすみ(私服): <lora:nishiki asumi_hamidashi creative_IllustriousXL_epoch-000075:1> asumi-casual,green eyes,blue hair,short hair,hair ribbon,
+  錦 あすみ(雪景シキ): <lora:nishiki asumi_hamidashi creative_IllustriousXL_epoch-000075:1> asumi-vtuber,red eyes,blue hair,long hair,hair flower,hair ornament,yellow ribbon,headphones,

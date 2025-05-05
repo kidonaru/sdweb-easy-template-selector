@@ -1,0 +1,74 @@
+Model:
+  Nova Anime XL: masterpiece, best quality, amazing quality, very aesthetic, high resolution, ultra-detailed, absurdres, newest, scenery
+  Unholy Desire Mix: unholy-aesthetic,masterpiece,best quality,amazing quality,very aesthetic,absurdres,ultra detailed face,ultra detailed eyes
+  WAI-NSFW-illustrious-SDXL: masterpiece,best quality,amazing quality
+  KonpaEvo Mix: masterpiece,best quality,very awa
+
+マスピ:
+  マスピ: masterpiece
+
+品質:
+  ベスト: best quality
+  ハイクオリティ: best quality,high quality
+  驚異的: best quality,amazing quality
+
+美的:
+  非常に美的: very aesthetic
+  非常に美的(AWA): very aesthetic,very awa
+
+評価:
+  高評価: score_9,score_8_up,score_7_up
+
+解像度:
+  高解像度: high resolution
+  高解像度(省略): highres
+  異常な解像度: absurdres
+  8K HDR: highres,8k,HDR,
+  異常な解像度で詳細: high resolution,ultra-detailed,absurdres
+
+詳細:
+  複雑でシャープなライン: intricate details,sharp lines
+  超詳細な目: ultra detailed eyes
+
+スタイル:
+  水彩画風: watercolor,pastel color
+  アニメ: source anime
+  アニメ(強調): 2d anime,source anime,anime
+  アニメのスクショ: anime screencap
+  漫画: manga
+  ピクセルアート: pixel art
+  ホログラフィックグラデーション: holographic colors,cute,gradient colors
+  良いイラスト: best illustration
+
+効果:
+  ソフトライト: soft lighting
+  幻想的で美しい光の演出: soft lighting,light particles,film grain,bokeh,glow,shiny hair
+  立体的で動的な光: dynamic lighting,volumetric lighting
+  動的な陰影: dynamic shading
+  被写界深度: depth of field
+  完璧な照明/下からの照明: perfect lighting,shiny skin,low light
+
+背景:
+  詳細な背景: detailed background
+  風景: scenery
+
+ポーズ:
+  躍動感: dynamic pose,dynamic angle
+  安全なポーズ: safe_pos
+
+体:
+  完璧な解剖学: perfect anatomy
+  完璧な体: perfect face,perfect eyes,perfect breasts,perfect hands,perfect ass
+
+世代:
+  最新: newest
+
+レーティング:
+  一般: general
+  安全: safe
+  注意: sensitive
+  過激: questionable
+  NSFW: nsfw
+  無修正: uncensored
+  無修正(NSFW): uncensored,nsfw
+  露骨な表現: explicit

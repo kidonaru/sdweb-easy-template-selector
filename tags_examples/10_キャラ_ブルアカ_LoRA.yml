@@ -1,0 +1,205 @@
+ゲヘナ:
+  ヒナ: <lora:HinaBlueArchiveIXL:1.0> zzHina, purple eyes, long hair, hair ornament, white hair, horns, hina (blue archive), ahoge, halo, multiple horns, parted bangs,
+  アコ: <lora:ako-default_blue archive_PONY_epoch-000020:1> ako-default, ako \(blue archive\), blue eyes,blue hair,hairband,halo,cowbell,
+  アコ(ドレス): <lora:ako-dress_blue archive_PONY_epoch-000020:1> ako-dress,ako \(blue archive\), blue eyes,blue hair,halo,
+
+  イブキ: <lora:ibuki_blue archive_IllustriousXL_epoch-000070:1> ibuki-default,ibuki \(blue archive\),yellow eyes,blonde hair,side ponytail,halo,hair ribbon,pointy ears,tail,low wings
+  イブキ(ジャケット): <lora:ibuki_blue archive_IllustriousXL_epoch-000070:1> ibuki-jacket,ibuki \(blue archive\),yellow eyes,blonde hair,side ponytail,halo,hair ribbon,pointy ears,tail,low wings
+  イブキ(水着): <lora:ibuki-swimsuit_blue archive_IllustriousXL_epoch-000079:1> ibuki-swimsuit,(ibuki \(blue archive\):0.7), yellow eyes,blonde hair,single hair bun,hairbow,halo,pointy ears,low wings,tail,halo,horns,
+  イブキ(ドレス): <lora:ibuki_dress_blue archive_IllustriousXL_last:1> ibuki-dress,ibuki \(blue archive\),yellow eyes,blonde hair,long hair,one side up,pointy ears,halo,black hair ribbon,horns,tail,low wings,
+  イブキ(白ワンピ): <lora:ibuki_dress_blue archive_IllustriousXL_last:1> ibuki-dress,ibuki \(blue archive\), closed eyes,blonde hair,white ribbon,twintails,pointy ears,halo,low wings,tail,
+  イロハ: <lora:iroha_blue archive_PONY_epoch-000020:1> iroha-default,iroha \(blue archive\),grey eyes,red hair,long hair,halo,
+  イロハ(インナー): <lora:iroha_blue archive_PONY_epoch-000020:1> iroha-shirt,iroha \(blue archive\),grey eyes,red hair,long hair,halo,
+  イロハ(体操服): <lora:iroha_blue archive_PONY_epoch-000020:1> iroha-gym,iroha \(blue archive\),grey eyes,red hair,long hair,halo,
+
+  フウカ: <lora:fuuka_blue archive_PONY_last:1> fuuka-default,fuuka \(blue archive\),red eyes,horn,black hair,hair on horn,long hair,twintails,
+  フウカ(私服): <lora:fuuka-casual_blue archive_IllustriousXL_epoch-000075:1> fuuka-casual,fuuka \(blue archive\),red eyes,horn,black hair,long hair,hair on horn,straight hair,hair down,halo
+  フウカ(正月): fuuka \(new year\) \(blue archive\),red eyes,horn,black hair,hair on horn,hair bun,hair flower,
+
+  セナ(私服): <lora:sena-casual_blue archive_IllustriousXL_last:0.77> hmrsn-default,sena \(blue archive\),yellow eyes,white hair,horn,halo
+
+  ムツキ: <lora:mutsuki_blue archive_PONY_last> (mutsuki-default:1.2), mutsuki \(blue archive\),purple eyes,white hair,side ponytail,halo,pointy ears,
+  ムツキ(正月): <lora:mutsuki_blue archive_PONY_last> (mutsuki-kimono:1.2), mutsuki \(blue archive\),purple eyes,white hair,hair bun,hair flower,halo,pointy ears,
+  ムツキ(ドレス): <lora:mutsuki_blue archive_PONY_last> (mutsuki-dress:1.2),mutsuki \(blue archive\),purple eyes,white hair,long hair,hairband,
+  ムツキ(スーツ): <lora:mutsuki_blue archive_PONY_last> mutsuki-suit, mutsuki \(blue archive\),purple eyes,white hair,low ponytail,halo,pointy ears,
+  ムツキ(雀魂): <lora:mutsuki-jantama_blue archive_PONY_epoch-000020:1> mutsuki-jantama,mutsuki \(blue archive\),purple eyes, white hair,long hair,twintails,pointy ears,halo,hair ornament,
+
+トリニティ:
+  ミカ: <lora:mika_blue archive_IllustriousXL_epoch-000052:1> mika-default,mika \(blue archive\),yellow eyes,single hair bun,pink hair,long hair,halo,wings,
+  ミカ(ケープなし): <lora:mika_blue archive_IllustriousXL_epoch-000052:1> mika-sleeveless,mika \(blue archive\),yellow eyes,single hair bun,pink hair,long hair,halo,wings,
+  ミカ(水着): <lora:mika_blue archive_IllustriousXL_epoch-000052:1> mika-swim,mika \(blue archive\),yellow eyes,pink hair,long hair,high ponytail,halo,wings,
+  ミカ(体操服): <lora:mika_blue archive_IllustriousXL_epoch-000052:1> mika-gym,mika \(blue archive\),yellow eyes,pink hair,short hair,double bun,halo,wings,
+  セイア: <lora:seia_blue archive_IllustriousXL_last:1> seia-default,seia \(blue archive\),pink eyes, blonde hair,long hair,animal ears,halo
+  セイア(体操服): <lora:seia_blue archive_IllustriousXL_last:1> seia-gym,seia \(blue archive\),pink eyes, blonde hair,long hair,ponytail,animal ears,halo
+
+  マリー: <lora:mari_blue_archive_for_IL:0.7> mari_\(blue_archive\),blue eyes,orange hair,mari halo,habit,single braid,hat flower,
+  マリー(ユスティナ聖徒会): <lora:mari_blue_archive_for_IL:0.7> mari_\(justina_follower\)_\(blue_archive\),blue eyes,orange hair,mari halo,habit,single braid,hat flower,
+  マリー(体操服): <lora:mari_blue_archive_for_IL:0.7> mari_\(track\)_\(blue_archive\),blue eyes,orange hair,mari halo,hair flower,white hairband,ponytail,
+  マリー(体操服2): <lora:mari_blue_archive_for_IL:0.7> mari_\(track_remove\)_\(blue_archive\),blue eyes,orange hair,mari halo,hair flower,white hairband,ponytail,
+  マリー(アイドル): <lora:mari-idol_blue archive_IllustriousXL_epoch-000057:1> mari-idol,mari \(blue archive\),blue eyes,orange hair,low twintails,twintails,animal ears,halo
+  サクラコ: <lora:Hoseki_BlueArchive_SakurakoUtazumi_IllustriousXL_v1:1> s4kur4ko, yellow halo, large breasts, purple eyes, grey hair, crossed bangs, hair between eyes, very long hair
+  サクラコ(レオタード): <lora:Hoseki_BlueArchive_SakurakoUtazumi_IllustriousXL_v1:1> s4kur4ko, yellow halo, large breasts, purple eyes, grey hair, crossed bangs, hair between eyes, very long hair
+  サクラコ(アイドル): <lora:Hoseki_BlueArchive_SakurakoUtazumi_IllustriousXL_v1:1> s4kur4ko, yellow halo, large breasts, purple eyes, grey hair, crossed bangs, hair between eyes, very long hair
+
+  コハル: <lora:koharu_blue archive_PONY_last:1> koharu-default, koharu \(blue archive\),pink eyes,pink hair,beret, head wings,twintails,halo,low wings,
+  コハル(体操服): <lora:koharu_blue archive_PONY_last:1> koharu-gym, koharu \(blue archive\),pink eyes,pink hair,hat,head wings,twintails,halo,low wings,
+  コハル(スク水): <lora:koharu_blue archive_PONY_last:1> koharu-swim2,koharu \(blue archive\),pink eyes,pink hair,beret,head wings,twintails,halo,low wings,
+  コハル(ピザハットコラボ): <lora:koharu-casual_blue archive_IllustriousXL_epoch-000092:1.1> koharu-casual, koharu \(swimsuit\) \(blue archive\), pink eyes,pink hair, head wings,low twintails,halo,low wings,hair flowers,hair tied
+  コハル(水着): <lora:koharu-swimsuit_blue archive_IllustriousXL_epoch-000073:1> koharu-swimsuit, koharu \(swimsuit\) \(blue archive\),pink eyes,pink hair, head wings,twintails,halo,low wings
+  ハナコ: <lora:hanako_blue archive_PONY_last:1> hanako-default,hanako \(blue archive\),large breasts,green eyes, pink hair,long hair,braid,ahoge,halo,
+  ハナコ(水着): <lora:hanako_blue archive_PONY_last:1> (hanako-swim:1.2),hanako \(blue archive\),large breasts,green eyes, pink hair,long hair,braid,ahoge,halo,
+  ハナコ(体操服): <lora:hanako_blue archive_PONY_last:1> (hanako-gym:1.2),hanako \(blue archive\),large breasts,green eyes, pink hair,long hair,braid,ahoge,halo,
+  ハナコ(学校指定水着): <lora:hanako_blue archive_PONY_last:1> (hanako-swim2:1.2),hanako \(blue archive\),large breasts,green eyes, pink hair,long hair,braid,ahoge,halo,
+  アズサ: <lora:azusa_blue archive_PONY_last:1> azusa-default, azusa \(blue archive\),purple eyes,white hair,long hair,wings,hair flower,halo,
+  アズサ(ノースリーブ): <lora:azusa_blue archive_PONY_last:1> azusa-default, azusa \(blue archive\),purple eyes,white hair,long hair,wings,hair flower,halo,
+  アズサ(プール掃除): <lora:azusa_blue archive_PONY_last:1> azusa-gymswim, azusa \(blue archive\),purple eyes,white hair,long hair,ponytail,wings,hair flower,halo,
+  アズサ(水着): <lora:azusa-swim_blue archive_PONY_last:1> azusa-swim, azusa \(blue archive\),purple eyes,white hair,long hair,two side up,wings,hair flower,halo,
+  ヒフミ: <lora:hifumi_blue archive_PONY_last:1> hifumi-default,hifumi \(blue archive\),yellow eyes,light brown hair,long hair,low twintails,halo,
+  ヒフミ(水着): <lora:hifumi_blue archive_PONY_last:1> hifumi-swim,hifumi \(blue archive\),yellow eyes,light brown hair, eyewear on head,long hair,low twintails,halo,
+  ヒフミ(体操服): <lora:hifumi_blue archive_PONY_last:1> hifumi-gym,hifumi \(blue archive\),yellow eyes,light brown hair,long hair,low twintails,halo,
+  ヒフミ(学校指定水着): <lora:hifumi_blue archive_PONY_last:1> hifumi-swim2,hifumi \(blue archive\),yellow eyes,light brown hair,long hair,low twintails,halo,
+
+  ナツ: <lora:natsu_blue archive_PONY_last:1> natsu-default,natsu \(blue archive\),red eyes,pink hair,side ponytail,ahoge,halo,
+  ナツ(体操服): <lora:natsu_blue archive_PONY_last:1> natsu-gym,natsu \(blue archive\),red eyes,pink hair,side ponytail,ahoge,halo,
+  ナツ(バンド): <lora:natsu-band_blue archive_PONY_epoch-000020:1> natsu-band,natsu \(blue archive\),red eyes,pink hair,single hair bun,ahoge,halo,
+  カズサ: <lora:kazusa_blue archive_PONY_epoch-000020:1> kazusa-default,kazusa \(blue archive\),red eyes,black hair, animal ears,halo,choker,(hooded jacket:1.1),
+  カズサ(パーカー脱ぎ): <lora:kazusa_blue archive_PONY_epoch-000020:1> kazusa-shirt,kazusa \(blue archive\),flat chest,red eyes,black hair, animal ears,halo,choker,
+  カズサ(バンド): <lora:kazusa-band_blue archive_PONY_epoch-000020:1> kazusa-shirt,kazusa \(blue archive\),flat chest,red eyes,black hair, animal ears,halo,choker,
+  ヨシミ: <lora:yoshimi_blue archive_PONY_epoch-000020:1> (yoshimi-default:1.1),yoshimi \(blue archive\),brown eyes,blonde hair, twintails,hair ribbon,ahoge,halo,
+  ヨシミ(バンド): <lora:yoshimi_blue archive_PONY_epoch-000020:1> yoshimi-band,yoshimi \(blue archive\),brown eyes,blonde hair,low twintails,hair ribbon,ahoge,halo,
+  アイリ: <lora:airi_ver1.0_blue archive_PONY_epoch-000020:1> airi-default,airi \(blue archive\),green eyes,black hair,long hair,hair ornament,halo,
+  アイリ(バンド): <lora:airi-band_ver1.0_blue archive_PONY_epoch-000020:1> airi-band,airi \(blue archive\),green eyes, black hair,long hair,hair ribbon,
+  レイサ: <lora:reisa_blue archive_PONY_last:1> reisa-default,reisa \(blue archive\),purple eyes, multicolored hair,low twintails, halo,star \(symbol\),
+  レイサ(リュック無し): <lora:reisa_blue archive_PONY_last:1> (reisa-bagless:1.2),reisa \(blue archive\),purple eyes, multicolored hair,low twintails, halo,star \(symbol\),
+
+  セリナ: <lora:serina_blue_archive_for_IL:1> serina_\(blue_archive\),pink hair,mini  nurse cap,pink eyes,serina halo,one side up,hair ribbon,feather hair,
+  セリナ(ナース): <lora:serina_blue_archive_for_IL:1> serina_\(nurse\)_\(blue_archive\),pink hair,pink nurse cap,pink eyes,serina halo,one side up,hair ribbon,feather hair,
+  セリナ(クリスマス): <lora:serina_blue_archive_for_IL:1> serina_\(christmas\)_\(blue_archive\),pink hair,beret,pink eyes,serina halo,hair ribbon,feather hair,single side bun,
+
+  正実モブ(制服/目隠れ): <lora:justice task force mob_blue archive_PONY_last:1> seijitsu-noeye,justice task force member \(blue archive\),(no eyes:1.2),hair over eyes, black hair,halo,choker,
+  正実モブ(制服/目見え): <lora:justice task force mob_blue archive_PONY_last:1> seijitsu-eyes,justice task force member \(blue archive\),red eyes,hair over eyes, black hair,halo,choker,
+  正実モブ(体操服/目隠れ): <lora:justice task force mob_blue archive_PONY_last:1> (seijitsu-gym:1.2),justice task force member \(blue archive\),(no eyes:1.2),hair over eyes, black hair,halo,
+  正実モブ(体操服/目見え): <lora:justice task force mob_blue archive_PONY_last:1> (seijitsu-gym:1.2),justice task force member \(blue archive\),red eyes,hair over eyes, black hair,halo,
+
+ミレニアム:
+  アリス: <lora:aris-default_blue archive_IllustriousXL_epoch-000055:1> aris-default,aris \(blue archive\),blue eyes,one side up,black hair,absurdly long hair,hair between eyes,black hairband,halo
+  アリス(ジャケット): <lora:aris-default_blue archive_IllustriousXL_epoch-000055:1> aris-default,aris \(blue archive\),blue eyes,one side up,black hair,absurdly long hair,hair between eyes,black hairband,halo
+  アリス(メイド): <lora:aris-default_blue archive_IllustriousXL_epoch-000055:1> aris-maid,aris \(maid\) \(blue archive\),blue eyes,black hair,side ponytail,very long hair,sidelocks,halo
+  アリス(防寒着): <lora:aris-winter cloth_blue archive_IllustriousXL_last:1> aris-casual,aris \(blue archive\), blue eyes,black hair,absurdly long hair,low tied hair,halo
+  アリス(一番くじ): <lora:aris-ichibankuji_blue archive_IllustriousXL_epoch-000097:1> aris-casual,aris \(blue archive\),blue eyes,black hair,absurdly long hair,twintails,halo
+  アリス(アイドル): <lora:aris-idol gym_blur archive_IllustriousXL_epoch-000078:1> aris-idol,aris \(blue archive\),blue eyes,side ponytail,black hair,absurdly long hair,hair between eyes,hair ribbon,halo
+  アリス(体操着): <lora:aris-idol gym_blur archive_IllustriousXL_epoch-000078:1> aris-gym,aris \(blue archive\),blue eyes,side ponytail,black hair,absurdly long hair,hair between eyes,hair ribbon,halo
+  ケイ: <lora:kei_blue archive_IllustriousXL_epoch-000075:1> kei-default,aris \(blue archive\),red eyes,black hair,one side up,absurdly long hair,black hairband,green halo
+  モモイ: <lora:MomoiBlueArchiveIXL:1.0> zzMomoi, pink eyes, pink halo, blonde hair, animal ears, fake animal ears, animal ear headphones, headphones, short hair, bow, halo, cat ear headphones, hair bow,
+  ミドリ: <lora:MidoriBlueArchiveIXL:1.0> zzMidori, green eyes, green halo, blonde hair, short hair, hair bow, tail, animal ears, fake animal ears, animal ear headphones, headphones, cat ear headphones, hair bow, tail, cat tail,
+
+  ユウカ: <lora:yuuka_blue archive_PONY_last:1> yuuka-default,yuuka \(blue archive\),purple eyes,purple hair,long hair,two side up,halo,
+  ユウカ(アウター脱ぎ): <lora:yuuka_blue archive_PONY_last:1> yuuka-default,yuuka \(blue archive\),purple eyes,purple hair,long hair,two side up,halo,
+  ユウカ(体操服): <lora:yuuka_blue archive_PONY_last:1> yuuka-gym,yuuka \(blue archive\),purple eyes,purple hair,long hair,ponytail,halo,
+  ユウカ(パジャマ): <lora:yuuka-pajamas_blue archive_IllustriousXL_epoch-000078:1> yuuka-pajamas,yuuka \(blue archive\),blue eyes,blue hair,long hair,halo
+  ノア: <lora:noa_blue archive_PONY_epoch-000020:1> noa-default,noa \(blue archive\),purple eyes, white hair,long hair,halo,headphones,
+  ノア(パジャマ): <lora:noa-pajamas_blue archive_IllustriousXL_epoch-000078:0.9> noa-pajamas,noa \(blue archive\),purple eyes,white hair,long hair,ponytail,halo
+  コユキ: <lora:koyuki_blue archive_PONY_last:1> koyuki-default,koyuki \(blue archive\),pink eyes,symbol-shaped pupils,pink hair,very long hair, twintails,halo,
+  コユキ(バニー): <lora:koyuki-bunny_blue archive_PONY_epoch-000020:1> koyuki-bunny,koyuki \(blue archive\),pink eyes,symbol-shaped pupils,hair rings,pink hair,rabbit ears,very long hair, twintails,halo,
+
+  トキ: <lora:toki_blue archive_PONY_epoch-000020:1> toki-default,toki \(blue archive\),blue eyes,blonde hair, hair bun,halo,
+  トキ(戦闘時): <lora:toki_blue archive_PONY_epoch-000020:1> toki-battle,toki \(blue archive\),blue eyes,blonde hair, hair bun,halo,
+  トキ(戦闘時/レオタード): <lora:toki_blue archive_PONY_epoch-000020:1> toki-leotard,toki \(blue archive\),blue eyes,blonde hair, hair bun,halo,
+  トキ(バニー): <lora:toki-bunny_blue archive_PONY_epoch-000020:1> toki-bunny,toki \(blue archive\),blue eyes,blonde hair,long hair,halo,
+  トキ(制服): <lora:toki-bunny_blue archive_PONY_epoch-000020:1> toki-schooluniform,toki \(blue archive\),blue eyes,blonde hair,long hair,halo,
+  アカネ: <lora:Hoseki_BlueArchive_AkaneMurokasa_IllustriousXL_v1:1> ak4ne, brown halo, large breasts, brown eyes, light brown hair, hair between eyes, glasses
+  アカネ(バニー): <lora:Hoseki_BlueArchive_AkaneMurokasa_IllustriousXL_v1:1> ak4ne, brown halo, large breasts, brown eyes, light brown hair, hair between eyes, glasses
+  カリン: <lora:Hoseki_BlueArchive_KarinKakudate_IllustriousXL_v1:1> kar1n, tsurime, purple halo, dark-skinned female, large breasts, gradient hair, black hair, purple hair, very long hair, yellow eyes
+  カリン(バニー): <lora:Hoseki_BlueArchive_KarinKakudate_IllustriousXL_v1:1> kar1n, tsurime, purple halo, dark-skinned female, large breasts, gradient hair, black hair, purple hair, very long hair, yellow eyes
+  カリン(制服): <lora:Hoseki_BlueArchive_KarinKakudate_IllustriousXL_v1:1> kar1n, tsurime, purple halo, dark-skinned female, large breasts, gradient hair, black hair, purple hair, very long hair, yellow eyes
+  カリン(チア): <lora:Hoseki_BlueArchive_KarinKakudate_IllustriousXL_v1:1> kar1n, tsurime, purple halo, dark-skinned female, large breasts, gradient hair, black hair, purple hair, very long hair, yellow eyes
+  アスナ: <lora:Hoseki_BlueArchive_AsunaIchinose_IllustriousXL_v1:1> 1chn, blue halo, large breasts, light brown hair, blue eyes, asymmetrical bangs, hair over one eye, very long hair, hair ribbon
+  アスナ(バニー): <lora:Hoseki_BlueArchive_AsunaIchinose_IllustriousXL_v1:1> 1chn, blue halo, large breasts, light brown hair, blue eyes, asymmetrical bangs, hair over one eye, very long hair, hair ribbon
+  アスナ(制服): <lora:Hoseki_BlueArchive_AsunaIchinose_IllustriousXL_v1:1> 1chn, blue halo, large breasts, light brown hair, blue eyes, asymmetrical bangs, hair over one eye, very long hair, hair ribbon
+  アスナ(チア): <lora:Hoseki_BlueArchive_AsunaIchinose_IllustriousXL_v1:1> 1chn, blue halo, large breasts, light brown hair, blue eyes, asymmetrical bangs, hair over one eye, very long hair, hair ribbon
+
+  マキ: <lora:maki-default_blue archive_IllustriousXL_epoch-000090:1> maki-default,maki \(blue archive\),blue eyes,short hair,red hair,double bun,halo
+  マキ(ジャケット): <lora:maki-default_blue archive_IllustriousXL_epoch-000090:1> maki-default,maki \(blue archive\),blue eyes,short hair,red hair,double bun,halo
+  マキ(キャンプ): <lora:maki camp_blue archive_IllustriousXL_epoch-000064:1> maki-camp,maki \(camp\) \(blue archive\),blue eyes,twin braids,red hair,white hat,halo
+  マキ(パジャマ): <lora:maki-pajamas_blue archive_IllustriousXL_epoch-000089:1> maki-shirt,maki \(blue archive\),blue eyes,red hair,straight hair,hair down,long hair,ahoge,halo
+
+  エイミ: <lora:Hoseki_BlueArchive_EimiIzumimoto_IllustriousXL_v1:1> e1m1, large breasts, pink halo, purple eyes, pink hair, long hair
+  エイミ(水着): <lora:Hoseki_BlueArchive_EimiIzumimoto_IllustriousXL_v1:1> e1m1, large breasts, pink halo, purple eyes, pink hair, long hair
+
+  レイ: <lora:rei_blue archive_IllustriousXL_last:1> rei-default,rei \(blue archive\),purple eyes, orange hair, medium hair, halo,
+
+SRT:
+  ミヤコ: <lora:miyako_blue archive_PONY_last:1> miyako-default,miyako \(blue archive\),purple eyes,white hair,long hair,one side upfake animal ears,headset,halo,
+  ミヤコ(武装解除): <lora:miyako_blue archive_PONY_last:1> (miyako-school:1.2),miyako \(blue archive\),purple eyes,white hair,long hair,one side upfake animal ears,headset,halo,
+  ミヤコ(水着): <lora:miyako-swim_blue archive_PONY_last:1> miyako-swim,miyako \(blue archive\),loli,purple eyes, white hair,long hair,ponytail,halo,
+  ミヤコ(青パーカー): <lora:miyako-hoodie_blue archive_PONY_last:1> miyako-hoodie,miyako \(blue archive\),loli,purple eyes, white hair,long hair,one side up,halo,
+  ミユ: <lora:miyu_blue archive_PONY_last:1> (miyu-default:1.2),miyu \(blue archive\),red eyes,black hair,long hair,leaf on head,ahoge,fake animal ears,halo,
+  ミユ(武装解除): <lora:miyu_blue archive_PONY_last:1> (miyu-school:1.2),miyu \(blue archive\),red eyes,black hair,long hair,leaf on head,ahoge,fake animal ears,halo,
+  ミユ(水着): <lora:miyu-swim_blue archive_PONY_last:1> miyu-swim,miyu \(blue archive\),red eyes,black hair,twin braids,leaf on head,ahoge,halo,
+  ミユ(水着/帽子なし): <lora:miyu-swim_blue archive_PONY_last:1> miyu-swim,miyu \(blue archive\),red eyes,black hair,twin braids,leaf on head,ahoge,halo,
+  ニコ: <lora:niko_blue archive_PONY_last:1> niko-default, niko \(blue archive\),blue eyes,pink hair,medium hair,short ponytail,animal ears,halo,
+  ニコ(武装解除): <lora:niko_blue archive_PONY_last:1> niko-weponless, niko \(blue archive\),blue eyes,pink hair,medium hair,short ponytail,animal ears,halo,
+  クルミ: <lora:kurumi_blue archive_PONY_epoch-000020:1> kurumi-default,kurumi \(blue archive\),green eyes,blonde hair,long hair,animal ears,halo,choker,
+  クルミ(武装解除): <lora:kurumi_blue archive_PONY_epoch-000020:1> kurumi-weponless,kurumi \(blue archive\),green eyes,blonde hair,long hair,animal ears,halo,choker,
+
+ハイランダー:
+  ノゾミ: <lora:nozomi_blue archive_IllustriousXL_epoch-000042:1> nozomi-default,nozomi_\(blue archive\),yellow eyes,green hair,twintails,long hair, pointy ears,halo,tail
+  ヒカリ: <lora:hikari_blue archive_IllustriousXL_epoch-000042:1> hikari-default,hikari_\(blue archive\),yellow eyes,green hair,long hair,earring,pointy ears,halo,tail
+  アオバ: <lora:aoba_v1.0_blue archive_IllustriousXL_epoch-000097:1> aoba-default,red eyes,white hair,low twintails,hairclip,halo
+  アオバ(メモロビ): <lora:aoba_v1.0_blue archive_IllustriousXL_epoch-000097:1> aoba-default,red eyes,white hair,low twintails,hairclip,halo
+
+ヴァルキューレ:
+  キリノ: <lora:kirino_blue archive_PONY_last:1> kirino-default,kirino \(blue archive\),blue eyes,white hair,hairclip,ahoge,twin braids,halo,
+  キリノ(水着): <lora:kirino-swim_blue archive_PONY_last:1> kirino-swim,kirino \(blue archive\),blue eyes,white hair,hairclip,ahoge,single braid, eyewear on head,halo,
+  フブキ: <lora:fubuki_blue archive_PONY_last:1> fubuki-default,fubuki \(blue archive\), pink eyes,blue hair,twintails,hair ornament,ahoge,halo,
+  フブキ(水着): <lora:fubuki-swim_blue archive_PONY_last:1> fubuki-swim,fubuki \(blue archive\), pink eyes,blue hair,double bun,ahoge,halo,
+
+百鬼夜行:
+  イズナ: <lora:izuna_blue archive_PONY_last:1> izuna-default,izuna \(blue archive\),yellow eyes, black hair, animal ears, halo,fox tail,
+  イズナ(水着): <lora:izuna-swim_blue archive_PONY_epoch-000020:1> izuna-swim,izuna \(blue archive\),yellow eyes, black hair, animal ears, halo,fox tail,
+  イズナ(体操服): <lora:izuna-gym_blue archive_PONY_epoch-000020:1> izuna-gym,izuna \(blue archive\),yellow eyes, black hair,medium hair,one side up,animal ears, halo,fox tail,
+
+  キキョウ: <lora:Hoseki_BlueArchive_KikyouKiryuu_IllustriousXL_v1:1> kiky0u, blue halo, animal ears, cat tail, two tails, tsurime, makeup, black eyes, black hair, parted bangs, short hair, black choker, ribbon choker
+  キキョウ(ジャケット): <lora:Hoseki_BlueArchive_KikyouKiryuu_IllustriousXL_v1:1> kiky0u, blue halo, animal ears, cat tail, two tails, tsurime, makeup, black eyes, black hair, parted bangs, short hair, black choker, ribbon choker
+  ユカリ: <lora:Hoseki_BlueArchive_YukariKadenokouji_IllustriousXL_v1:1> yuk4r1, skin fang, purple halo, makeup, large breasts, short eyebrows, purple eyes, purple hair, parted bangs, long hair, hair flower
+  ユカリ(羽織): <lora:Hoseki_BlueArchive_YukariKadenokouji_IllustriousXL_v1:1> yuk4r1, skin fang, purple halo, makeup, large breasts, short eyebrows, purple eyes, purple hair, parted bangs, long hair, hair flower
+
+  シュロ: <lora:shuro_blue archive_PONY_last:1> shuro-default,shuro \(blue archive\),red eyes,grey hair, long hair,halo,bandaids,bandages,
+  シュロ(羽織脱ぎ): <lora:shuro_blue archive_PONY_last:1> shuro-nosleeves,shuro \(blue archive\),red eyes,grey hair, long hair,halo,bandaids,bandages,
+
+アビドス:
+  ホシノ: <lora:hoshino_ver2_blue archive_PONY_epoch-000020:1> hoshino-default,hoshino \(blue archive\),heterochromia,long hair,pink hair,ahoge,halo,
+  ホシノ(水着): <lora:hoshino_ver2_blue archive_PONY_epoch-000020:1> hoshino-swim,hoshino \(blue archive\), heterochromia,pink hair,low twintails,hair bobbles,ahoge,long hair,
+  ホシノ(ポニーテール): <lora:hoshino_ver2_blue archive_PONY_epoch-000020:1> hoshino-ponytail,hoshino \(blue archive\), heterochromia,medium hair,ponytail,pink hair,ahoge,halo,
+  ホシノ(私服): <lora:hoshino_ver2_blue archive_PONY_epoch-000020:1> hoshino-casual,hoshino \(blue archive\),heterochromia,long hair,pink hair,ahoge,halo,
+  ホシノ(過去): <lora:hoshino-first_ver2_blue archive_PONY_epoch-000020:1> hoshino-first,hoshino \(blue archive\), heterochromia,short hair,pink hair,ahoge,halo,
+  ホシノ(過去/水着): <lora:hoshino-first_ver2_blue archive_PONY_epoch-000020:1> hoshino-first,hoshino \(blue archive\), heterochromia,short hair,pink hair,ahoge,halo,
+  ホシノ(臨戦): <lora:hoshino-armed_blue archive_PONY_last:1> hoshino-armed,hoshino \(blue archive\), heterochromia,long hair,ponytail,pink hair,ahoge,halo,
+  ホシノ(一番くじ): <lora:hoshino-casual_blue archive_IllustriousXL_epoch-000076:1> hoshino-casual,hoshino \(blue archive\), heterochromia,long hair,pink hair,ahoge,halo
+  ホシノ(雀魂): <lora:hoshino-china dress_blue archive_IllustriousXL_epoch-000076:1> hoshino-chinadress,hoshino \(blue archive\),heterochromia,pink hair, long hair, double bun,ahoge,hair ornament,white scrunchie,halo
+  シロコ: <lora:shiroko_blue archive_PONY_last:1> shiroko-default, shiroko \(blue archive\),blue eyes,grey hair,hairclip,animal ears,halo,
+  シロコ(チャリコ): <lora:shiroko_blue archive_PONY_last:1> (shiroko-cycling:1.2), shiroko \(blue archive\),blue eyes,grey hair,hairclip,animal ears,halo,
+  シロコ(水着): <lora:shiroko_blue archive_PONY_last:1> (shiroko-swim:1.2), shiroko \(blue archive\),blue eyes,grey hair,hairclip,animal ears,halo,ponytail,
+  シロコ(体操服): <lora:shiroko_blue archive_PONY_last:1> shiroko-gym,shiroko \(blue archive\),blue eyes,grey hair,hairclip,animal ears,halo,
+  ノノミ: <lora:Hoseki_BlueArchive_NonomiIzayoi_IllustriousXL_v1:1> nnmizy, large breasts, green halo, green eyes, light brown hair, long hair, sidelocks
+  ノノミ(水着): <lora:Hoseki_BlueArchive_NonomiIzayoi_IllustriousXL_v1:1> nnmizy, large breasts, green halo, green eyes, light brown hair, long hair, sidelocks
+
+山海経:
+  キサキ: <lora:kisaki_blue archive_IllustriousXL_epoch-000056:1> kisaki-default, kisaki \(blue archive\),grey eyes,black hair, double bun,twintails,halo
+  キサキ(ジャケット): <lora:kisaki_blue archive_IllustriousXL_epoch-000056:1> kisaki-default, kisaki \(blue archive\),grey eyes,black hair, double bun,twintails,halo
+  キサキ(制服): <lora:kisaki_blue archive_IllustriousXL_epoch-000056:1> kisaki-schooluniform,kisaki \(blue archive\),grey eyes,black hair,double bun,twintails,halo
+  キサキ(キキ): <lora:kisaki_blue archive_IllustriousXL_epoch-000056:1> kisaki-kiki,kisaki \(blue archive\),grey eyes,black hair,low twintails,hair bobbles,halo
+  ココナ: <lora:kokona_blue archive_PONY_last:1> kokona-jacket,kokona \(blue archive\),orange eyes,multicolored hair,very long hair,animal ears,halo,
+  ココナ(ジャケット無し): <lora:kokona_blue archive_PONY_last:1> kokona-nosleeves,kokona \(blue archive\),orange eyes,multicolored hair,very long hair,animal ears,halo,
+  シュン(小): <lora:small-shun_blue archive_PONY_last:1> small-shun,shun \(small\) \(blue archive\),loli,green eyes, black hair,twintails,animal ears,halo,
+  ルミ(小): <lora:rumi-small_blue archive_IllustriousXL_epoch-000099:1> rumi-small,rumi \(blue archive\),purple eyes,brown hair,hair rings,halo
+
+その他:
+  アロナ: <lora:arona_blue archive_PONY_last:1> arona \(blue archive\),blue eyes, blue hair,braid,bow hairband,halo,choker,
+  アロナ(黒ビキニ): <lora:arona_blue archive_PONY_last:1> arona \(blue archive\),loli,blue eyes, blue hair,braid,bow hairband,heart halo,
+  アロナ(チアリーダー): <lora:arona-cheerleader_blue archive_PONY_epoch-000020:1> arona-cheerleader,arona \(blue archive\),blue eyes, blue hair,hair bun,hair ribbon,hairclip,braid,halo,choker,
+  プラナ: <lora:plana_blue archive_PONY_last:1> plana \(blue archive\),black eyes,long hair, white hair,braid,bow hairband,halo,choker,
+  プラナ(黒ビキニ): <lora:plana_blue archive_PONY_last:1> plana \(blue archive\),black eyes,long hair, white hair,braid,bow hairband,heart halo,
+  ソラ: <lora:sora_blue archive_PONY_last:1> sora-default,sora \(blue archive\),blue eyes,blonde hair, long hair,forehead,halo,wings,
+  モミジ: <lora:momiji_blue archive_PONY_last:1> momiji-default,momiji \(blue archive\), green eyes, green hair,long hair,halo,
+  ニヤニヤ教授: <lora:niyaniya kyoju_v1.1_blue archive_PONY_last:1> niyaniya-default,professor niyaniya \(blue archive\),green eyes, blonde hair, long hair, halo,

@@ -1,0 +1,23 @@
+LoRA:
+  電車の車内2: <lora:Train_Interior_View_Type2_v2:0.9> train interior,window
+  電車の車内2(シート): <lora:Train_Interior_View_Type2_v2:0.9> train interior,window,seat
+  エッフェル塔: <lora:EiffelTowerIXL_v2:1.0> zzEiffelTower in background
+  温泉: <lora:onsen_illustrious_V1.0:1> onsen
+  水中: <lora:underwater_illustrious_V1.0:1> underwater,water
+
+オリジナル:
+  ピンクのカジノ背景: pink casino background
+  濡れたタイルに反射する陽光,青く澄んだプール: sunlight glinting off wet tiles,blue pool water nearby
+  路地裏: Back Alley,neon lighting,simple background
+  奴隷の牢屋: slave,jail,dirty prison
+  屋外: outdoor
+  トレンディなバー: indoors,trendy bar,night,club,dim lighting,dark
+  満開の星,発光する花びら,別世界の背景ぼかし: blooming stars,luminescent petals,otherworldly fragrance blurry background
+  黄色い単色背景: yellow background,simple background,sketch
+  明るく清潔なリビングルーム: home living room, polished wooden floor, low table nearby, bright natural sunlight pouring through large windows, peaceful domestic interior,
+  窓とカーテン: indoors,window,curtains,
+  タイルの床: tile floor
+  花園: blue sky, flower petals, outdoors
+  教会の中: church,indoors
+  夕暮れの空: dusk,night and orange sky
+  宮殿内: indoors, palace, night, architecture, flag, arch, pillar,

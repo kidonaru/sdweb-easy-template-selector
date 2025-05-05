@@ -1,29 +1,15 @@
 from pathlib import Path
 import random
 import re
-import yaml
 import gradio as gr
 
+import modules.infotext_utils as parameters_copypaste
 import modules.scripts as scripts
-from modules.scripts import AlwaysVisible, basedir
+from modules.scripts import AlwaysVisible
 from modules import shared
-from scripts.setup import write_filename_list
+from scripts.setup import load_tags, get_tags
 
 FILE_DIR = Path().absolute()
-BASE_DIR = Path(basedir())
-TAGS_DIR = BASE_DIR.joinpath('tags')
-
-def tag_files():
-    return TAGS_DIR.rglob("*.yml")
-
-def load_tags():
-    tags = {}
-    for filepath in tag_files():
-        with open(filepath, "r", encoding="utf-8") as file:
-            yml = yaml.safe_load(file)
-            tags[filepath.stem] = yml
-
-    return tags
 
 def find_tag(tags, location):
     if type(location) == str:
@@ -48,9 +34,10 @@ def find_tag(tags, location):
 
     return value
 
-def replace_template(tags, prompt, seed = None):
+def replace_template(prompt, seed = None):
     random.seed(seed)
 
+    tags = get_tags()
     count = 0
     while count < 100:
         if not '@' in prompt:
@@ -58,6 +45,8 @@ def replace_template(tags, prompt, seed = None):
 
         for match in re.finditer(r'(@((?P<num>\d+(-\d+)?)\$\$)?(?P<ref>[^>]+?)@)', prompt):
             template = match.group()
+            if shared.opts.easy_template_use_consistent_seed:
+                random.seed(seed)
             try:
                 try:
                     result = list(map(lambda x: int(x), match.group('num').split('-')))
@@ -77,14 +66,12 @@ def replace_template(tags, prompt, seed = None):
     return prompt
 
 class Script(scripts.Script):
-    tags = {}
-
     def __init__(self):
         super().__init__()
-        self.tags = load_tags()
+        load_tags()
 
     def title(self):
-        return "EasyPromptSelector"
+        return "EasyTemplateSelector"
 
     def show(self, is_img2img):
         return AlwaysVisible
@@ -93,16 +80,17 @@ class Script(scripts.Script):
         if (is_img2img):
             return None
 
-        reload_button = gr.Button('🔄', variant='secondary', elem_id='easy_prompt_selector_reload_button')
-        reload_button.style(size='sm')
+        image_info = gr.Textbox("", elem_id='easy_template_selector_image_info', interactive=True, visible=False)
+        apply_button = gr.Button("", elem_id='easy_template_selector_apply_button', visible=False)
 
-        def reload():
-            self.tags = load_tags()
-            write_filename_list()
+        binding = parameters_copypaste.ParamBinding(
+            paste_button=apply_button,
+            tabname="txt2img",
+            source_text_component=image_info,
+            source_tabname="txt2img")
+        parameters_copypaste.register_paste_params_button(binding)
 
-        reload_button.click(fn=reload)
-
-        return [reload_button]
+        return [image_info, apply_button]
 
     def replace_template_tags(self, p):
         prompts = [
@@ -119,11 +107,27 @@ class Script(scripts.Script):
 
                 self.save_prompt_to_pnginfo(p, prompt, raw_prompt_param_name)
 
-                replaced = "".join(replace_template(self.tags, all_prompts[i], seed))
+                replaced = "".join(replace_template(all_prompts[i], seed))
                 all_prompts[i] = replaced
 
+        # Remove blank line
+        if shared.opts.easy_template_remove_blank_line:
+            for i in range(len(p.all_prompts)):
+                for [prompt, all_prompts, raw_prompt_param_name] in prompts:
+                    lines = all_prompts[i].split('\n')
+                    lines = list(filter(lambda x: len(x.strip()) > 0, lines))
+                    all_prompts[i] = '\n'.join(lines)
+
+        # Remove new line
+        if shared.opts.easy_template_remove_new_line:
+            for i in range(len(p.all_prompts)):
+                for [prompt, all_prompts, raw_prompt_param_name] in prompts:
+                    lines = all_prompts[i].split('\n')
+                    lines = list(filter(lambda x: len(x.strip()) > 0, lines))
+                    all_prompts[i] = ' '.join(lines)
+
     def save_prompt_to_pnginfo(self, p, prompt, name):
-        if shared.opts.eps_enable_save_raw_prompt_to_pnginfo == False:
+        if shared.opts.easy_template_enable_save_raw_prompt_to_pnginfo == False:
             return
 
         p.extra_generation_params.update({name: prompt.replace('\n', ' ')})

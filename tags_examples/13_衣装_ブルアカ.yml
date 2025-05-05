@@ -1,0 +1,205 @@
+ゲヘナ:
+  ヒナ: skirt, long sleeves, hairclip, black skirt, coat, coat on shoulders, fur trim, black gloves,
+  アコ: long sleeves,sideboob,miniskirt,gloves,black thighhighs,garter straps,boots
+  アコ(ドレス): sideboob,blue dress,sleeveless,bare shoulders,(chain:0.8),high heels
+
+  イブキ: pinafore dress,white shirt,white bloomers,yellow boots
+  イブキ(ジャケット): black headwear,black jacket,chain,pinafore dress,white bloomers,oversized clothes,yellow boots
+  イブキ(水着): one-piece swimsuit, polka dot
+  イブキ(ドレス): black dress,bare shoulders,elbow gloves,grey pantyhose,mary janes
+  イブキ(白ワンピ): white dress, frilled dress,sleeveless,straw hat
+  イロハ: hat,black shirt,black skirt,red necktie,boots
+  イロハ(インナー): hat,black shirt,long sleeves,black skirt,red necktie
+  イロハ(体操服): gym uniform,track jacket,buruma,white sock,sneakers
+
+  フウカ: head scarf,frilled dress,apron,necktie,sneakers
+  フウカ(私服): blue dress,white shirt,short sleeves, necklace,wristwatch, white headwear,white socks,brown mary janes
+  フウカ(正月): japanese clothes,kimono,tabi,zouri
+
+  セナ(私服): sundress,white dress,sun hat,shoulder bag
+
+  ムツキ: cropped jacket,short sleeves,high-waist skirt, frilled skirt,black boots,a thigh strap
+  ムツキ(正月): japanese clothes,white kimono,zouri,tabi,
+  ムツキ(ドレス): red dress,fishnets,high heels,
+  ムツキ(スーツ): red necktie,suit,shorts,white socks,black footwear
+  ムツキ(雀魂): china dress,pelvic curtain,detached sleeves,thighhighs
+
+トリニティ:
+  ミカ: white dress,capelet,white pantyhose,high heels
+  ミカ(ケープなし): sleeveless dress,bare shoulders,white pantyhose,high heels
+  ミカ(水着): one-piece swimsuit
+  ミカ(体操服): track jacket, shorts,sneakers
+  セイア: white dress,sleeves past fingers,pantyhose,tail, high heels
+  セイア(体操服): track jacket,track shorts
+
+  マリー: nun,blue neckerchief,white sailor collar,white dress,armlet,mary janes
+  マリー(ユスティナ聖徒会): nun,highleg leotard,latex,black thighhighs,gloves,high heels,
+  マリー(体操服): track jacket,gym shorts,kneehighs,sneakers
+  マリー(体操服2): track jacket,gym shirt,gym shorts,open clothes,id card,kneehighs,sneakers,
+  マリー(アイドル): hat,earrings,sleeveless dress,frilled dress,detached sleeves,black pantyhose,high heels
+  サクラコ: nun, habit, two-tone capelet, blue neckerchief, black frilled dress, juliet sleeves, brown gloves, black thighhighs
+  サクラコ(レオタード): nun, black habit, white capelet, latex leotard, black leotard, highleg leotard, black thighhighs, black thigh boots, latex boots, high heel boots
+  サクラコ(アイドル): earrings, mini top hat, black hat, hat flower, hat feather, grey hair ribbon, black hairband, black capelet, frilled capelet, purple brooch, green ascot, layered dress, two-tone dress, black dress, grey dress, center frills, bare shoulders, detached sleeves, wide sleeves, frilled sleeves, vertical-striped pantyhose, black pantyhose, black half gloves
+
+  コハル: white sailor collar,black shirt,off shoulder,pink neckerchief,red skirt,loose socks,black footwear
+  コハル(体操服): track jacket,shorts
+  コハル(スク水): one-piece swimsuit
+  コハル(ピザハットコラボ): frilled bikini,denim shorts,open shorts,black side-tie,wrist ring
+  コハル(水着): black bikini
+  ハナコ: school uniform,sailor collar,white pleated skirt, kneehighs,mary janes
+  ハナコ(水着): (white shirt:1.3),oversized clothes,wet clothes,sleeves past wrists,(red bikini:0.5),shoulder straps,off shoulder,sandals
+  ハナコ(体操服): gym uniform,track jacket,white shirt,shorts
+  ハナコ(学校指定水着): one-piece swimsuit,competition swimsuit,bare arms
+  アズサ: white capelet,black sailor collar,black frilled dress,white footwear
+  アズサ(ノースリーブ): (bare shoulders,sleeveless dress:1.2),black frilled dress,white footwear
+  アズサ(プール掃除): (track jacket:1.2),open jacket,one-piece swimsuit
+  アズサ(水着): strapless bikini,frills,see-through jacket,sandals
+  ヒフミ: school uniform,blue sailor collar,white cardigan,pleated skirt,black pantyhose,sneakers
+  ヒフミ(水着): white frilled bikini,sandals
+  ヒフミ(体操服): gym uniform,track jacket,shorts,white socks, sneakers
+  ヒフミ(学校指定水着): one-piece swimsuit
+
+  ナツ: sailor collar,white cardigan,pleated skirt,black thighhighs,white shoes
+  ナツ(体操服): track jacket,shorts,white socks,sneakers
+  ナツ(バンド): yellow jacket,clip,sugarrush-logo shirt,pleated skirt, wrist band,loose socks, black footwear
+  カズサ: black jacket,skirt,pantyhose, sneakers
+  カズサ(パーカー脱ぎ): sailor collar,(white shirt:1.1),long sleeves,white skirt,pantyhose,sneakers
+  カズサ(バンド): mouth mask,thigh strap,sugarrush-logo shirt,white shirt,black cloth_around_waist,white skirt,black socks,black footwear
+  ヨシミ: (red jacket,closed jacket,hoodie jacket:1.1),pink skirt,black thighhighs, sneakers
+  ヨシミ(バンド): (red coat,sugarrush-logo shirt:1.1),pink skirt,white socks,black footwear
+  アイリ: sailor collar,white shirt,long sleeves,green bowtie,white skirt,black frills,thighhighs,black footwear
+  アイリ(バンド): sugarrush-logo shirt,blue jacket, white skirt,white socks,black footwear
+  レイサ: black jacket,sailor collar,grey skirt,backpack,socks,sneakers
+  レイサ(リュック無し): black jacket,sailor collar,grey skirt, socks,sneakers
+
+  セリナ: white sailor collar,black bow,black skirt,white dress,armband,boots,
+  セリナ(ナース): white pantyhose,pink dress,short sleeves,armband,boots,
+  セリナ(クリスマス): black pantyhose,black gloves,red capelet,fur trim,santa costume,armband,white boots,
+
+  正実モブ(制服/目隠れ): beret,black serafuku,skirt,black socks,black footwear
+  正実モブ(制服/目見え): beret,black serafuku,skirt,black socks,black footwear
+  正実モブ(体操服/目隠れ): white headwear,baseball cap,gym uniform,(white shirt:1.2),short sleeves,shorts,white socks,sneakers
+  正実モブ(体操服/目見え): white headwear,baseball cap,gym uniform,(white shirt:1.2),short sleeves,shorts,white socks,sneakers
+
+ミレニアム:
+  アリス: white shirt,white long sleeves,necktie,pleated skirt,black socks,sneakers
+  アリス(ジャケット): multicolored jacket,necktie,pleated skirt,black socks,sneakers
+  アリス(メイド): maid headdress,white apron,white pantyhose,mary janes
+  アリス(防寒着): earmuffs,brown coat,scarf,brown mittens,black black pantyhose,boots
+  アリス(一番くじ): white hairband,white shirt,neckbow,long sleeves,suspenders,high-waist skirt,blue skirt,bobby socks,mary janes
+  アリス(アイドル): choker,idol clothes,sailor collar,detached sleeves,corset,pleated skirt,frilled skirt, white footwear
+  アリス(体操着): gym uniform, black shirt,buruma,sneakers
+  ケイ: multicolored coat,blue necktie,white shirt,pleated skirt,black socks,sneakers
+  モモイ: red bow, tail, cat tail, collared shirt, long sleeves, pleated skirt,  white shirt, black skirt, blue necktie, white jacket, wide sleeves, black thighhighs, suspender skirt
+  ミドリ: green bow, black thighhighs, blue necktie, collared shirt, long sleeves, white jacket, white shirt, black shorts, blush, black footwear, open jacket, hood, wide sleeves,
+
+  ユウカ: jacket,necktie, shirt,half gloves, pleated skirt,belt,black footwear
+  ユウカ(アウター脱ぎ): necktie,(white shirt:1.2),long sleeves,half gloves, pleated skirt,black footwear
+  ユウカ(体操服): id card,blue jacket, track jacket,black shirt, blue buruma,black footwear
+  ユウカ(パジャマ): headband,blue pajamas,print clothes,short shorts,slippers
+  ノア: jacket,white suit,blue necktie,pleated skirt,black pantyhose, white high heels, short boots
+  ノア(パジャマ): white nightgown,black scarf
+  コユキ: white jacket,blue necktie,id card,collared shirt,pleated skirt, smile,white thighhighs,knee pads, white footwear
+  コユキ(バニー): detached collar,blue necktie,tailcoat,white pantyhose, black footwear
+
+  トキ: headdress,maid,apron,long sleeves,(long black skirt:1.1),high heels,fingerless gloves,chest harness,pouch
+  トキ(戦闘時): headdress,maid,apron,detached sleeves,black skirt, thighhighs,white boots,high heels,fingerless gloves,chest harness,pouch
+  トキ(戦闘時/レオタード): headdress,leotard,elbow gloves, black gloves,thighhighs,white boots,high heels
+  トキ(バニー): fake animal ears,leotard,detached collar,rabbit tail,white thighhighs,high heels
+  トキ(制服): school uniform,bowtie,blue sweater,black skirt, pleated skirt,black socks
+  アカネ: brown plaid shawl, maid headdress, hair ribbon, blue ribbon, white collared shirt, long sleeves, center frills, blue necktie, short necktie, chest harness, white apron, frills, black pleated skirt, long skirt, white gloves
+  アカネ(バニー): brown plaid shawl, playboy bunny, detached collar, traditional bowtie, blue bowtie, white leotard, white pantyhose, white gloves
+  カリン: maid headdress, black dress, white apron, puffy short sleeves, back bow, white pantyhose, white gloves
+  カリン(バニー): ponytail, playboy bunny, detached collar, traditional bowtie, black leotard, fishnet pantyhose, wrist cuffs, white gloves
+  カリン(制服): blue cardigan, blue loose bowtie, collared shirt, white shirt, pleated skirt, blue skirt
+  カリン(チア): ponytail, cheerleader, detached collar, two-tone sports bra, blue sports bra, white sports bra, halterneck, cleavage, bare shoulders, midriff, two-tone skirt, blue skirt, white skirt
+  アスナ: hair bun, maid headdress, headphones, choker, detached collar, blue bowtie, black dress, puffy short sleeves, cleavage, white apron, garter straps, white thighhighs, white elbow gloves, frills
+  アスナ(バニー): choker, white hairband, playboy bunny, aqua leotard, detached collar, blue traditional bowtie, white elbow gloves, thighbang pantyhose, black pantyhose
+  アスナ(制服): white collared shirt, sleeves rolled up, loose bowtie, pleated skirt, black skirt, choker, wrist scrunchie, shirt tucked in, black socks
+  アスナ(チア): ponytail, star sticker, cheerleader, detached collar, two-tone sports bra, blue sports bra, white sports bra, cleavage, bare shoulders, midriff, two-tone skirt, blue skirt, white skirt
+
+  マキ: blue sweater vest,whtie shirt,short sleeves,blue necktie,pleated skirt,black socks,sneakers
+  マキ(ジャケット): black hooded jacket,blue sweater,blue necktie,pleated skirt,black socks,sneakers
+  マキ(キャンプ): brown jacket,red sweater,short shorts,black pantyhose,boots
+  マキ(パジャマ): white tank top,bare shoulders,bike shorts
+
+  エイミ: braided ponytail, hair ornament, headphones around neck, open clothes, black coat, red necktie between breasts, collared shirt, partially unbuttoned, bare shoulders, bandaid on shoulder, black underwear, zipper pull tab, white skirt, id card, ammunition belt, bandaid on knee, black socks, black footwear
+  エイミ(水着): ponytail, goggles on head, white scarf, pink padded jacket, open jacket, off shoulder, black bikini, white footwear
+
+  レイ: baseball cap, orange-tinted eyewear, white hoodie, blue jacket,multicolored jacket, thigh strap,bandaid,black socks,sneakers,
+
+SRT:
+  ミヤコ: tactical clothes,pouch,blue skirt,gloves,knee pads,black footwear
+  ミヤコ(武装解除): (blue serafuku,sailor collar,blue long sleeves, pleated skirt:1.2)
+  ミヤコ(水着): one-piece swimsuit,frills,sandals
+  ミヤコ(青パーカー): blue hoodie
+  ミユ: sailor collar,pleated skirt,white pantyhose, sneakers,(black armband, black pouch:1.2),gloves,kneepad,
+  ミユ(武装解除): sailor collar, green neckerchief,pleated skirt, white pantyhose, sneakers
+  ミユ(水着): (headwear removed:1.3),neck ribbon,bikini,sandals,
+  ミユ(水着/帽子なし): bikini,sandals
+  ニコ: serafuku,white shirt,blue skirt,black pantyhose,(headset:1.1),chest harness,armband,pouch,white belt,fingerless gloves,black footwear
+  ニコ(武装解除): serafuku,whiteshirt,skirt,black pantyhose,black footwear
+  クルミ: school uniform,serafuku,skirt,black socks,sneakers,chest harness,gloves,(thigh strap:0.8)
+  クルミ(武装解除): school uniform,serafuku,skirt,black socks,sneakers
+
+ハイランダー:
+  ノゾミ: black jacket,long sleeves,white shirt,black shorts,arm band,white pantyhose,white gloves,boots,peaked cap
+  ヒカリ: black jacket,long sleeves,white shirt,black skirt,arm band,white pantyhose,white gloves,boots,peaked cap
+  アオバ: blue jacket,brown shirt,armband,yellow bow,white skirt,cabbie hat,blue hat,cross-laced footwear,black boots,brown gloves
+  アオバ(メモロビ): white camisole,brown shirt,armband,yellow bow,white skirt,cabbie hat,blue hat,cross-laced footwear,black boots,brown gloves
+
+ヴァルキューレ:
+  キリノ: blue headwear,white jacket,armband,blue dress,pouch,black pantyhose,white gloves,boots
+  キリノ(水着): white shirt,black vest,swimsuit,purple buruma, whistle,sandals
+  フブキ: hat,police uniform,white jacket,armband,vest,skirt,black pantyhose, sneakers
+  フブキ(水着): white one-piece swimsuit,jacket,visor cap, whistle,sandals
+
+百鬼夜行:
+  イズナ: school uniform, japanese clothes,scarf,serafuku,skirt,gloves,(fishnets:1.1),single black sock,loafers
+  イズナ(水着): bikini,swimsuit,blue shorts,visor cap,scarf,brown sandals
+  イズナ(体操服): gym uniform,gym shirt,buruma,sneakers
+
+  キキョウ: blue sailor collar, blue neckerchief, white shirt, blue skirt, pleated skirt, white socks, black sandals
+  キキョウ(ジャケット): blue haori, jacket on shoulders, wide sleeves, blue sailor collar, blue neckerchief, white shirt, blue skirt, pleated skirt, white socks, black sandals
+  ユカリ: white sailor collar, red neckerchief, white shirt, short sleeves, blue skirt, pleated skirt, white socks
+  ユカリ(羽織): blue haori, wide sleeves, white sailor collar, red neckerchief, white shirt, blue skirt, pleated skirt, white socks, blue sandals
+
+  シュロ: jacket,japanese clothes,pelvic curtain,obi,sleeveless
+  シュロ(羽織脱ぎ): pelvic curtain,obi,sleeveless,sandals
+
+アビドス:
+  ホシノ: white shirt,plaid skirt,necktie,sneakers,id card
+  ホシノ(水着): white bikini,blue jacket,head on sunglasses
+  ホシノ(ポニーテール): blue scarf,(grey sweater:1.2),pleated skirt,(white shirt,blue necktie:0.9),black pantyhose,shoes
+  ホシノ(私服): (white frilled dress,sundress,off shoulder:1.2), blue ribbon,sandals
+  ホシノ(過去): (vest:1.2), blue vest,long sleeves,blue necktie, plaid skirt,armband,shoes
+  ホシノ(過去/水着): blue one-piece swimsuit
+  ホシノ(臨戦): armor vest,white shirt,pouch,pleated skirt,white socks,sneakers,gloves
+  ホシノ(一番くじ): frilled dress,white sundress,off shoulder, blue ribbon,sandals,shoulder bag
+  ホシノ(雀魂): chinese clothes,china dress
+  シロコ: scarf,jacket,white shirt,necktie,plaid skirt, white socks,sneakers
+  シロコ(チャリコ): (shirt,clothes writing,cleavage:1.2),zipper,bike shorts,green gloves
+  シロコ(水着): one-piece swimsuit,black sandals
+  シロコ(体操服): track jacket,buruma,white socks,sneakers,
+  ノノミ: single side bun, hair bow, lanyard, id card, yellow jacket, open jacket, off shoulder, buttons, white collared shirt, pleated skirt, plaid skirt, black skirt, black fingerless gloves, black socks, white sneakers
+  ノノミ(水着): white sunhat, hat ribbon, hat flower, white see-through shirt, open shirt, yellow bikini, string bikini, front-tie bikini top, side-tie bikini bottom, bead bracelet
+
+山海経:
+  キサキ: china dress,sleeveless,pelvic curtain,high heels
+  キサキ(ジャケット): grey jacket,china dress,pelvic curtain,high heels,black gloves
+  キサキ(制服): school uniform,white shirt,necktie,short sleeves,black skirt,white socks,loafers
+  キサキ(キキ): school hat,yellow headwear,pink shirt,long sleeves,name tag,blue skirt,white socks,uwabaki,shoulder bag,star-shaped pupils
+  ココナ: black dress,(pelvic curtain:1.2),jacket, white skirt,black socks,sneakers
+  ココナ(ジャケット無し): black dress,(pelvic curtain:1.2),(white skirt:1.2),bare arms,black socks,sneakers
+  シュン(小): chinese clothes,black lace,white thighhighs,mary janes
+  ルミ(小): red dress,puffy short sleeves,white socks,red mizuhiki,black mary janes
+
+その他:
+  アロナ: white sailor collar,white skirt,white sneakers,
+  アロナ(黒ビキニ): black swimsuit, frilled bikini,bare arms,bare legs
+  アロナ(チアリーダー): cheerleader,shorts under skirt,white socks,white sneakers, pom pom \(cheerleading\)
+  プラナ: black serafuku,sailor collar,black long coat,skirt, black pantyhose,black loafers,
+  プラナ(黒ビキニ): black swimsuit,(frilled bikini:1.2),blue sky ,bare arms ,bare legs
+  ソラ: blue apron,white shirt,skirt, white socks,sneakers
+  モミジ: hoodie,(white dress:1.2),tail,black pantyhose,brown boots
+  ニヤニヤ教授: beret,black coat,black dress,sailor collar,black pantyhose,lace-up boots,black gloves

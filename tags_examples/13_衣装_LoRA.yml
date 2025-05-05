@@ -1,0 +1,94 @@
+bolero537/制服:
+  学生服: <lora:JCF_illustrious_V1.0:0.7> jcf,school uniform,shirt,skirt
+  学生服(秋): <lora:school uniform cardigan_illustrious_V1.0:1> cardigan, school uniform, skirt, blazer
+  ブレザー: <lora:blazer_illustrious_V1.0:0.7> blazer,shirt,skirt,necktie
+  スク水: <lora:sukumizu_XL_illustrious_V1.0:1> school swimsuit
+  スク水(ワンピ): <lora:sukumizu_XL_illustrious_V1.0:1> one-piece swimsuit
+  スク水(白ワンピ): <lora:sukumizu_XL_illustrious_V1.0:1> white one-piece swimsuit
+  スク水2: <lora:sukumizu highleg_illustrious_V1.0:0.8> school swimsuit
+  スク水2(ハイレグ): <lora:sukumizu highleg_illustrious_V1.0:0.8> school swimsuit,highleg
+  セーラー水着: <lora:sera swimsuti_illustrious_V1.0:0.8> sera swimsuit, one-piece swimsuit, red neckerchief, white swimsuit,miniskirt
+  競泳水着: <lora:competitive Swimsuit_illustrious_V1.0:1> competitive swimsuit
+  体操服: <lora:taisoufuku_illustrious_V1.0:1> jyojifuku,white shirt,short sleeves,shorts,gym uniform
+  体操服(帽子): <lora:taisoufuku_illustrious_V1.0:1> jyojifuku,white shirt,short sleeves,shorts,gym uniform,baseball cap
+  ブルマ: <lora:buruma_XL_illustrious_V1.0:1> sgu,gym uniform,@97_Color@ buruma
+  ジャージ(ズボン): <lora:tracksuits_XL_illustrious_V1.0:1> tracksuits,long sleeves,pants
+  ジャージ(ブルマ): <lora:tracksuits_XL_illustrious_V1.0:1> tracksuits,long sleeves,buruma
+  ジャージ(ショートパンツ): <lora:tracksuits_XL_illustrious_V1.0:1> tracksuits,long sleeves,shorts
+
+bolero537/私服:
+  女児服: <lora:jyojifuku_XL_illustrious_V1.0:1> jyojifuku, print clothes, pastel color clothes,shirt, skirt, thighhighs,backpack
+  ワンピース: <lora:jyoji one piece_illustrious_V1.0:0.7> jyojifuku, dress, short sleeves,ribbon,frills
+  地雷系: <lora:jirai kei_illustrious_V1.0:0.8> jirai kei ,pink shirt,black skirt,thighhighs,twintails
+  オーバーサイズシャツ: <lora:over size shirt_illustrious_V1.0:1> oversized shirt
+  ゴスロリ: <lora:gothic dress_illustrious_V1.0:0.7> jyojifuku, dress, frills, hair bow, ribbon
+  パジャマ(ズボン): <lora:pajamas_illustrious_V1.0:0.7> jyojifuku, pajamas,pants
+  パジャマ(スカート): <lora:pajamas_illustrious_V1.0:0.7> jyojifuku, pajamas,skirt
+  パジャマ(ショートパンツ): <lora:pajamas_illustrious_V1.0:0.7> jyojifuku, pajamas,shorts
+  メイド クラシック: <lora:maid classic_illustrious_V1.0:1> maid, maid apron, maid headdress, puffy sleeves
+  メイド風ドレス: <lora:maid dress_noobep_V1.0:0.7> jyojifuku,frills,kneehighs,apron
+  巫女: <lora:miko_XL_illustrious_V1.0:1> jyojifuku,miko,red hakama
+  ナース: <lora:nurse_illustrious_V1.0:1> nurse,nurse cap,dress
+  スーツ: <lora:suit_illustrious_V1.0:1> suit, jacket, shirt, pants, necktie
+  スーツ(スカート): <lora:suit skirt_illustrious_V1.0:1> suit, pencil skirt, jacket, shirt
+  和服ゴシック: <lora:wafuu gothic_illustrious_V1.0:1> jyojifuku, thighhighs, floral print, hair ornament, kimono skirt
+  魔女コス: <lora:witch_illustrious_V1.0:0.6> jyojifuku, witch, witch hat, dress, pantyhose, halloween
+  浴衣: <lora:yukata_noobep_V1.0:0.6> jyojifuku, yukata, kimono, floral print, hair ornament, obi, wide sleeves
+  キャミソールドレス: <lora:camisole dress_illustrious_V1.0:0.7> jyoji fuku, dress,bare shoulders
+  キャミソールドレス(スカート): <lora:camisole dress_illustrious_V1.0:0.7> jyoji fuku, dress,bare shoulders,skirt
+  ミリタリードレス: <lora:military uniform_illustrious_V1.0:1> jyojifuku, m dress, hat, belt, gloves, boots
+  ミリタリードレス(武器): <lora:military uniform_illustrious_V1.0:1> jyojifuku, m dress, hat, belt, gloves, boots,holding weapon
+  チャイナドレス: <lora:china dress_illustrious_V2.0:0.7> jyojifuku, china dress, double bun,skirt
+  チャイナメイド: <lora:china maid_illustrious_V1.0:1> jyojifuku, china maid,dress,apron, frills,thighhighs
+  マーチング衣装(軍服): <lora:marching_illustrious_V1.0:0.7> jyojifuku, marching, skirt,gloves, hat, uniform
+  マーチング衣装(軍服/靴): <lora:marching_illustrious_V1.0:0.7> jyojifuku, marching, skirt,gloves, hat, uniform, boots
+  ウェディングドレス: <lora:wedding dress_illustrious_V1.0:0.8> wedding dress
+  オフショルダーセーター: <lora:off-shoulder sweater_illustrious_V1.0:1> off-shoulder sweater
+  修道女: <lora:nun_illustrious_V1.0:0.7> nun,black dress, thighhighs, long sleeves,cleavage
+
+bolero537/露出:
+  バニーガール: <lora:bunny girl_illustrious_V1.0:1> bunny girl,rabbit ears,leotard,wrist cuffs,bowtie
+  逆バニー: <lora:reverse bunnysuit_illustrious_V1.0:0.8> reverse bunnysuit,pasties
+  燕尾服バニー: <lora:bunny girl coattails_illustrious_V1.0:1> playboy bunny, tailcoat, coattails
+  ベリーダンス衣装(スカート): <lora:belly dance clothes_illustrious_V1.0:0.6> jyojifuku, veil, midriff, bracelet, earrings, navel, see-through,skirt
+  ベリーダンス衣装(ズボン): <lora:belly dance clothes_illustrious_V1.0:0.6> jyojifuku, veil, midriff, bracelet, earrings, navel, see-through,pants
+  女児下着: <lora:jyojishitagi_XL_illustrious_V1.1:1> jyojipan,print panties,bra
+  女児水着2: <lora:jyojimizugi skirt_illustrious_V1.0:1> jyojimizugi,one-piece swimsuit,skirt
+  猫ランジェリー: <lora:cat lingerie_illustrious_V1.0:0.8> cat lingerie
+  ハーネス: <lora:harness_illustrious_V1.0:1> harness,bdsm,o-ring,
+  ハーネス(縛り): <lora:harness_illustrious_V1.0:1> harness,bdsm,o-ring,bound
+  バンドエイド: <lora:bandeid_illustrious_V1.0:1> bandaid, bandaid on pussy, bandaids on nipples
+  触手服: <lora:tentacles clothes_illustrious_V1.0:1> tentacles clothes, living clothes
+  ボディースーツ: <lora:bodysuit_illustrious_V1.0:0.8> bodysuit
+  ボディースーツ(乳液): <lora:bodysuit_illustrious_V1.0:0.8> bodysuit,latex
+  ボディースーツ(ファスナー): <lora:bodysuit_illustrious_V1.0:0.8> bodysuit,zipper
+  ボディースーツ(ファスナー開): <lora:bodysuit_illustrious_V1.0:0.8> bodysuit,zipper,unzipping
+  紐パン: <lora:himopan_illustrious_V1.0:1> side-tie panties
+  エプロン: <lora:apron_illustrious_V1.0:1> apron,naked apron
+  悪落ち: <lora:corruption_illustrious_V1.0:0.7> corruption, blush, pubic tattoo, dark persona
+  悪落ち(レオタード): <lora:corruption_illustrious_V1.0:0.7> corruption, blush, pubic tattoo, dark persona,leotard,elbow gloves,thighhighs
+  バスローブ: <lora:bathrobe_illustrious_V1.0:1> bathrobe
+  メイドビキニ: <lora:maid bikini_illustrious_V1.0:0.7> maid bikini,black bikini, maid headdress, detached collar, thighhighs,frills,ribbon,arm garter,leg garter,wrist cuffs
+  セクシーチャイナドレス: <lora:sexy china dress_illustrious_V1.0:0.8> sexy china dress, side slit
+  彼シャツ: <lora:karesyatsu_illustrious_V1.0:1> karesyatsu, sleeves past wrists, collared shirt
+  裸リボン: <lora:body ribbon_illustrious_V1.0:1> body ribbon, ribbon, naked ribbon
+  キャミソール: <lora:camisole_illustrious_V1.0:0.8> jyojishitagi,camisole
+  透け下着: <lora:see-through underwear_XL_illustrious_V1.0:1> see-through underwear, panties, bra,nipples,pussy
+
+School Girl Costumes:
+  ウォーターアイス制服: <lora:WaterIceRabbitSGILL:0.7> serafuku,bow
+  スイートアイドル制服: <lora:SweetIdolCollegeSGILL:0.7> jacket, layered skirt, pink skirt, hair ornament, white shirt, bow, pink jacket
+  ロックパンク制服: <lora:LockpanquaCollegeSGILL:0.6> plaid skirt, shirt, black shirt, leg warmers, red necktie, black jacket, collared shirt, sleeves past wrists
+  ストライプ制服: <lora:SglingerieV9ILL:0.7> sg lingerie, striped jacket, necktie, plaid skirt
+  ラテックス制服: <lora:SglingerieV10ILL:0.7> sg lingerie, latex skirt, necktie, midriff,front-tie top,collared shirt
+  ビキニトップ制服: <lora:SglingerieV8ILL:0.7> sg lingerie, bikini top only, plaid skirt, necktie
+  アニス制服: <lora:SglingerieV7ILL:0.7> sg lingerie, latex, crop top, pleated skirt, black serafuku, midriff, anis_(nikke)
+  アンダーブースト制服: <lora:SglingerieV6ILL:0.7> sg lingerie, underboob, plaid skirt, sleeves past wrists
+  原宿制服: <lora:HarajukuschoolgirldressILL:0.7> harsg dress, thighhighs, necktie, plaid skirt, corset, frills
+  ハーネス制服: <lora:SglingerieV5ILL:0.7> lingerie,skirt,underwear, plaid, harness
+  韓国制服: <lora:KoreanschoolgirlILL:0.7> ksg skirt, plaid skirt, white shirt,school uniform, @97_Color@ bow, @97_Color@ skirt
+  セーター制服: <lora:SweaterschoolgirlILL:0.7> ssg skirt, necktie, plaid, socks, school uniform, white shirt, plaid skirt, jacket
+  タイドシャツ制服: <lora:sglingerieV2ILL:0.7> sg lingerie, thighhighs, skirt, cleavage, midriff, tied shirt, plaid skirt
+  セーラー制服: <lora:sglingerieILL:0.7> sg lingerie, sailor collar, skirt, panties, white thighhighs
+  クロップトップ制服: <lora:sglingerieV3ILL:0.7> sg lingerie, necktie, midriff, plaid skirt, crop top
+  ガーター制服: <lora:sglingerieV4ILL:0.7> sg lingerie, thighhighs, necktie, garter straps, plaid skirt,white bra

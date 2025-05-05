@@ -1,0 +1,85 @@
+Model:
+  Nova Anime XL: modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated
+  Unholy Desire Mix: bad quality,worst quality,worst detail,sketch,censor
+  WAI-NSFW-illustrious-SDXL: bad quality,worst quality,worst detail,sketch,censor
+  KonpaEvo Mix: lowres,worst quality,low quality,simple background,bad anatomy,bad hands,signature,text,watermark
+
+Embeddings:
+  badhandv4: badhandv4
+  Bad-Hands-5: bad-hands-5
+
+品質:
+  低解像度: lowres
+  低品質: worst quality,bad quality,low quality,normal quality
+
+アートスタイル:
+  アニメ・カートゥーン: cartoon
+  モダン・レトロ: modern,recent,old,oldest,early
+
+テキスト:
+  署名: watermark,signature,artist name,twitter username
+  テキストロゴ: text,logo
+
+顔:
+  醜い顔: ugly face,disfigured
+  悪い顔: blurry face,cloned face,poorly drawn face
+  リアルな目: realistic eyes
+  悪い目: bad eyes
+  大きな頭: large head
+
+人体:
+  悪い解剖学: bad anatomy
+  筋肉質な体: muscular,strong
+  拡張された手足: extra hands,extra arms,extra legs,extra limbs
+  欠損した手足: missing arms,missing legs
+  伸びた手足: long legs,long arms,long forearms
+  悪い手足: bad hands,bad feet,bad limp,bad fingers,poorly drawn hands
+  悪い比率: bad proportions,gross proportions
+  奇形な手足: malformed limbs,mutated hands,fused fingers
+  指の異常: missing fingers,extra fingers,extra digits,fewer digits
+  指の異常(強調): missing fingers,missing digits,extra fingers,extra digits,fewer digits,lower fingers,4fingers,6fingers
+  伸びた体: long body
+  長い首: long neck
+  太った: fat
+  腹筋: abs
+  肋骨: ribs
+  毛深い: furry
+  悪い肌: bad skin
+  変形: deformed,mutated
+  結合: conjoined
+  減少拡張欠損: fewer,extra,missing
+  ロリ: loli
+
+評価:
+  低評価: score_6,score_5,score_4,score_3,score_2,score_1
+
+グラフィック:
+  アーティファクト: artifacts,jpeg artifacts,scan artifacts
+  悪いアート: bad art,bad drawing,poorly drawn,ugly artstyle,artistic error
+  モノクロ: black and white
+  切り取り: cropped
+  スケッチ: sketch
+  ボケ: blurry
+  低コントラスト: low contrast
+  スキャン: scan
+  グラフィック1: graphic,text,painting,crayon,graphite,abstract,glitch
+  変形: Morphing,blending,incorrectly proportioned
+  アニメ: anime
+  吹き出し: speech bubble
+
+その他:
+  曲がった: bendy
+  AI生成: bad ai-generated
+  Civitai Safe Helper: safe_neg
+  ベッド: bed,bedroom
+  不快: very displeasing
+  検閲: censored
+  検閲(強調): (censored, bar_censor, mosaic_censor:1.2)
+  シンプルな背景: simple background
+  ソース: source pony,source furry,source cartoon
+  エラー: error
+  未完成: unfinished
+  色収差: chromatic aberration
+  抽象: abstract
+  効果音: sound effect
+  レンズフレア: lens flare
