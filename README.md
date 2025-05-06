@@ -26,6 +26,8 @@ https://github.com/kidonaru/sdweb-easy-template-selector
 
 また、`Settings` - `User Interface` - `Quicksettings list` の項目に`CLIP_stop_at_last_layers` を追加してください
 
+`Clip skip: 2` 以外ではテンプレートの読み込みが正常にできない可能性があります
+
 # 機能
 
 ## テンプレートの読み込み/保存
