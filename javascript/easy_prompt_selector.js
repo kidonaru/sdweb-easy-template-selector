@@ -287,43 +287,71 @@ class EPSElementBuilder {
   }
 
   static reloadButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('🔄', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('🔄', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: 'テンプレートとタグを再読み込み'
+    })
     button.addEventListener('click', onClick)
     return button
   }
   
   static saveButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('💾', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('💾', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: '現在のテンプレートを保存'
+    })
     button.addEventListener('click', onClick)
     return button
   }
 
   static upButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('⬆️', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('⬆️', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: '編集中のプロンプトを上に移動'
+    })
     button.addEventListener('click', onClick)
     return button
   }
 
   static downButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('⬇️', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('⬇️', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: '編集中のプロンプトを下に移動'
+    })
     button.addEventListener('click', onClick)
     return button
   }
 
   static deleteButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('🗑️', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('🗑️', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: '編集中のプロンプトを削除'
+    })
     button.addEventListener('click', onClick)
     return button
   }
 
   static undoButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('↩️', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('↩️', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: 'プロンプトの変更を元に戻す'
+    })
     button.addEventListener('click', onClick)
     return button
   }
 
   static redoButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('↪️', { size: 'tool', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('↪️', { 
+      size: 'tool', 
+      color: 'secondary',
+      tooltip: 'プロンプトの変更をやり直す'
+    })
     button.addEventListener('click', onClick)
     return button
   }
