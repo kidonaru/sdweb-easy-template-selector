@@ -5,7 +5,8 @@
 
 独特なプロンプトの書き方をすることで、キャラの変更などを容易にできるようにしています。
 
-https://github.com/user-attachments/assets/19525017-b418-4557-a94d-87330f9981e4
+https://github.com/user-attachments/assets/bdbc3e6c-161f-498f-96c7-950938b90c3a
+
 
 # インストール方法
 
