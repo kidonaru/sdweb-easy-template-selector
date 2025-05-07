@@ -414,26 +414,36 @@ class ETSSection {
 
   // カテゴリIDを取得
   getCategoryId() {
+    if (!this.category) return null
     return this.category.split('_')[0]
+  }
+
+  // セクションが有効か
+  isValid() {
+    return this.category
   }
 
   // セクションがネガティブプロンプトかどうかを判定
   isNegativeCategory() {
+    if (!this.category) return false
     return this.category.startsWith('99_ネガティブ')
   }
 
   // セクションがテンプレートかどうかを判定
   isTemplate() {
+    if (!this.category) return false
     return this.category.startsWith('00_テンプレート')
   }
 
   // セクションが強制追加カテゴリかどうかを判定
   isForceAddCategory() {
+    if (!this.category) return false
     return this.category.startsWith('97_Color') || this.category.startsWith('98_特殊')
   }
 
   // セクションがサブカテゴリマッチかどうかを判定
   isSubCategoryMatch() {
+    if (!this.category) return false
     return this.category.startsWith('01_クオリティ') || this.category.startsWith('99_ネガティブ')
   }
 }
@@ -1028,6 +1038,10 @@ class EasyTemplateSelector {
   }
 
   removeTag(targetSection) {
+    if (!targetSection.isValid()) {
+      return
+    }
+
     const isNegativeCategory = targetSection.isNegativeCategory()
     const id = isNegativeCategory ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
@@ -1096,6 +1110,10 @@ class EasyTemplateSelector {
   }
 
   moveTag(targetSection, direction) {
+    if (!targetSection.isValid()) {
+      return
+    }
+
     const isNegativeCategory = targetSection.isNegativeCategory()
     const id = isNegativeCategory ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
