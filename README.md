@@ -24,7 +24,7 @@ https://github.com/kidonaru/sdweb-easy-template-selector
 - Nova Anime XL v6.0
 - WAI-NSFW-illustrious-SDXL v13.0
 
-別途LoRAなどを参照している場合もあるので、適宜インストールしてください
+別途LoRAなどを参照している場合もあるので、適宜インストールしてください (ほとんどCivitaiでダウンロードできます)
 
 また、`Settings` - `User Interface` - `Quicksettings list` の項目に`CLIP_stop_at_last_layers` を追加してください
 
