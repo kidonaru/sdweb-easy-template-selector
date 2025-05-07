@@ -1,4 +1,4 @@
-class EPSElementBuilder {
+class ETSElementBuilder {
   // Templates
   static baseButton(text, { size = 'sm', color = 'primary', customColor = null, tooltip = null }) {
     const button = document.createElement('button')
@@ -76,7 +76,7 @@ class EPSElementBuilder {
 
   // Elements
   static openButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('🔯タグを選択', { size: 'sm', color: 'secondary' })
+    const button = ETSElementBuilder.baseButton('🔯タグを選択', { size: 'sm', color: 'secondary' })
     button.classList.add('easy_template_selector_button')
     button.addEventListener('click', onClick)
 
@@ -160,7 +160,7 @@ class EPSElementBuilder {
     // 改行が含まれていたらtooltipを表示しない
     const tooltip = value.includes('\n') ? null : value
 
-    const button = EPSElementBuilder.baseButton(buttonTitle, { color: buttonColor, customColor, tooltip })
+    const button = ETSElementBuilder.baseButton(buttonTitle, { color: buttonColor, customColor, tooltip })
     button.style.height = '2rem'
     button.style.flexGrow = '0'
     button.style.margin = '2px'
@@ -184,15 +184,10 @@ class EPSElementBuilder {
     select.style.borderColor = 'var(--block-border-color)'
     select.style.borderRadius = 'var(--block-radius)'
     select.style.margin = '2px'
-    select.addEventListener('change', (event) => { onChange(event.target.value) })
+    select.style.minWidth = '200px'
+    select.style.maxWidth = '400px'
 
-    const none = ['なし']
-    none.concat(options).forEach((key) => {
-      const option = document.createElement('option')
-      option.value = key
-      option.textContent = key
-      select.appendChild(option)
-    })
+    select.addEventListener('change', (event) => { onChange(event.target.value) })
 
     return select
   }
@@ -287,7 +282,7 @@ class EPSElementBuilder {
   }
 
   static reloadButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('🔄', { 
+    const button = ETSElementBuilder.baseButton('🔄', { 
       size: 'tool', 
       color: 'secondary',
       tooltip: 'テンプレートとタグを再読み込み'
@@ -297,7 +292,7 @@ class EPSElementBuilder {
   }
   
   static saveButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('💾', { 
+    const button = ETSElementBuilder.baseButton('💾', { 
       size: 'tool', 
       color: 'secondary',
       tooltip: '現在のテンプレートを保存'
@@ -307,37 +302,37 @@ class EPSElementBuilder {
   }
 
   static upButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('⬆️', { 
+    const button = ETSElementBuilder.baseButton('⬆️', { 
       size: 'tool', 
       color: 'secondary',
-      tooltip: '編集中のプロンプトを上に移動'
+      tooltip: '編集中のプロンプト行を上に移動'
     })
     button.addEventListener('click', onClick)
     return button
   }
 
   static downButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('⬇️', { 
+    const button = ETSElementBuilder.baseButton('⬇️', { 
       size: 'tool', 
       color: 'secondary',
-      tooltip: '編集中のプロンプトを下に移動'
+      tooltip: '編集中のプロンプト行を下に移動'
     })
     button.addEventListener('click', onClick)
     return button
   }
 
   static deleteButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('🗑️', { 
+    const button = ETSElementBuilder.baseButton('🗑️', { 
       size: 'tool', 
       color: 'secondary',
-      tooltip: '編集中のプロンプトを削除'
+      tooltip: '編集中のプロンプト行を削除'
     })
     button.addEventListener('click', onClick)
     return button
   }
 
   static undoButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('↩️', { 
+    const button = ETSElementBuilder.baseButton('↩️', { 
       size: 'tool', 
       color: 'secondary',
       tooltip: 'プロンプトの変更を元に戻す'
@@ -347,7 +342,7 @@ class EPSElementBuilder {
   }
 
   static redoButton({ onClick }) {
-    const button = EPSElementBuilder.baseButton('↪️', { 
+    const button = ETSElementBuilder.baseButton('↪️', { 
       size: 'tool', 
       color: 'secondary',
       tooltip: 'プロンプトの変更をやり直す'
@@ -369,6 +364,77 @@ class EPSElementBuilder {
         bubbles: true
       }))
     }, 100)
+  }
+}
+
+class ETSSection {
+  constructor(comment, tag, category) {
+    this.comment = comment
+    this.tag = tag
+    this.category = category
+  }
+
+  // セクションの完全な文字列表現を生成
+  toString() {
+    if (this.category == null) {
+      return ''
+    }
+
+    const isForceAddCategory = this.isForceAddCategory()
+
+    if (this.tag == null) {
+      if (isForceAddCategory) {
+        return ''
+      }
+      return `# ${this.category} (なし),\n`
+    }
+
+    // タグの最後にカンマがない場合は追加
+    let formattedTag = this.tag.trim()
+    if (!this.tag.endsWith(',')) {
+      formattedTag += ','
+    }
+
+    if (isForceAddCategory) {
+      return `${formattedTag}`
+    }
+    if (this.tag.startsWith('@')) {
+      return `# ${this.category} (ランダム),\n${formattedTag}`
+    }
+    if (this.comment == null) {
+      return `# ${this.category},\n${formattedTag}`
+    }
+    return `# ${this.category} (${this.comment}),\n${formattedTag}`
+  }
+
+  // セクションのヘッダー行のみを取得
+  getHeader() {
+    return this.toString().split('\n')[0]
+  }
+
+  // カテゴリIDを取得
+  getCategoryId() {
+    return this.category.split('_')[0]
+  }
+
+  // セクションがネガティブプロンプトかどうかを判定
+  isNegativeCategory() {
+    return this.category.startsWith('99_ネガティブ')
+  }
+
+  // セクションがテンプレートかどうかを判定
+  isTemplate() {
+    return this.category.startsWith('00_テンプレート')
+  }
+
+  // セクションが強制追加カテゴリかどうかを判定
+  isForceAddCategory() {
+    return this.category.startsWith('97_Color') || this.category.startsWith('98_特殊')
+  }
+
+  // セクションがサブカテゴリマッチかどうかを判定
+  isSubCategoryMatch() {
+    return this.category.startsWith('01_クオリティ') || this.category.startsWith('99_ネガティブ')
   }
 }
 
@@ -395,9 +461,7 @@ class EasyTemplateSelector {
     this.replaceExisting = true
     this.tags = undefined
     this.currentTab = null
-    this.currentComment = null
-    this.currentTag = null
-    this.currentCategory = null
+    this.currentSection = new ETSSection(null, null, null)
     this.textHistory = []
     this.currentHistoryIndex = -1
     this.maxHistoryLength = 20
@@ -493,55 +557,56 @@ class EasyTemplateSelector {
   render() {
     let container = gradioApp().querySelector(`#${EasyTemplateSelector.IDS.AREA}`)
     if (!container) {
-      container = EPSElementBuilder.areaContainer(EasyTemplateSelector.IDS.AREA)
+      container = ETSElementBuilder.areaContainer(EasyTemplateSelector.IDS.AREA)
 
-      const reloadButton = EPSElementBuilder.reloadButton({
+      const reloadButton = ETSElementBuilder.reloadButton({
         onClick: () => this.reload()
       })
 
-      const undoButton = EPSElementBuilder.undoButton({
+      const undoButton = ETSElementBuilder.undoButton({
         onClick: () => this.undoLastAction()
       })
       undoButton.id = EasyTemplateSelector.IDS.UNDO_BUTTON
 
-      const redoButton = EPSElementBuilder.redoButton({
+      const redoButton = ETSElementBuilder.redoButton({
         onClick: () => this.redoLastAction()
       })
       redoButton.id = EasyTemplateSelector.IDS.REDO_BUTTON
 
-      const templateNameArea = EPSElementBuilder.textarea(EasyTemplateSelector.IDS.TEMPLATE_NAME, "テンプレート名", {
+      const templateNameArea = ETSElementBuilder.textarea(EasyTemplateSelector.IDS.TEMPLATE_NAME, "テンプレート名", {
         onChange: () => {}
       })
 
-      const saveButton = EPSElementBuilder.saveButton({
+      const saveButton = ETSElementBuilder.saveButton({
         onClick: () => this.saveTemplate()
       })
   
-      const upButton = EPSElementBuilder.upButton({
-        onClick: () => this.moveTag(this.currentComment, this.currentTag, this.currentCategory, -1)
+      const upButton = ETSElementBuilder.upButton({
+        onClick: () => this.moveTag(this.currentSection, -1)
       })
   
-      const downButton = EPSElementBuilder.downButton({
-        onClick: () => this.moveTag(this.currentComment, this.currentTag, this.currentCategory, +1)
+      const downButton = ETSElementBuilder.downButton({
+        onClick: () => this.moveTag(this.currentSection, +1)
       })
   
-      const deleteButton = EPSElementBuilder.deleteButton({
-        onClick: () => this.removeTag(this.currentComment, this.currentTag, this.currentCategory)
+      const deleteButton = ETSElementBuilder.deleteButton({
+        onClick: () => this.removeTag(this.currentSection)
       })
   
-      const tagInfoField = EPSElementBuilder.tagFields()
-      const tagInfoText = document.createElement('span')
-      tagInfoText.id = EasyTemplateSelector.IDS.TAG_INFO
-      tagInfoText.textContent = ''
-      tagInfoField.appendChild(tagInfoText)
+      const tagInfoSelect = ETSElementBuilder.dropDown(EasyTemplateSelector.IDS.TAG_INFO, [], {
+        onChange: (value) => {
+          if (!value) return
+          const selectedSection = this.parseSection(value)
+          this.selectCurrent(selectedSection)
+        }
+      })
   
       container.header.appendChild(reloadButton)
       container.header.appendChild(undoButton)
       container.header.appendChild(redoButton)
       container.header.appendChild(templateNameArea)
       container.header.appendChild(saveButton)
-
-      container.header.appendChild(tagInfoField)
+      container.header.appendChild(tagInfoSelect)
       container.header.appendChild(upButton)
       container.header.appendChild(downButton)
       container.header.appendChild(deleteButton)
@@ -569,6 +634,36 @@ class EasyTemplateSelector {
     this.updateUndoRedoButtons()
 
     return container
+  }
+
+  parseSection(section) {
+    let lines = section.split('\n')
+    let category = null
+    let comment = null
+    let tag = null
+
+    // 最初の行がコメント行の場合
+    if (lines[0].startsWith('#')) {
+      const commentLine = lines[0].replace(/^#\s*/, '').replace(/,$/, '')
+      
+      // カッコ内のコメントを抽出
+      const commentMatch = commentLine.match(/^(.*?)\s*\((.*?)\)$/)
+      if (commentMatch) {
+        category = commentMatch[1].trim()
+        comment = commentMatch[2].trim()
+      } else {
+        category = commentLine.trim()
+      }
+
+      lines.shift() // コメント行を削除
+    }
+
+    // タグを取得
+    if (lines.length > 0) {
+      tag = lines.join('\n')
+    }
+
+    return new ETSSection(comment, tag, category)
   }
 
   renderTabs() {
@@ -655,7 +750,7 @@ class EasyTemplateSelector {
     Object.keys(this.tags).forEach((key) => {
       const values = this.tags[key]
 
-      const fields = EPSElementBuilder.tagFields()
+      const fields = ETSElementBuilder.tagFields()
       fields.id = `${EasyTemplateSelector.IDS.CONTAINER}-${key}`
       fields.style.display = key === this.currentTab ? 'flex' : 'none'  // 現在のタブのみ表示
       fields.style.flexDirection = 'column'
@@ -663,7 +758,7 @@ class EasyTemplateSelector {
 
       fields.append(this.renderTagButton(key, `@${key}@`, key))
 
-      const buttons = EPSElementBuilder.tagFields()
+      const buttons = ETSElementBuilder.tagFields()
       buttons.id = 'buttons'
       fields.append(buttons)
       this.renderTagButtons(values, key).forEach((group) => {
@@ -686,12 +781,12 @@ class EasyTemplateSelector {
 
         if (typeof values === 'string') { return this.renderTagButton(key, values, prefix, 'secondary') }
 
-        const fields = EPSElementBuilder.tagFields()
+        const fields = ETSElementBuilder.tagFields()
         fields.style.flexDirection = 'column'
 
         fields.append(this.renderTagButton(key, `@${randomKey}@`, randomKey))
 
-        const buttons = EPSElementBuilder.tagFields()
+        const buttons = ETSElementBuilder.tagFields()
         buttons.id = 'buttons'
         fields.append(buttons)
         this.renderTagButtons(values, randomKey).forEach((button) => {
@@ -703,19 +798,20 @@ class EasyTemplateSelector {
     }
   }
 
-  renderTagButton(title, value, category, color = 'primary') {
-    return EPSElementBuilder.tagButton({
-      title,
-      value,
+  renderTagButton(comment, tag, category, color = 'primary') {
+    return ETSElementBuilder.tagButton({
+      title: comment,
+      value: tag,
       onClick: (e) => {
         e.preventDefault();
 
-        this.addTag(title, value, category, e.metaKey || e.ctrlKey)
+        this.addTag(comment, tag, category, e.metaKey || e.ctrlKey)
       },
       onRightClick: (e) => {
         e.preventDefault();
 
-        this.removeTag(null, value, category)
+        const targetSection = new ETSSection(comment, tag, category)
+        this.removeTag(targetSection)
       },
       color
     })
@@ -754,15 +850,15 @@ class EasyTemplateSelector {
   }
 
   addTag(comment, tag, category, isAddMode) {
-    const isNegativeCategory = category.startsWith('99_ネガティブ')
-    const isForceAddCategory = category.startsWith('97_Color') || category.startsWith('98_特殊')
-    const isSubCategoryMatch = category.startsWith('01_クオリティ') || category.startsWith('99_ネガティブ')
-
+    const targetSection = new ETSSection(comment, tag, category)
+    const isNegativeCategory = targetSection.isNegativeCategory()
+    const isForceAddCategory = targetSection.isForceAddCategory()
+    const isSubCategoryMatch = targetSection.isSubCategoryMatch()
     const id = isNegativeCategory ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
-    // テンプレートの場合は特別処理
-    if (category.startsWith('00_テンプレート')) {
+    // テンプレートの場合はテンプレートの反映
+    if (targetSection.isTemplate()) {
       if (tag.startsWith('@')) {
         return
       }
@@ -780,9 +876,6 @@ class EasyTemplateSelector {
       return
     }
 
-    // プロンプトを構築
-    const prompt = this.generateSection(comment, tag, category)
-
     // セクションに分割
     const sections = this.splitSections(textarea.value)
     let newSections = []
@@ -790,12 +883,12 @@ class EasyTemplateSelector {
 
     // 完全一致の検索
     if (!isForceAddCategory) {
-      let overrideName = this.getSectionName(comment, tag, category)
+      let targetName = targetSection.getHeader()
       newSections = []
 
       for (const section of sections) {
-        if (!categoryFound && section.startsWith(overrideName)) {
-          newSections.push(prompt)
+        if (!categoryFound && section.startsWith(targetName)) {
+          newSections.push(targetSection.toString())
           categoryFound = true
         } else {
           newSections.push(section)
@@ -803,14 +896,14 @@ class EasyTemplateSelector {
       }
     }
 
-    // サブカテゴリの一致を検索
+    // カテゴリの一致を検索
     if (!categoryFound && !isForceAddCategory && !isAddMode) {
-      let overrideName = `# ${category}`
+      let targetName = `# ${category}`
       newSections = []
 
       for (const section of sections) {
-        if (!categoryFound && section.startsWith(overrideName)) {
-          newSections.push(prompt)
+        if (!categoryFound && section.startsWith(targetName)) {
+          newSections.push(targetSection.toString())
           categoryFound = true
         } else {
           newSections.push(section)
@@ -820,12 +913,12 @@ class EasyTemplateSelector {
 
     // カテゴリID一致の検索
     if (!categoryFound && !isForceAddCategory && !isAddMode && !isSubCategoryMatch) {
-      let overrideName = `# ${category.split('_')[0]}_`
+      let targetName = `# ${targetSection.getCategoryId()}_`
       newSections = []
 
       for (const section of sections) {
-        if (!categoryFound && section.startsWith(overrideName)) {
-          newSections.push(prompt)
+        if (!categoryFound && section.startsWith(targetName)) {
+          newSections.push(targetSection.toString())
           categoryFound = true
         } else {
           newSections.push(section)
@@ -835,14 +928,14 @@ class EasyTemplateSelector {
 
     // 見つからなかった場合、選択中カテゴリの下に追加
     if (!categoryFound && !isForceAddCategory) {
-      const targetName = this.getSectionName(this.currentComment, this.currentTag, this.currentCategory)
+      const targetName = this.currentSection.getHeader()
       newSections = []
 
       for (const section of sections) {
         newSections.push(section)
 
         if (!categoryFound && section.startsWith(targetName)) {
-          newSections.push(prompt)
+          newSections.push(targetSection.toString())
           categoryFound = true
         }
       }
@@ -855,57 +948,46 @@ class EasyTemplateSelector {
         newSections.push(section)
       }
 
-      newSections.push(prompt)
+      newSections.push(targetSection.toString())
     }
 
     textarea.value = newSections.join('\n')
     updateInput(textarea)
 
-    this.selectCurrent(comment, tag, category)
+    this.selectCurrent(targetSection)
     this.saveTextHistory()
   }
 
-  generateSection(comment, tag, category) {
-    if (category == null) {
-      return ''
-    }
+  updateTagInfo() {
+    const tagInfoSelect = gradioApp().getElementById(EasyTemplateSelector.IDS.TAG_INFO)
+    const textarea = gradioApp().getElementById('txt2img_prompt').querySelector('textarea')
 
-    const isForceAddCategory = category.startsWith('97_Color') || category.startsWith('98_特殊')
+    // ドロップダウンのオプションを更新
+    const sections = this.splitSections(textarea.value)
+    tagInfoSelect.innerHTML = ''
 
-    if (tag == null) {
-      if (isForceAddCategory) {
-        return ''
+    sections.forEach(section => {
+      if (!section.startsWith('#')) {
+        return
       }
-      return `# ${category} (なし),\n`
-    }
 
-    // タグの最後にカンマがある場合削除
-    const formattedTag = tag.trim().replace(/,$/, '')
+      const optionElement = document.createElement('option')
+      optionElement.value = section
+      optionElement.textContent = section.split('\n')[0]
+      tagInfoSelect.appendChild(optionElement)
+    })
 
-    if (isForceAddCategory) {
-      return `${formattedTag},`
-    }
-    if (tag.startsWith('@')) {
-      return `# ${category} (ランダム),\n${formattedTag},`
-    }
-    if (comment == null) {
-      return `# ${category},\n${formattedTag},`
-    }
-    return `# ${category} (${comment}),\n${formattedTag},`
+    // 現在のセクションを選択
+    tagInfoSelect.value = this.currentSection.toString()
   }
 
-  getSectionName(comment, tag, category) {
-    const section = this.generateSection(comment, tag, category)
-    return section.split('\n')[0].replace(/,$/, '')
-  }
+  selectCurrent(section) {
+    if (section.isForceAddCategory() || section.isNegativeCategory()) {
+      return
+    }
 
-  selectCurrent(comment, tag, category) {
-    this.currentComment = comment
-    this.currentTag = tag
-    this.currentCategory = category
-
-    const tagInfoText = gradioApp().getElementById(EasyTemplateSelector.IDS.TAG_INFO)
-    tagInfoText.textContent = this.getSectionName(comment, tag, category)
+    this.currentSection = section
+    this.updateTagInfo()
   }
 
   getMetaElement(key) {
@@ -934,7 +1016,7 @@ class EasyTemplateSelector {
     }
 
     if (metaInfo.type === 'dropdown') {
-      //EPSElementBuilder.updateDropdown(element, value)
+      //ETSElementBuilder.updateDropdown(element, value)
     } else if (metaInfo.type === 'checkbox') {
       element.checked = value === 'true'
       element.dispatchEvent(new Event('change', { bubbles: true }))
@@ -945,18 +1027,18 @@ class EasyTemplateSelector {
     }
   }
 
-  removeTag(comment, tag, category) {
-    const isNegativeCategory = category === '99_ネガティブ'
+  removeTag(targetSection) {
+    const isNegativeCategory = targetSection.isNegativeCategory()
     const id = isNegativeCategory ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
     // テンプレートの場合は削除しない
-    if (!category || category === '00_テンプレート') {
+    if (targetSection.isTemplate()) {
       return
     }
 
-    // プロンプトを構築
-    const prompt = this.generateSection(null, null, category)
+    // 上書き用セクションを構築
+    const overrideSection = new ETSSection(null, null, targetSection.category)
 
     // セクションに分割
     const sections = this.splitSections(textarea.value)
@@ -964,24 +1046,41 @@ class EasyTemplateSelector {
     let categoryFound = false
 
     // 該当セクションを削除
-    let targetName = this.getSectionName(comment, tag, category)
-    for (const section of sections) {
-      if (!categoryFound && section.startsWith(targetName)) {
-        newSections.push(prompt)
-        categoryFound = true
-      } else {
-        newSections.push(section)
+    {
+      const targetName = targetSection.getHeader()
+      for (const section of sections) {
+        if (!categoryFound && section.startsWith(targetName)) {
+          newSections.push(overrideSection.toString())
+          categoryFound = true
+        } else {
+          newSections.push(section)
+        }
       }
     }
 
-    // 見つからなかった場合、メインカテゴリで削除
-    if (!categoryFound && !comment) {
-      targetName = `# ${category.split(':')[0]}`
+    // 見つからなかった場合、カテゴリ一致で削除
+    if (!categoryFound) {
+      const targetName = `# ${targetSection.category}`
       newSections = []
 
       for (const section of sections) {
         if (!categoryFound && section.startsWith(targetName)) {
-          newSections.push(prompt)
+          newSections.push(overrideSection.toString())
+          categoryFound = true
+        } else {
+          newSections.push(section)
+        }
+      }
+    }
+
+    // 見つからなかった場合、カテゴリIDで削除
+    if (!categoryFound) {
+      const targetName = `# ${targetSection.getCategoryId()}_`
+      newSections = []
+
+      for (const section of sections) {
+        if (!categoryFound && section.startsWith(targetName)) {
+          newSections.push(overrideSection.toString())
           categoryFound = true
         } else {
           newSections.push(section)
@@ -992,17 +1091,17 @@ class EasyTemplateSelector {
     textarea.value = newSections.join('\n')
     updateInput(textarea)
 
-    this.selectCurrent(null, null, category)
+    this.selectCurrent(overrideSection)
     this.saveTextHistory()
   }
 
-  moveTag(comment, tag, category, direction) {
-    const isNegativeCategory = category === '99_ネガティブ'
+  moveTag(targetSection, direction) {
+    const isNegativeCategory = targetSection.isNegativeCategory()
     const id = isNegativeCategory ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
     // テンプレートの場合は移動しない
-    if (!category || category === '00_テンプレート') {
+    if (targetSection.isTemplate()) {
       return
     }
 
@@ -1012,7 +1111,7 @@ class EasyTemplateSelector {
     let targetIndex = -1
 
     // 対象のセクションを探す
-    const targetName = this.getSectionName(comment, tag, category)
+    const targetName = targetSection.getHeader()
     for (let i = 0; i < sections.length; i++) {
       if (sections[i].startsWith(targetName)) {
         targetIndex = i
@@ -1021,7 +1120,10 @@ class EasyTemplateSelector {
     }
 
     // 対象のセクションが見つからない場合は何もしない
-    if (targetIndex === -1) return
+    if (targetIndex === -1) {
+      console.warn(`Target section not found: ${targetName}`)
+      return
+    }
 
     // 移動先のインデックスを計算
     const newIndex = targetIndex + direction
@@ -1103,6 +1205,9 @@ class EasyTemplateSelector {
         selectCheckpoint(modelName)
       }, 100)
     }
+
+    this.currentSection = new ETSSection(null, null, null)
+    this.updateTagInfo()
   }
 
   convertMetaText(prompt, negPrompt, metaDataMap) {
