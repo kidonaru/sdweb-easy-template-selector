@@ -788,15 +788,11 @@ class EasyTemplateSelector {
     let newSections = []
     let categoryFound = false
 
-    // 該当セクションを上書き
+    // 完全一致の検索
     if (!isForceAddCategory) {
-      let overrideName = `# ${category.split('_')[0]}_` // 通常はカテゴリIDの一致を確認
-      if (isSubCategoryMatch) {
-        overrideName = `# ${category}`
-      }
-      if (isAddMode) {
-        overrideName = this.getSectionName(comment, tag, category)
-      }
+      let overrideName = this.getSectionName(comment, tag, category)
+      newSections = []
+
       for (const section of sections) {
         if (!categoryFound && section.startsWith(overrideName)) {
           newSections.push(prompt)
@@ -807,8 +803,38 @@ class EasyTemplateSelector {
       }
     }
 
-    // カテゴリが見つからなかった場合、選択中カテゴリの下に追加
-    if (!isForceAddCategory && !categoryFound) {
+    // サブカテゴリの一致を検索
+    if (!categoryFound && !isForceAddCategory && !isAddMode) {
+      let overrideName = `# ${category}`
+      newSections = []
+
+      for (const section of sections) {
+        if (!categoryFound && section.startsWith(overrideName)) {
+          newSections.push(prompt)
+          categoryFound = true
+        } else {
+          newSections.push(section)
+        }
+      }
+    }
+
+    // カテゴリID一致の検索
+    if (!categoryFound && !isForceAddCategory && !isAddMode && !isSubCategoryMatch) {
+      let overrideName = `# ${category.split('_')[0]}_`
+      newSections = []
+
+      for (const section of sections) {
+        if (!categoryFound && section.startsWith(overrideName)) {
+          newSections.push(prompt)
+          categoryFound = true
+        } else {
+          newSections.push(section)
+        }
+      }
+    }
+
+    // 見つからなかった場合、選択中カテゴリの下に追加
+    if (!categoryFound && !isForceAddCategory) {
       const targetName = this.getSectionName(this.currentComment, this.currentTag, this.currentCategory)
       newSections = []
 
