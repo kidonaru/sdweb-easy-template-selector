@@ -376,35 +376,34 @@ class ETSSection {
 
   // セクションの完全な文字列表現を生成
   toString() {
-    if (this.category == null) {
+    if (!this.isValid()) {
       return ''
     }
 
     const isForceAddCategory = this.isForceAddCategory()
+    const formattedTag = this.getFormattedTag()
 
-    if (this.tag == null) {
-      if (isForceAddCategory) {
-        return ''
-      }
-      return `# ${this.category} (なし),\n`
-    }
-
-    // タグの最後にカンマがない場合は追加
-    let formattedTag = this.tag.trim()
-    if (!this.tag.endsWith(',')) {
-      formattedTag += ','
-    }
-
+    // 強制追加カテゴリの場合はタグのみを返す
     if (isForceAddCategory) {
-      return `${formattedTag}`
+      return formattedTag || ''
     }
-    if (this.tag.startsWith('@')) {
-      return `# ${this.category} (ランダム),\n${formattedTag}`
+
+    // ヘッダー部分の生成
+    let header = `# ${this.category}`
+    if (this.tag?.startsWith('@')) {
+      header += ' (ランダム)'
+    } else if (this.comment) {
+      header += ` (${this.comment})`
     }
-    if (this.comment == null) {
-      return `# ${this.category},\n${formattedTag}`
+    header += ','
+
+    // タグがない場合はヘッダーのみを返す
+    if (formattedTag === null) {
+      return header
     }
-    return `# ${this.category} (${this.comment}),\n${formattedTag}`
+
+    // タグがある場合はヘッダーとタグを改行で結合
+    return `${header}\n${formattedTag}`
   }
 
   // セクションのヘッダー行のみを取得
@@ -416,6 +415,22 @@ class ETSSection {
   getCategoryId() {
     if (!this.category) return null
     return this.category.split('_')[0]
+  }
+
+  getFormattedTag() {
+    if (this.tag === null) {
+      return null
+    }
+
+    let formattedTag = this.tag.trim()
+    if (!formattedTag) {
+      return ''
+    }
+
+    if (!this.tag.endsWith(',')) {
+      formattedTag += ','
+    }
+    return formattedTag
   }
 
   // セクションが有効か
@@ -992,6 +1007,8 @@ class EasyTemplateSelector {
   }
 
   selectCurrent(section) {
+    //console.log('selectCurrent', section)
+
     if (section.isForceAddCategory() || section.isNegativeCategory()) {
       return
     }
@@ -1052,7 +1069,7 @@ class EasyTemplateSelector {
     }
 
     // 上書き用セクションを構築
-    const overrideSection = new ETSSection(null, null, targetSection.category)
+    const overrideSection = new ETSSection('なし', '', targetSection.category)
 
     // セクションに分割
     const sections = this.splitSections(textarea.value)
