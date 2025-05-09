@@ -504,6 +504,7 @@ class EasyTemplateSelector {
       { key: 'Model', id: 'setting_sd_model_checkpoint', type: 'dropdown' },
       { key: 'Denoising strength', id: 'txt2img_denoising_strength', type: 'input' },
       { key: 'Clip skip', id: 'setting_CLIP_stop_at_last_layers', type: 'input' },
+      { key: 'Hires visible', id: 'txt2img_hr-visible-checkbox', type: 'checkbox' },
       { key: 'Hires CFG Scale', id: 'txt2img_hr_cfg', type: 'input' },
       { key: 'Hires upscale', id: 'txt2img_hr_scale', type: 'input' },
       { key: 'Hires steps', id: 'txt2img_hires_steps', type: 'input' },
@@ -1203,6 +1204,9 @@ class EasyTemplateSelector {
     // テンプレート名を設定
     metaDataMap['Template name'] = templateName
 
+    // Hiresが有効か
+    metaDataMap['Hires visible'] = 'Hires upscaler' in metaDataMap ? 'true' : 'false'
+
     textarea.value = prompt.trim()
     updateInput(textarea)
 
@@ -1245,7 +1249,7 @@ class EasyTemplateSelector {
     this.updateTagInfo()
   }
 
-  convertMetaText(prompt, negPrompt, metaDataMap) {
+  convertToTemplate(prompt, negPrompt, metaDataMap) {
     let metaText = ''
 
     if (prompt) {
@@ -1255,6 +1259,8 @@ class EasyTemplateSelector {
       metaText += `Negative prompt: ${negPrompt.trim()}\n`
     }
 
+    const isHiresVisible = metaDataMap['Hires visible'] === 'true'
+
     for (const [key, value] of Object.entries(metaDataMap)) {
       if (key == 'Width' || key == 'Height') {
         continue
@@ -1262,6 +1268,16 @@ class EasyTemplateSelector {
       if (key == 'Template name') {
         continue
       }
+      if (key == 'Hires visible') {
+        continue
+      }
+
+      if (!isHiresVisible) {
+        if (key == 'Hires CFG Scale' || key == 'Hires upscale' || key == 'Hires steps' || key == 'Hires upscaler' || key == 'Denoising strength') {
+          continue
+        }
+      }
+
       metaText += `${key}: ${value}, `
     }
     return metaText
@@ -1335,7 +1351,7 @@ class EasyTemplateSelector {
       const element = this.getMetaElement(metaInfo.key)
       if (element) {
         if (metaInfo.type === 'checkbox') {
-          metaDataMap[metaInfo.key] = element.checked
+          metaDataMap[metaInfo.key] = element.checked.toString()
         } else {
           metaDataMap[metaInfo.key] = element.value
         }
@@ -1383,7 +1399,7 @@ class EasyTemplateSelector {
       }
     }
 
-    const template = this.convertMetaText(prompt, negPrompt, metaDataMap)
+    const template = this.convertToTemplate(prompt, negPrompt, metaDataMap)
 
     // APIを呼び出して保存
     try {

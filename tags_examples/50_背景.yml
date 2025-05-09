@@ -12,7 +12,7 @@ LoRA:
   奴隷の牢屋: slave,jail,dirty prison
   屋外: outdoor
   トレンディなバー: indoors,trendy bar,night,club,dim lighting,dark
-  満開の星,発光する花びら,別世界の背景ぼかし: blooming stars,luminescent petals,otherworldly fragrance blurry background
+  満開の星/発光する花びら/別世界の背景ぼかし: blooming stars,luminescent petals,otherworldly fragrance blurry background
   黄色い単色背景: yellow background,simple background,sketch
   明るく清潔なリビングルーム: home living room, polished wooden floor, low table nearby, bright natural sunlight pouring through large windows, peaceful domestic interior,
   窓とカーテン: indoors,window,curtains,
@@ -21,3 +21,10 @@ LoRA:
   教会の中: church,indoors
   夕暮れの空: dusk,night and orange sky
   宮殿内: indoors, palace, night, architecture, flag, arch, pillar,
+  たくさんの花と葉: many flowers in background, leaf,
+  ピンクのグラデーション背景に白い太い枠: simple gradient pink background with thick white border,
+  左右非対称の雲: symmetrical clouds,
+  雪に覆われた廃墟の街: abandoned city covered by snow in background,
+  銀河と光の粒子/たくさんの流れ星: (galaxies in sky, light particles, many shooting starts),
+  パステルカラーの瑠璃色のグラデーション背景: simple gradient pastel lapis lazuli background with white border
+  広大な廃墟の城の内部で/古代ギリシャのレリーフ: abandoned castle interior in  background, ancient greek reliefs ,vast,

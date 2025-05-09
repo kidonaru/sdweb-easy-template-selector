@@ -3,6 +3,7 @@ Model:
   Unholy Desire Mix: bad quality,worst quality,worst detail,sketch,censor
   WAI-NSFW-illustrious-SDXL: bad quality,worst quality,worst detail,sketch,censor
   KonpaEvo Mix: lowres,worst quality,low quality,simple background,bad anatomy,bad hands,signature,text,watermark
+  LunarCherryMix: lowres, worst quality, bad quality, bad anatomy, sketch, jpeg artifacts, signature, watermark, old, oldest.
 
 Embeddings:
   badhandv4: badhandv4

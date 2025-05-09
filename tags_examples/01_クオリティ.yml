@@ -3,6 +3,7 @@ Model:
   Unholy Desire Mix: unholy-aesthetic,masterpiece,best quality,amazing quality,very aesthetic,absurdres,ultra detailed face,ultra detailed eyes
   WAI-NSFW-illustrious-SDXL: masterpiece,best quality,amazing quality
   KonpaEvo Mix: masterpiece,best quality,very awa
+  LunarCherryMix: masterpiece,best quality,ultra high res,photorealistic,8K UHD,hyper-detailed
 
 マスピ:
   マスピ: masterpiece
@@ -39,11 +40,13 @@ Model:
   ピクセルアート: pixel art
   ホログラフィックグラデーション: holographic colors,cute,gradient colors
   良いイラスト: best illustration
+  フラットカラー: flat color
 
 効果:
   ソフトライト: soft lighting
   幻想的で美しい光の演出: soft lighting,light particles,film grain,bokeh,glow,shiny hair
   立体的で動的な光: dynamic lighting,volumetric lighting
+  立体的で映画のような照明効果: volumetric lighting, dynamic lighting, cinematic lighting,
   動的な陰影: dynamic shading
   被写界深度: depth of field
   完璧な照明/下からの照明: perfect lighting,shiny skin,low light
@@ -55,10 +58,12 @@ Model:
 ポーズ:
   躍動感: dynamic pose,dynamic angle
   安全なポーズ: safe_pos
+  動きのあるポーズ: dynamic posture,
 
 体:
   完璧な解剖学: perfect anatomy
   完璧な体: perfect face,perfect eyes,perfect breasts,perfect hands,perfect ass
+  完璧な手: perfect hands
 
 世代:
   最新: newest

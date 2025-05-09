@@ -15,3 +15,9 @@ Style 56 - Too Sweet: <lora:Style56_IXL:1.0>
 Fine Anime Screencap XL: <lora:anime_screencap:1> anime screencap, anime coloring
 Famous nai3 prompts Style: <lora:a31_style_koni-000010:1>
 XL Outline kohaku delta: <lora:outline_xl_kohaku_delta_spv5x:-0.7>
+fl4t / flat color: <lora:fl4t:1.2> fl4t
+fl4t / flat color(強調): <lora:fl4t:1.2> Flat vector illustration, fl4t
+Bright - Shiiro's Styles: <lora:Bright_style:0.75> Bright_illu,sparkle,too many light particles
+tu11 Illustrious: <lora:tu11_v1:0.9> MF9f
+Ethereal Brushstroke: <lora:Illustrious:0.45> Ethereal Brushstroke
+<Alice In Cradle> Pixel Artstyle: <lora:pixels_hinayua:0.8> hinayua
