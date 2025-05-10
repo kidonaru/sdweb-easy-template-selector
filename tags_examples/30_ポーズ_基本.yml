@@ -75,7 +75,6 @@
   足の間に手を入れる: between legs
   足の間に手を入れる2: hand between legs,
   腕まくり: sleeves rolled up
-  服を直す: adjusting clothes
   帽子を触る: adjusting headwear
   メガネを直す: adjusting eyewear
   胸を押さえる: breast hold
@@ -86,6 +85,57 @@
   手ブラ: covering breasts
   片手ブラ: covering one breast
   乳首を隠す: covering nipples
+
+衣装動作:
+  服のたくし上げ: clothes lift
+  服を調整する: adjusting clothes
+  自分でたくし上げ: lifting own clothes
+  自分の服を引っ張る: pulling own clothes
+  他人の服を持ち上げる: lifting another's clothes
+  他人の服を引っ張る: pulling another's clothes
+  服の匂いを嗅ぐ: smelling clothes
+
+  セーターのたくし上げ: sweater lift
+
+  ワンピのたくし上げ: dress lift
+  ワンピを引き下げる: dress pull
+  ワンピで股間を隠す: dress tug
+
+  シャツのたくし上げ: shirt lift
+  シャツを引っ張る: shirt pull
+  シャツで股間を隠す: shirt tug
+
+  着物のたくし上げ: kimono lift
+  着物を引っ張る: kimono pull
+
+  水着をずらす: swimsuit aside
+  水着を調整: adjusting swimsuit
+  ワンピーズ水着を引き下げる: one-piece swimsuit pull
+
+  ビキニを引き下げる: bikini pull
+  ビキニを引っ張る: bikini tug
+  ビキニトップを持ち上げる: bikini top lift
+  ビキニボトムを横にずらす: bikini bottom aside
+  ビキニボトムを引っ張る: bikini bottom pull
+
+  ショーツを引き下げる: shorts pull
+  スパッツを引き下げる: bike shorts pull
+
+  ズボンを引っ張る: pants pull
+
+  スカートのたくし上げ: skirt lift
+  スカートの中を見る: upskirt
+  スカートを持ち上げる: skirt hold
+  スカートめくり: skirt flip
+  スカートを引き下げる: skirt pull
+  スカートで股間を隠す: skirt tug
+
+  手袋を調整する: adjusting gloves
+
+  パンツを横にずらす: panties aside
+  パンツを調整する: adjusting panties
+  パンツ越しにいじる: fingering through panties
+  脱いだパンツを見せる: presenting removed panties
 
 持つ:
   物を持つ: holding
@@ -103,14 +153,6 @@
   指差し後ろ: pointing another
   指差し上: pointing up
   指差し前: pointing forward
-
-たくし上げ:
-  服のたくし上げ: clothes lift
-  シャツのたくし上げ: shirt lift
-  スカートのたくし上げ: skirt lift
-  スカートのたくし上げ2: upskirt
-  セーターのたくし上げ: sweater lift
-  ドレスのたくし上げ: dress lift
 
 脚の動作:
   足を上げる: legs up
@@ -162,7 +204,7 @@
   ダイナミックポーズ: dynamic pose
   ファイティングポーズ: fighting stance
   逆さま: upside down
-  おしっこ: pee
+  キス待ち: imminent kiss
   キスの瞬間: incoming kiss
   ジャックオーチャレンジ: top-down bottom-up
   ハグ: hug
@@ -170,7 +212,6 @@
   何かを抱く: hugging object
   逆立ち: handstand
   足を水に浸す: soaking feet
-  キス待ち: imminent kiss
   ぬいぐるみを抱く: stuffed toy
   ぬいぐるみを抱く2: stuffed animal
   うさぎのぬいぐるみを抱く: stuffed rabbit
@@ -178,5 +219,4 @@
   胸への憧れ: breast envy
   頭を傾ける: head tilt
   尻尾が上がる: tail raised
-  拘束: restrained
   本を読む: reading a book

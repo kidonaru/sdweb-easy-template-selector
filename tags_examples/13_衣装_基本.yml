@@ -1,0 +1,418 @@
+セット:
+  アーマー: armor
+  アーマードレス: armored dress
+  日本の鎧: japanese armor
+  ビキニアーマー: bikini armor
+  鎧: full armor
+  パワードスーツ: power armor
+  金の鎧: ornate armor 
+  ゴスロリ: gothic lolita
+  スポーツウェア: track suit
+  体操服: gym uniform
+  セーラー服: serafuku
+  パジャマ: pajamas
+  前合わせが二重になっている服: double-breasted
+  ボンテージ衣装: bondage outfit
+  ロボ兵装: machinery
+  ロリータファッション: lolita fashion
+  夏服: summer uniform
+  学ラン: gakuran
+  軍服: military
+  軍服2: military uniform
+  海軍の制服: naval uniform
+  メイド: maid
+  全身タイツ: bodystocking
+  レオタード: leotard
+  タバード: tabard
+  浴衣: yukata
+  温泉浴衣: bath yukata
+  和服: japanese clothes
+  アイドル衣装: idol clothes
+
+学生服:
+  学生服: school uniform
+  トレセン学園制服: tracen school uniform
+  県立北高校制服: kita high school uniform
+  見滝原中学校制服: mitakihara school uniform
+  桜が丘女子高等学校制服: sakuragaoka high school uniform
+  大洗女子学園制服: ooarai school uniform
+  常盤台制服: tokiwadai school uniform
+  国立音ノ木坂学院制服: otonokizaka school uniform
+  蓮ノ空女学院制服: hasu no sora school uniform
+  陵桜学園制服: ryouou school uniform
+  月光館高校制服: gekkoukan high school uniform
+  浦の星女学院制服: uranohoshi school uniform
+  七森女子高制服: nanamori school uniform
+  アスティカシア高等専門学園制服: asticassia school uniform
+  虹ヶ咲学園制服: nijigasaki school uniform
+  私立直江津高校制服: naoetsu high school uniform
+  北宇治高校制服: kitauji high school uniform
+  聖グロリアーナ女学院: st. gloriana's school uniform
+  リトバス制服: "little busters! school uniform"
+  秀知院学園の制服: shuuchiin academy school uniform
+
+トップス:
+  ハーフトップ: crop top
+  カーディガン: cardigan
+  サスペンダー: suspenders
+  開いたジャケット: open jacket
+  開いた服: open clothes
+  セーター: sweater
+  タートルネック: turtleneck
+  タートルネック2: turtleneck sweater
+  タンクトップ: tank top
+  オープンバック: backless outfit
+  ブラウス: blouse
+  ブレザー: blazer
+  ベスト: vest
+  ホルターネック: halterneck
+  シースルー: see-through
+  オフショルダー: off shoulder
+  ベアトップ: strapless
+  童貞を殺す服: cleavage cutout
+  フードを下ろした服: hood down
+  スポーツウェアの上着: track jacket
+  パーカー: hoodie
+  文字入りの服: clothes writing
+  胸のない服: breastless clothes
+  彼シャツ: borrowed clothes
+
+ワンピ:
+  ワンピ: dress
+  白ワンピ: white dress
+  黒ワンピ: black dress
+  ノースリーブワンピ: sleeveless dress
+  フリル付きワンピ: frilled dress
+  ショートワンピ: short dress
+  ロングワンピ: long dress
+  ベアトップワンピ: strapless dress
+  セーラーワンピ: sailor dress
+  襟付きワンピ: collared dress
+  オフショルダーワンピ: off-shoulder dress
+  ウェディングドレス: wedding dress
+  ピナフォアードレス: pinafore dress
+  プリーツワンピ: pleated dress
+  サンドレス: sundress
+  レイヤードワンピ: layered dress
+  オープンバックドレス: backless dress
+  ニットワンピ: sweater dress
+  前開きワンピ: open dress
+  ミニワンピ: microdress
+  サンタワンピ: santa dress
+  タートルネックワンピ: turtleneck dress
+  未使用のワンピ: unworn dress
+
+シャツ:
+  シャツ: shirt
+  白シャツ: white shirt
+  黒シャツ: black shirt
+  襟付きシャツ: collared shirt
+  袖なしシャツ: sleeveless shirt
+  Yシャツ: dress shirt
+  Tシャツ: t-shirt
+  開いたシャツ: open shirt
+  フリル付きシャツの襟: frilled shirt collar
+  オフショルダーシャツ: off-shoulder shirt
+  フリル付きシャツ: frilled shirt
+  セーラーシャツ: sailor shirt
+  裸シャツ: naked shirt
+  体操服のシャツ: gym shirt
+
+コート:
+  コート: coat
+  白コート: white coat
+  黒コート: black coat
+  開いたコート: open coat
+  白衣: lab coat
+  スリップ: petticoat
+  毛皮飾りのついたコート: fur-trimmed coat
+  フード付きコート: hooded coat
+  ロングコート: long coat
+  ウェストコート: waistcoat
+  ウィンターコート: winter coat
+  トレンチコート: trench coat
+  襟付きコート: collared coat
+  ファーコート: fur coat
+  レインコート: raincoat
+  裸コート: naked coat
+  袖なしコート: sleeveless coat
+  ダッフルコート: duffle coat
+
+エプロン:
+  エプロン: apron
+  白エプロン: white apron
+  ウェイトレスエプロン: waist apron
+  メイドエプロン: maid apron
+  フリルのエプロン: frilled apron
+  裸エプロン: naked apron
+  下着エプロン: nearly naked apron
+
+着物:
+  着物: kimono
+  ミニ着物: short kimono
+  開いた着物: open kimono
+  袖なし着物: sleeveless kimono
+  フリル付き着物: frilled kimono
+  脇が開いた着物: sideless kimono
+  裸の着物: naked kimono
+  着物スカート: kimono skirt
+  重ね着物: layered kimono
+
+袖:
+  長袖: long sleeves
+  半袖: short sleeves
+  白い袖: white sleeves
+  黒い袖: black sleeves
+  取り外し可能な袖: detached sleeves
+  膨らんだスリーブ: puffy sleeves
+  膨らんだ半袖: puffy short sleeves
+  膨らんだ袖: puffy long sleeves
+  広袖: wide sleeves
+  萌え袖: sleeves past wrists
+  フリル付き袖: frilled sleeves
+  ジュリエットスリーブ: juliet sleeves
+  腕まくり: sleeves rolled up
+  腕まくり2: sleeves pushed up
+  リボン飾りの袖: ribbon-trimmed sleeves
+  レイヤードスリーブ: layered sleeves
+  長袖の上に半袖: short over long sleeves
+  ラグラン: raglan sleeves
+  透け袖: see-through sleeves
+  毛皮飾りのついた袖: fur-trimmed sleeves
+  七分袖: sleeves past elbows
+  破けた袖: torn sleeves
+
+水着:
+  水着: swimsuit
+  スク水: school swimsuit
+  旧スク: old school swimsuit
+  新スク: new school swimsuit
+  ワンピース水着: one-piece swimsuit
+  青いワンピース水着: blue one-piece swimsuit
+  黒いワンピース水着: black one-piece swimsuit
+  白いワンピース水着: white one-piece swimsuit
+  ハイレグワンピース水着: highleg one-piece swimsuit
+  カジュアルワンピース水着: casual one-piece swimsuit
+  フリル付きのワンピース水着水着: frilled one-piece swimsuit
+  オフショルダーワンピース水着: off-shoulder one-piece swimsuit
+  肩ひもなしのワンピース水着: strapless one-piece swimsuit
+  競泳水着: competition swimsuit
+  競泳スク水: competition school swimsuit
+  スリングショット水着: slingshot swimsuit
+  水玉模様の水着: polka dot swimsuit
+  水着パーカー: jacket over swimsuit
+  水着の上の衣装: swimsuit cover-up
+  ドレス水着: dress swimsuit
+  背中が開いた水着: backless swimsuit
+  パレオ: sarong
+  バンドゥビキニ: bandeau
+  紐水着: side tie panties
+
+ビキニ:
+  ビキニ: bikini
+  横で結んだビキニボトム: side-tie bikini bottom
+  前で結んだビキニトップ: front-tie bikini top
+  紐ビキニ: string bikini
+  マイクロビキニ: micro bikini
+  ビキニトップのみ: bikini top only
+  ビキニボトムのみ: bikini bottom only
+  フリル付きビキニ: frilled bikini
+  ストライプビキニ: striped bikini
+  縦縞ビキニ: vertical-striped bikini
+  ハイレグビキニ: highleg bikini
+  ローレグビキニ: lowleg bikini
+  ビキニスカート: bikini skirt
+  Oリングで連結したビキニ: o-ring bikini
+  牛柄ビキニ: cow print bikini
+  Tバックボトムのビキニ: thong bikini
+  肩ひもなしのビキニ: strapless bikini
+  水玉模様のビキニ: polka dot bikini
+  メイドビキニ: maid bikini
+  マルチストラップビキニボトム: multi-strapped bikini bottom
+  レイヤードビキニ: layered bikini
+  セーラービキニ: sailor bikini
+  リボン付きビキニ: bow bikini
+  未着用のビキニ: unworn bikini
+  未着用のビキニトップ: unworn bikini top
+  未着用のビキニボトム: unworn bikini bottom
+  オフショルダービキニ: off-shoulder bikini
+  貝殻ビキニ: shell bikini
+  ストリングビキニトップ: sling bikini top
+
+ショーツ:
+  ショーツ: shorts
+  ショーツ2: short pants
+  白ショーツ: white shorts
+  黒ショーツ: black shorts
+  青ショーツ: blue shorts
+  スパッツ: bike shorts
+  デニムショーツ: denim shorts
+  マイクロショーツ: micro shorts
+  ドルフィンショーツ: dolphin shorts
+  体操服のショーツ: gym shorts
+  ハイウエストショーツ: high waist shorts
+  サスペンダーショーツ: suspender shorts
+  開いたショーツ: open shorts
+  膨らんだショーツ: puffy shorts
+  フリル付きショーツ: frilled shorts
+  オーバーオールショーツ: overall shorts
+
+ズボン:
+  ズボン: pants
+  白ズボン: white pants
+  黒ズボン: black pants
+  青ズボン: blue pants
+  履いてないパンツ: no pants
+  破けたズボン: torn pants
+  だぶだぶのズボン: baggy pants
+  スポーツウェアのズボン: track pants
+  ぴっちりなズボン: tight pants
+  ハイウエストズボン: high-waist pants
+  ヨガパンツ: yoga pants
+  七分ズボン: capri pants
+  膨らんだボン: puffy pants
+  開いたズボン: open pants
+  まくったズボン: pants rolled up
+  スウェットパンツ: sweatpants
+  ハーレムパンツ: harem pants
+  ジーンズ: jeans
+  腰布: loincloth
+
+スカート:
+  スカート: skirt
+  白スカート: white skirt
+  黒スカート: black skirt
+  青スカート: blue skirt
+  赤スカート: red skirt
+  プリーツスカート: pleated skirt
+  ミニスカート: miniskirt
+  ロングスカート: long skirt
+  ミディスカート: medium skirt
+  チェックスカート: plaid skirt
+  フリル付きスカート: frilled skirt
+  トップス付きスカート: skirt set
+  タイトスカート: pencil skirt
+  ハイウエストスカート: high-waist skirt
+  サスペンダースカート: suspender skirt
+  マイクロミニスカート: microskirt
+  レイヤードスカート: layered skirt
+  ビキニスカート: bikini skirt
+  ショーガールスカート: showgirl skirt
+  未着用のスカート: unworn skirt
+  バブルスカート: bubble skirt
+  袴: hakama
+  袴2: hakama skirt
+  短い袴: hakama short skirt
+
+レッグウェア:
+  レッグウェア: legwear
+  アシンメトリーレッグウェア: asymmetrical legwear
+  長さの違うレッグウェア: uneven legwear
+  左右で異なるレッグウェア: mismatched legwear
+  つま先なしレッグウェア: toeless legwear
+  レース飾りのレッグウェア: lace-trimmed legwear
+  あぶみ付きのレッグウェア: stirrup legwear
+  未着用レッグウェア: no legwear
+  レッグウェア用ガーター: legwear garter
+  透けレッグウェア: see-through legwear
+  縫い目付きレッグウェア: seamed legwear
+  リブ素材のレッグウェア: ribbed legwear
+  毛皮飾りのついたレッグウェア: fur-trimmed legwear
+  リボン付きレッグウェア: bow legwear
+
+靴:
+  靴: shoes
+  靴なし: no shoes
+  未着用の靴: unworn shoes
+  肉球の靴: paw shoes
+  ハイヒール: high heels
+  黒い履物: black footwear
+  ブラウンの履物: brown footwear
+  白い履物: white footwear
+  赤い履物: red footwear
+  編み上げブーツ: cross-laced footwear
+  厚底靴: platform footwear
+  サンダル: toeless footwear
+  アシンメトリーな履物: asymmetrical footwear
+  左右で異なる履物: mismatched footwear
+  かかとが広がった履物: flared heel footwear
+  つま先が尖った履物: pointy footwear
+
+靴下:
+  靴下: socks
+  白い靴下: white socks
+  黒い靴下: black socks
+  青い靴下: blue socks
+  ルーズソックス: loose socks
+  ボビーソックス: bobby socks
+  ストライプソックス: striped socks
+  縦縞の靴下: vertical-striped socks
+  靴下なし: no socks
+  未着用の靴下: unworn socks
+  短い靴下: ankle socks
+  フリル付き靴下: frilled socks
+  網タイツ: fishnet socks
+
+手袋:
+  手袋: gloves
+  白手袋: white gloves
+  黒手袋: black gloves
+  長い手袋: elbow gloves
+  指ぬきグローブ: fingerless gloves
+  指ぬきグローブ(一部): partially fingerless gloves
+  ハーフグローブ: half gloves
+  肉球グローブ: paw gloves
+  アシンメトリーな手袋: asymmetrical gloves
+  毛皮飾りのついた手袋: fur-trimmed gloves
+  フリル付き手袋: frilled gloves
+  長さの違う手袋: uneven gloves
+  網目模様の手袋: fishnet gloves
+  縞模様の手袋: striped gloves
+  ラテックス手袋: latex gloves
+  革手袋: leather gloves
+  未着用の手袋: unworn gloves
+  手袋なし: no gloves
+  レースの手袋: lace gloves
+  レース飾りの手袋: lace-trimmed gloves
+
+パンツ:
+  パンツ: panties
+  白パンツ: white panties
+  黒パンツ: black panties
+  ピンクパンツ: pink panties
+  はいてないパンツ: no panties
+  未着用のパンツ: unworn panties
+  縞パン: striped panties
+  紐パン: string panties
+  横で結んだ紐パン: side-tie panties
+  リボン付きパンツ: bow panties
+  ハイレグ: highleg panties
+  ローレグ: lowleg panties
+  レース飾りのパンツ: lace-trimmed panties
+  レース付きパンツ: lace panties
+  フリル付きパンツ: frilled panties
+  プリントパンツ: print panties
+  水玉パンツ: polka dot panties
+  猫耳パンツ: cat ear panties
+  オープンパンツ: crotchless panties
+  マイクロパンツ: micro panties
+  格子縞のパンツ: plaid panties
+  マルチストラップパンツ: multi-strapped panties
+  バックプリントパンツ: back-print panties
+  苺パンツ: strawberry panties
+
+下着:
+  下着: underwear
+  ガーターストラップ: garter straps
+  ガーターベルト: garter belt
+  キャミソール: chemise
+  スポブラ: sports bra
+  ドロワーズ: bloomers
+  ニップレス: pasties
+  ナイトガウン: nightgown
+  ネグリジェ: negligee
+  パンスト: pantyhose
+  ベビードール: babydoll
+  股間の前布: pelvic curtain
+  ふんどし: loincloth
+  ビスチェ: bustier
