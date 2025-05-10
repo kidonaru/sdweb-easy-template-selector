@@ -461,6 +461,12 @@ class ETSSection {
     if (!this.category) return false
     return this.category.startsWith('01_クオリティ') || this.category.startsWith('99_ネガティブ')
   }
+
+  // 解像度カテゴリかどうかを判定
+  isResolutionCategory() {
+    if (!this.category) return false
+    return this.category.startsWith('96_解像度')
+  }
 }
 
 class EasyTemplateSelector {
@@ -882,6 +888,16 @@ class EasyTemplateSelector {
     const isSubCategoryMatch = targetSection.isSubCategoryMatch()
     const id = isNegativeCategory ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
+
+    // 解像度カテゴリの場合、解像度を反映
+    if (targetSection.isResolutionCategory()) {
+      const [width, height] = tag.split('x').map(Number)
+      if (!isNaN(width) && !isNaN(height)) {
+        this.applyMeta('Width', width)
+        this.applyMeta('Height', height)
+      }
+      return
+    }
 
     // テンプレートの場合はテンプレートの反映
     if (targetSection.isTemplate()) {
