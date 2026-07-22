@@ -21,7 +21,6 @@ class ETSHistory {
     }
   }
 
-  // テキスト履歴を保存するメソッド
   saveTextHistory() {
     const textarea = gradioApp().getElementById('txt2img_prompt').querySelector('textarea')
     const negTextarea = gradioApp().getElementById('txt2img_neg_prompt').querySelector('textarea')
@@ -55,7 +54,6 @@ class ETSHistory {
     this.updateUndoRedoButtons()
   }
 
-  // 履歴から状態を復元するメソッド
   restoreFromHistory(index) {
     if (index < 0 || index >= this.textHistory.length) return
 
@@ -72,7 +70,6 @@ class ETSHistory {
     this.currentHistoryIndex = index
   }
 
-  // undo/redoボタンの更新
   updateUndoRedoButtons() {
     const undoButton = gradioApp().querySelector(`#${this.ids.UNDO_BUTTON}`)
     const redoButton = gradioApp().querySelector(`#${this.ids.REDO_BUTTON}`)

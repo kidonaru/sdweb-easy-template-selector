@@ -22,6 +22,7 @@ class EasyTemplateSelector {
     this.tags = undefined
     this.currentTab = null
     this.history = new ETSHistory({ ids: EasyTemplateSelector.IDS })
+    // this.tags は init() 完了後に再代入されるため、値ではなく getter を渡す
     this.templateManager = new ETSTemplateManager({
       ids: EasyTemplateSelector.IDS,
       history: this.history,

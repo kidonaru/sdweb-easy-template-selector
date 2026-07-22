@@ -213,8 +213,6 @@ class ETSPromptEditor {
   }
 
   selectCurrent(section) {
-    //console.log('selectCurrent', section)
-
     if (section.isForceAddCategory() || section.isNegativeCategory()) {
       return
     }
