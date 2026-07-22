@@ -23,15 +23,20 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 
-def flatten(node, group=None):
+def flatten(node, filename, group=None):
     """YAML ノードを (グループ, ラベル, タグ文字列) のリストへ平坦化する。"""
     entries = []
     if isinstance(node, dict):
         for key, value in node.items():
             if isinstance(value, dict):
-                entries.extend(flatten(value, group=key))
+                entries.extend(flatten(value, filename, group=key))
             elif isinstance(value, str):
                 entries.append((group, key, value))
+            else:
+                print(
+                    f"警告: {filename}.yml の '{key}' はタグ文字列(str)ではないため無視します: {type(value).__name__}",
+                    file=sys.stderr,
+                )
     return entries
 
 
@@ -52,15 +57,15 @@ def load_entries(tags_dir):
         try:
             with open(path, encoding="utf-8") as f:
                 data = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(f"警告: {filename}.yml の構文解析に失敗したためスキップします: {e}", file=sys.stderr)
+        except (yaml.YAMLError, OSError, UnicodeDecodeError) as e:
+            print(f"警告: {filename}.yml の読み込みに失敗したためスキップします: {e}", file=sys.stderr)
             continue
         if not data:
             continue
         if not isinstance(data, dict):
             print(f"警告: {filename}.yml はトップレベルが辞書形式ではないためスキップします", file=sys.stderr)
             continue
-        for group, label, tags in flatten(data):
+        for group, label, tags in flatten(data, filename):
             entries.append((filename, group, label, tags))
     return entries
 
@@ -71,7 +76,7 @@ def format_comment(filename, group, label):
     return f"# {category} ({label}),"
 
 
-def matches(entry, queries, mode, exact):
+def matches(entry, queries_lower, mode, exact):
     """1エントリがいずれかのクエリに一致するか判定する（OR 検索）。
 
     exact=False（既定）はタグ・ラベルへの部分文字列一致、
@@ -85,15 +90,14 @@ def matches(entry, queries, mode, exact):
     if mode in ("label", "all"):
         haystacks.append(label)
     lowered = [h.lower() for h in haystacks]
-    queries_lower = [q.lower() for q in queries]
     if exact:
         return any(q == h for q in queries_lower for h in lowered)
     return any(q in h for q in queries_lower for h in lowered)
 
 
 def search(entries, queries, mode, exact):
-    """クエリに一致するエントリのリストを返す。"""
-    return [e for e in entries if matches(e, queries, mode, exact)]
+    queries_lower = [q.lower() for q in queries]
+    return [e for e in entries if matches(e, queries_lower, mode, exact)]
 
 
 def main():
