@@ -131,7 +131,7 @@ class ETSTemplateManager {
       }, 100)
     }
 
-    this.promptEditor?.selectNone()
+    this.promptEditor.selectNone()
   }
 
   convertToTemplate(prompt, negPrompt, metaDataMap) {
