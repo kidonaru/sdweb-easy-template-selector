@@ -30,6 +30,8 @@ Model:
 詳細:
   複雑でシャープなライン: intricate details,sharp lines
   超詳細な目: ultra detailed eyes
+  詳細な目: detailed eyes
+  詳細な髪: detailed hair
 
 スタイル:
   水彩画風: watercolor,pastel color
@@ -77,3 +79,9 @@ Model:
   無修正: uncensored
   無修正(NSFW): uncensored,nsfw
   露骨な表現: explicit
+
+雰囲気:
+  扇情的: lewd
+  官能的: sensual
+  エロティック: erotic
+  淫らな雰囲気: lewd atmosphere

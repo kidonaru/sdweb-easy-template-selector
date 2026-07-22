@@ -8,6 +8,8 @@ Model:
 Embeddings:
   badhandv4: badhandv4
   Bad-Hands-5: bad-hands-5
+  unaestheticXL(アニメ): unaestheticXLv1
+  unaestheticXL(リアル): unaestheticXLv13
 
 品質:
   低解像度: lowres

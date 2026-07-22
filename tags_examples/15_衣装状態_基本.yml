@@ -1,11 +1,13 @@
 基本:
   開いた服: open clothes
   破けた服: torn clothes
+  破けて開いた服: torn open clothes
   濡れた服: wet clothes
   透けた服: see-through clothes
   汗をかいた服: sweaty clothes
   爆発する服: exploding clothes
   溶ける服: dissolving clothes
+  乱れた服: disheveled clothes
 
   脱衣: undressing
   着替え: dressing
@@ -48,9 +50,12 @@
   タイツの上にパンツ: panties over pantyhose
 
 トップス:
+  開いたワンピ: open dress
   破けたワンピ: torn dress
+  破けて開いたワンピ: torn open dress
   濡れたワンピ: wet dress
   透けたワンピ: see-through dress
+  乱れたワンピ: disheveled dress
 
   破けたシャツ: torn shirt
   濡れたシャツ: wet shirt
@@ -84,5 +89,6 @@
   ほどけたパンツ: untied panties
   バイブINパンツ: vibrator under panties
   片方の足にパンツ: panties around one leg
+  可愛いプリント柄の片足パンツ: cute print panties around one leg
   足首のパンツ: panties around ankles
   頭にパンツ: panties on head
