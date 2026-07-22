@@ -22,6 +22,10 @@ import yaml
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
+# トップレベルが辞書形式ではない仕様で意図的に作られているファイル。
+# 「トップレベルが辞書形式ではない」警告の対象から除外する。
+NON_DICT_WARNING_BLACKLIST = {"98_特殊"}
+
 
 def flatten(node, filename, group=None):
     """YAML ノードを (グループ, ラベル, タグ文字列) のリストへ平坦化する。"""
@@ -63,7 +67,8 @@ def load_entries(tags_dir):
         if not data:
             continue
         if not isinstance(data, dict):
-            print(f"警告: {filename}.yml はトップレベルが辞書形式ではないためスキップします", file=sys.stderr)
+            if filename not in NON_DICT_WARNING_BLACKLIST:
+                print(f"警告: {filename}.yml はトップレベルが辞書形式ではないためスキップします", file=sys.stderr)
             continue
         for group, label, tags in flatten(data, filename):
             entries.append((filename, group, label, tags))
