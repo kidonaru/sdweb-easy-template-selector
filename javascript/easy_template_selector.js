@@ -132,12 +132,6 @@ class EasyTemplateSelector {
         onClick: () => this.templateManager.saveTemplate()
       })
 
-      const applyModelCheckbox = ETSElementBuilder.checkbox('モデル反映', this.templateManager.applyModel, {
-        onChange: (checked) => {
-          this.templateManager.applyModel = checked
-        }
-      })
-
       const upButton = ETSElementBuilder.upButton({
         onClick: () => this.promptEditor.moveTag(this.promptEditor.currentSection, -1)
       })
@@ -163,7 +157,6 @@ class EasyTemplateSelector {
       container.header.appendChild(redoButton)
       container.header.appendChild(templateNameArea)
       container.header.appendChild(saveButton)
-      container.header.appendChild(applyModelCheckbox)
       container.header.appendChild(tagInfoSelect)
       container.header.appendChild(upButton)
       container.header.appendChild(downButton)
@@ -293,10 +286,39 @@ class EasyTemplateSelector {
         buttons.appendChild(group)
       })
 
+      // テンプレートタブの末尾に設定グループを表示
+      if (key === '00_テンプレート') {
+        fields.append(this.renderTemplateSettings())
+      }
+
       content.appendChild(fields)
     })
 
     return content
+  }
+
+  // テンプレートタブ内の設定グループ（99_設定）を生成する
+  renderTemplateSettings() {
+    const fields = ETSElementBuilder.tagFields()
+    fields.style.flexDirection = 'column'
+
+    // 既存カテゴリと同じ見た目のヘッダーボタン（クリック動作は不要）
+    const header = ETSElementBuilder.baseButton('99_設定', { color: 'primary' })
+    header.style.cursor = 'default'
+    fields.append(header)
+
+    // テンプレート適用時にモデル（checkpoint）を切り替えるかのトグル
+    const buttons = ETSElementBuilder.tagFields()
+    buttons.id = 'buttons'
+    const applyModelCheckbox = ETSElementBuilder.checkbox('モデル反映', this.templateManager.applyModel, {
+      onChange: (checked) => {
+        this.templateManager.applyModel = checked
+      }
+    })
+    buttons.append(applyModelCheckbox)
+    fields.append(buttons)
+
+    return fields
   }
 
   renderTagButtons(tags, prefix = '') {
