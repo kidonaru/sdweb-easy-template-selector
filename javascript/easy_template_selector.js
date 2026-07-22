@@ -131,7 +131,13 @@ class EasyTemplateSelector {
       const saveButton = ETSElementBuilder.saveButton({
         onClick: () => this.templateManager.saveTemplate()
       })
-  
+
+      const applyModelCheckbox = ETSElementBuilder.checkbox('モデル反映', this.templateManager.applyModel, {
+        onChange: (checked) => {
+          this.templateManager.applyModel = checked
+        }
+      })
+
       const upButton = ETSElementBuilder.upButton({
         onClick: () => this.promptEditor.moveTag(this.promptEditor.currentSection, -1)
       })
@@ -157,6 +163,7 @@ class EasyTemplateSelector {
       container.header.appendChild(redoButton)
       container.header.appendChild(templateNameArea)
       container.header.appendChild(saveButton)
+      container.header.appendChild(applyModelCheckbox)
       container.header.appendChild(tagInfoSelect)
       container.header.appendChild(upButton)
       container.header.appendChild(downButton)
