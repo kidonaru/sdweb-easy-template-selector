@@ -22,9 +22,7 @@ class EasyTemplateSelector {
     this.tags = undefined
     this.currentTab = null
     this.currentSection = new ETSSection(null, null, null)
-    this.textHistory = []
-    this.currentHistoryIndex = -1
-    this.maxHistoryLength = 20
+    this.history = new ETSHistory({ ids: EasyTemplateSelector.IDS })
 
     this.metaInfoMap = [
       { key: 'Template name', id: EasyTemplateSelector.IDS.TEMPLATE_NAME, type: 'input' },
@@ -125,12 +123,12 @@ class EasyTemplateSelector {
       })
 
       const undoButton = ETSElementBuilder.undoButton({
-        onClick: () => this.undoLastAction()
+        onClick: () => this.history.undoLastAction()
       })
       undoButton.id = EasyTemplateSelector.IDS.UNDO_BUTTON
 
       const redoButton = ETSElementBuilder.redoButton({
-        onClick: () => this.redoLastAction()
+        onClick: () => this.history.redoLastAction()
       })
       redoButton.id = EasyTemplateSelector.IDS.REDO_BUTTON
 
@@ -192,7 +190,7 @@ class EasyTemplateSelector {
     contentArea.appendChild(row)
     contentArea.appendChild(this.renderContent())
 
-    this.updateUndoRedoButtons()
+    this.history.updateUndoRedoButtons()
 
     return container
   }
@@ -526,7 +524,7 @@ class EasyTemplateSelector {
     updateInput(textarea)
 
     this.selectCurrent(targetSection)
-    this.saveTextHistory()
+    this.history.saveTextHistory()
   }
 
   updateTagInfo() {
@@ -669,7 +667,7 @@ class EasyTemplateSelector {
     updateInput(textarea)
 
     this.selectCurrent(overrideSection)
-    this.saveTextHistory()
+    this.history.saveTextHistory()
   }
 
   moveTag(targetSection, direction) {
@@ -726,7 +724,7 @@ class EasyTemplateSelector {
     textarea.value = newSections.join('\n')
     updateInput(textarea)
 
-    this.saveTextHistory()
+    this.history.saveTextHistory()
   }
 
   applyTemplate(template, templateName) {
@@ -759,8 +757,8 @@ class EasyTemplateSelector {
     updateInput(negTextarea)
 
     // テキスト履歴をリセット
-    this.resetTextHistory()
-    this.saveTextHistory()
+    this.history.resetTextHistory()
+    this.history.saveTextHistory()
 
     const imageInfo = gradioApp().getElementById(EasyTemplateSelector.IDS.IMAGE_INFO).querySelector('textarea')
     const applyButton = gradioApp().getElementById(EasyTemplateSelector.IDS.APPLY_BUTTON)
@@ -1010,83 +1008,6 @@ class EasyTemplateSelector {
     }
   }
 
-  undoLastAction() {
-    if (this.currentHistoryIndex > 0) {
-      this.restoreFromHistory(this.currentHistoryIndex - 1)
-      this.updateUndoRedoButtons()
-    }
-  }
-
-  redoLastAction() {
-    if (this.currentHistoryIndex < this.textHistory.length - 1) {
-      this.restoreFromHistory(this.currentHistoryIndex + 1)
-      this.updateUndoRedoButtons()
-    }
-  }
-
-  // テキスト履歴を保存するメソッド
-  saveTextHistory() {
-    const textarea = gradioApp().getElementById('txt2img_prompt').querySelector('textarea')
-    const negTextarea = gradioApp().getElementById('txt2img_neg_prompt').querySelector('textarea')
-    
-    const currentState = {
-      prompt: textarea.value,
-      negPrompt: negTextarea.value
-    }
-
-    // 現在の位置より後の履歴を削除
-    if (this.currentHistoryIndex < this.textHistory.length - 1) {
-      this.textHistory = this.textHistory.slice(0, this.currentHistoryIndex + 1)
-    }
-
-    // 新しい状態を追加
-    this.textHistory.push(currentState)
-    
-    // 履歴の長さを制限
-    if (this.textHistory.length > this.maxHistoryLength) {
-      this.textHistory.shift()
-    } else {
-      this.currentHistoryIndex++
-    }
-
-    this.updateUndoRedoButtons()
-  }
-
-  resetTextHistory() {
-    this.textHistory = []
-    this.currentHistoryIndex = -1
-    this.updateUndoRedoButtons()
-  }
-
-  // 履歴から状態を復元するメソッド
-  restoreFromHistory(index) {
-    if (index < 0 || index >= this.textHistory.length) return
-
-    const state = this.textHistory[index]
-    const textarea = gradioApp().getElementById('txt2img_prompt').querySelector('textarea')
-    const negTextarea = gradioApp().getElementById('txt2img_neg_prompt').querySelector('textarea')
-
-    textarea.value = state.prompt
-    negTextarea.value = state.negPrompt
-
-    updateInput(textarea)
-    updateInput(negTextarea)
-    
-    this.currentHistoryIndex = index
-  }
-
-  // undo/redoボタンの更新
-  updateUndoRedoButtons() {
-    const undoButton = gradioApp().querySelector(`#${EasyTemplateSelector.IDS.UNDO_BUTTON}`)
-    const redoButton = gradioApp().querySelector(`#${EasyTemplateSelector.IDS.REDO_BUTTON}`)
-
-    if (undoButton) {
-      undoButton.disabled = this.currentHistoryIndex <= 0
-    }
-    if (redoButton) {
-      redoButton.disabled = this.currentHistoryIndex >= this.textHistory.length - 1
-    }
-  }
 }
 
 onUiLoaded(async () => {
