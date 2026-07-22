@@ -7,6 +7,9 @@ class ETSTemplateManager {
     this.reinit = reinit
     this.promptEditor = null
 
+    // テンプレート適用時にモデル（checkpoint）を切り替えるか（セッション限り、永続化しない）
+    this.applyModel = true
+
     this.metaInfoMap = [
       { key: 'Template name', id: ids.TEMPLATE_NAME, type: 'input' },
       { key: 'Steps', id: 'txt2img_steps', type: 'input' },
@@ -124,7 +127,7 @@ class ETSTemplateManager {
     }, 1500)
 
     const modelName = metaDataMap['Model']
-    if (modelName != this.getCurrentModel()) {
+    if (this.applyModel && modelName != this.getCurrentModel()) {
       setTimeout(() => {
         console.log('selectCheckpoint', modelName)
         selectCheckpoint(modelName)
