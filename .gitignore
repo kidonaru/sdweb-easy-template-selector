@@ -3,3 +3,6 @@ __pycache__/
 
 tags/**
 templates/*_
+
+# Danbooru タグ検索キャッシュ（danbooru.csv から自動生成、再生成可能なため管理外）
+tools/.cache/
