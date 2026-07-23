@@ -29,6 +29,7 @@ Embeddings:
   リアルな目: realistic eyes
   悪い目: bad eyes
   大きな頭: large head
+  男性顔: man face
 
 人体:
   悪い解剖学: bad anatomy
@@ -49,6 +50,7 @@ Embeddings:
   毛深い: furry
   悪い肌: bad skin
   変形: deformed,mutated
+  変形した手: deformed hands
   結合: conjoined
   減少拡張欠損: fewer,extra,missing
   ロリ: loli
@@ -69,6 +71,9 @@ Embeddings:
   変形: Morphing,blending,incorrectly proportioned
   アニメ: anime
   吹き出し: speech bubble
+  フィルムグレイン: film grain
+  ハーフトーン: halftone,screentones,dithering
+  複数視点: multiple views
 
 その他:
   曲がった: bendy
@@ -84,5 +89,8 @@ Embeddings:
   未完成: unfinished
   色収差: chromatic aberration
   抽象: abstract
-  効果音: sound effect
+  効果音: sound effects
   レンズフレア: lens flare
+  透かし過多: too many watermarks
+  余白: negative space,blank page
+  テイル: tale

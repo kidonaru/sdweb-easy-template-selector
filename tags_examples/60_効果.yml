@@ -10,7 +10,13 @@
 モノクロの影とハート: monochrome,shadow,heart
 モーションライン: motion lines
 モーションエフェクト: motion effect
-擬音: sound effect
+モーションブラー: motion blur
+指の残像モーションライン: fingers motion lines afterimage
+スピード線: speed lines
+ハートエフェクト: heart effect
+浮遊するパーティクル: floating particles
+きらめく光: sparkles light
+擬音: sound effects
 ボケ: bokeh
 浅い被写界深度: shallow depth of field
 リムライト: rim light
@@ -18,3 +24,10 @@
 細部まで表現された布地: fine fabric emphasis
 Negative_for_anime: (negative_v2 Color_Balance_Calibration:0.8)
 前面ライトアップ: <lora:facelightup_xl_v10:1>
+パステルカラー: pastel colors
+甘く官能的な親密な雰囲気: intimate,sweet and erotic atmosphere
+水滴のついたレンズ: water droplets on lens
+視聴者への水滴: water drop on viewer
+飛沫: splash
+泡: bubble
+たくさんの泡: many foam

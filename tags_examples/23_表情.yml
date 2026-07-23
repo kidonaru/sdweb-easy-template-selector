@@ -8,6 +8,9 @@
   怒り: angry
   悲しい: sad
   泣く: crying
+  恥ずかしい: embarrassed
+  エクスタシー: ecstasy
+  淫らな表情: lewd expression
   邪悪な笑み: evil smile
   魅惑的な微笑み: seductive smile
   メスガキ: naughty face
@@ -15,6 +18,16 @@
   快感の涙: tears of pleasure
   上気した頬: flushed cheeks
   強烈な絶頂の表情: intense orgasm face
+  赤面: blush
+  絶叫: screaming
+  喘ぎ声: moaning
+  唇: lips
+  半開きの唇: parted lips
+  目を細める: squint
+  口を開く: open mouth
+  少し口を開く: open mouth slightly
+  口を閉じる: closed mouth
+  舌を出す: tongue out
 
 絵文字:
   # 笑顔
@@ -57,7 +70,7 @@
 
 オリジナル:
   挑発的な笑みと口にコンドーム: raised inner eyebrows,doyagao,smug,closed mouth,smile,(condom wrapper in mouth:1.2),blush,temptation,teasing
-  自制心を保とうとしながらも崩れていく表情: half-closed eyes,moist eyes,flushed cheeks,mouth open,panting heavily,sweating face,trying to stay composed,failing expression,looking_at_viewer
+  自制心を保とうとしながらも崩れていく表情: half-closed eyes,moist eyes,flushed cheeks,mouth open,panting heavily,sweating face,trying to stay composed,failing expression,looking at viewer
   興奮と緊張が混ざった表情: half-closed eyes, flushed cheeks, mouth wide open, heavy panting, sweating, focused yet strained expression, emotionally overwhelmed,
   恍惚とした表情とよだれ: full face blush,drooling:1.3,naughty smile
   震えながら見上げる: trembling:1.3,drooling,look up at viewer
@@ -72,5 +85,6 @@
   照れ嫌いな赤面した可愛い表情: (jitome eyes1.4),disgusted face,blush,very cute
   可愛く赤面: cute,pretty,blush
   笑顔で首を傾げる: smile,head tilt
-  半目でぼんやりとした無表情: half closed eyes, dazed, emotionless,
+  半目でぼんやりとした無表情: half-closed eyes, dazed, emotionless,
   ">ヮ<": (> <:1.2),happy,open mouth,
+  照れながらも愛情深い母性的な微笑み: bashful but loving smile,strong motherly aura,doing her best to please,caring expression,adorable

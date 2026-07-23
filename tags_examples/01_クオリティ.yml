@@ -13,6 +13,10 @@ Model:
   ハイクオリティ: best quality,high quality
   驚異的: best quality,amazing quality
 
+汎用:
+  高精細CGクオリティ: ultra detailed,extremely detailed absurdres,extremely detailed CG unity 8k wallpaper,detailed beautiful background,highly detailed beautiful face and eyes,no text
+  超詳細: ultra detailed
+
 美的:
   非常に美的: very aesthetic
   非常に美的(AWA): very aesthetic,very awa
@@ -52,6 +56,7 @@ Model:
   動的な陰影: dynamic shading
   被写界深度: depth of field
   完璧な照明/下からの照明: perfect lighting,shiny skin,low light
+  白い照明: white lighting
 
 背景:
   詳細な背景: detailed background
@@ -64,6 +69,7 @@ Model:
 
 体:
   完璧な解剖学: perfect anatomy
+  自然な解剖学: natural anatomy
   完璧な体: perfect face,perfect eyes,perfect breasts,perfect hands,perfect ass
   完璧な手: perfect hands
 
