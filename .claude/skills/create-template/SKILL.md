@@ -132,6 +132,7 @@ nun,blue neckerchief,white sailor collar,white dress,armlet,mary janes,
 ### NG だった場合
 
 1. `--exact` を外した部分一致検索で正式な表記が無いか確認する。この部分一致検索は、複合シーン記述（手順 3 参照）以外の全ての NG タグで省略しない。
+   - 入力フレーズの単語そのままの部分一致だけで諦めない。複合語・独自表現は、それを構成する概念の同義語・言い換え表現でも `search_danbooru.py` / `search_tags.py` を再検索する（例: `lotion juice string`→`juice trail`、`ribbon-tie`→`neck ribbon`、`hairy pubic hair`→`excessive`、色は基本色でも検索する等）。
 2. 意味の近い実在タグ・エイリアスが見つかった場合: 無断で置換せず、また無断でそのまま追記もせず、`AskUserQuestion` で「実在タグへの置換」か「入力表記のまま追記」かを確認してから確定する。
 3. それでも相当タグが一切見つからない場合: 入力プロンプト由来の独自表現としてそのまま追記してよいが、実在しない旨をユーザーへの報告に含める。
 
@@ -181,3 +182,4 @@ Steps: 25, Sampler: DPM++ 2M, ...（既存テンプレから流用）
 - 既存 YAML の既存エントリは変更しない（追記のみ）。
 - タグの重複追加をしない: 追記前に必ず `tools/search_tags.py` で該当タグを検索する。
 - LoRA タグ（`<lora:...>`）は対象の性質に応じたカテゴリの `_LoRA` サブファイルを使う: キャラ LoRA は 10 番台（`10_キャラ_LoRA.yml` 等）、衣装 LoRA は 13 番台（`13_衣装_LoRA.yml`）、ポーズ LoRA は 30 番台（`30_ポーズ_LoRA.yml`）、スタイル/ディテール等の汎用 LoRA のみ 70 番台。該当する `_LoRA` サブファイルが無ければ番号帯を合わせて新規作成する。入力に無ければ追加しない。
+- 未登録の LoRA で性質が名前から判断できない場合、ユーザーに推測で確認する前に `C:\tools\StabilityMatrix\Data\Models\Lora` 以下（サブディレクトリ含む）を LoRA ファイル名で検索し、同名の `.cm-info.json`（Civitai メタデータ。`Tags` / `ModelDescription` / `TrainedWords` 等を含む）が無いか確認する。見つかればその内容からカテゴリ・トリガーワード・作者名を判断する。見つからない場合のみユーザーに確認する。
