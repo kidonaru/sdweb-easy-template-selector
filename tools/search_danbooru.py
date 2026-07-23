@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Danbooru タグの実在確認・検索を行う CLI ツール。
 
-a1111-sd-webui-tagcomplete 拡張が持つ Danbooru タグのスナップショット
-（tags/danbooru.csv, 形式: name,category,post_count,"alias1,alias2,..."）
+Danbooru タグの CSV スナップショット
+（danbooru.csv, 形式: name,category,post_count,"alias1,alias2,..."）
 を SQLite にキャッシュし、タグ名・別名から検索する。
 
 create-template スキルで新規タグを tags/*.yml に追記する前に、
@@ -30,9 +30,9 @@ sys.stderr.reconfigure(encoding="utf-8")
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # StabilityMatrix の Data/Packages/<パッケージ>/extensions/<拡張> という
 # インストール構成を前提に、_REPO_ROOT から Data/Tags/danbooru.csv を参照する
-# （ユーザーの明示指定によるデフォルト変更。なお共通タグの post_count 比較では
-# a1111-sd-webui-tagcomplete 同梱版の方が全体としては後年のスナップショットで
-# あることを確認済みだが、Data/Tags 側を使う運用が選択された）。
+# （共通タグの post_count 比較では別配置の a1111-sd-webui-tagcomplete 同梱版の方が
+# 後年のスナップショットだが、意図的に Data/Tags 側をデフォルトにしている。
+# 別配置を使う場合は --csv-path で上書きする）。
 DEFAULT_CSV_PATH = os.path.normpath(
     os.path.join(_REPO_ROOT, "..", "..", "..", "..", "Tags", "danbooru.csv")
 )
@@ -335,12 +335,14 @@ def is_lora_entry(tags_str):
 _WEIGHT_WRAPPER_RE = re.compile(r"^\((.*):\d+(?:\.\d+)?\)$")
 
 
-def _split_top_level_commas(text):
+def split_top_level_commas(text):
     """かっこの深さを考慮し、最上位（かっこの外）のカンマでのみ分割する。
 
     エスケープされた括弧 \\( \\) はタグ名の一部として深さに影響させない。
     これにより、(tag1, tag2:1.2) のような複数タグへの重みラップ内のカンマを
-    誤って分割しないようにする。
+    誤って分割しないようにする。ただし \\( \\) は深さに影響しないため、
+    エスケープ括弧の内側に生のカンマが含まれる場合はそこで分割されてしまう
+    （Danbooru タグ名・別名にカンマは実質含まれないため実害は無い想定）。
     """
     tokens = []
     current = []
@@ -380,13 +382,13 @@ def extract_tags(tags_str):
     残す）。空トークンは無視する。
     """
     tags = []
-    for token in _split_top_level_commas(tags_str):
+    for token in split_top_level_commas(tags_str):
         token = token.strip()
         if not token:
             continue
         m = _WEIGHT_WRAPPER_RE.match(token)
         if m:
-            for sub in _split_top_level_commas(m.group(1).strip()):
+            for sub in split_top_level_commas(m.group(1).strip()):
                 sub = sub.strip()
                 if sub:
                     tags.append(sub)
@@ -395,53 +397,67 @@ def extract_tags(tags_str):
     return tags
 
 
-def _is_missing_comma_tag(conn, tag):
+# タグ欄に長文を誤貼り付けした場合などに備え、カンマ抜け許容判定の対象とする
+# 語数の上限（探索量は最悪 O(語数^2) のクエリになるため）。
+_MISSING_COMMA_MAX_WORDS = 20
+
+
+def is_missing_comma_tag(conn, tag):
     """空白区切りの各部分がすべて実在タグとなるよう分割できるか調べる。
 
     カンマを打ち忘れて複数タグが連結された文字列（例: "black hair ribbon"
     は本来 "black hair, ribbon"）は、プロンプトとして解釈しても実害が
     少ないことが多いため、NG扱いせず許容するための判定に使う。
+    末尾から先頭へ向かうボトムアップDPで判定し、再帰は使わない。
     """
     words = tag.split(" ")
     n = len(words)
-    if n < 2:
+    if n < 2 or n > _MISSING_COMMA_MAX_WORDS:
         return False
 
-    memo = {}
-
-    def solve(i):
-        if i == n:
-            return True
-        if i in memo:
-            return memo[i]
-        ok = False
+    # ok[i] は words[i:] 全体を実在タグの連続に分割できるかどうか。ok[n] = True（空列は成立）。
+    ok = [False] * (n + 1)
+    ok[n] = True
+    for i in range(n - 1, -1, -1):
         for j in range(i + 1, n + 1):
-            candidate = " ".join(words[i:j])
-            if query_exact(conn, candidate) is not None and solve(j):
-                ok = True
+            if ok[j] and query_exact(conn, " ".join(words[i:j])) is not None:
+                ok[i] = True
                 break
-        memo[i] = ok
-        return ok
+    return ok[0]
 
-    return solve(0)
+
+# NG理由コード。タグ文字列にアンダースコアが含まれる場合は、Danbooru上の実在有無に
+# 関わらずNG扱いにする（YAML側はスペース区切りで記述するのが本プロジェクトの規約で
+# あり、normalize() がスペースをアンダースコアへ変換して照合するためアンダースコア
+# 表記でも実在確認自体は通ってしまうが、表記を統一するためスタイル違反として弾く）。
+NG_REASON_UNDERSCORE = "underscore"
+
+
+def classify_tag(conn, tag):
+    """1タグを判定し、(状態, 理由) を返す。
+
+    状態は "ok"（実在する）, "comma_ok"（カンマ抜けだが許容）, "ng"（NG）のいずれか。
+    理由は状態が "ng" のときのみ意味を持ち、アンダースコア起因なら
+    NG_REASON_UNDERSCORE、それ以外（Danbooru上に見つからない）なら None。
+    """
+    if "_" in tag:
+        return "ng", NG_REASON_UNDERSCORE
+    if query_exact(conn, tag) is not None:
+        return "ok", None
+    if is_missing_comma_tag(conn, tag):
+        return "comma_ok", None
+    return "ng", None
 
 
 def verify_yaml_entries(conn, entries):
     """entries（(filename, group, label, tags_str)のリスト）を検証する。
 
     LoRAエントリ（is_lora_entry が真）は丸ごとスキップし、スキップした
-    タグ数を file_stats に計上する。カンマ抜けで複数タグが連結された
-    だけと判定できるタグ（_is_missing_comma_tag が真）もNG扱いせず、
-    comma_ok として file_stats に計上する。
-
-    タグ文字列にアンダースコアが含まれる場合は、Danbooru上の実在有無に
-    関わらずNG扱いにする。YAML側はスペース区切りで記述するのが本プロジェクトの
-    規約であり（normalize() がスペースをアンダースコアへ変換して照合するため
-    アンダースコア表記でも実在確認自体は通ってしまうが）、表記を統一するために
-    アンダースコアはスタイル違反として弾く。戻り値は (ng_list, file_stats)。
+    タグ数を file_stats に計上する。個々のタグの判定は classify_tag に委譲し、
+    ここでは file_stats / ng_list への集計のみを行う。戻り値は (ng_list, file_stats)。
 
     ng_list: NGだったタグのみのリスト。各要素は
-        {"filename", "group", "label", "tag", "reason"(省略可、"underscore"のみ設定)}
+        {"filename", "group", "label", "tag", "reason"(NG理由。通常NGなら None)}
     file_stats: {filename: {"checked": int, "ng": int, "skipped": int, "comma_ok": int}}
     """
     ng_list = []
@@ -455,19 +471,14 @@ def verify_yaml_entries(conn, entries):
             continue
         for tag in extract_tags(tags_str):
             stats["checked"] += 1
-            if "_" in tag:
-                stats["ng"] += 1
-                ng_list.append(
-                    {"filename": filename, "group": group, "label": label, "tag": tag, "reason": "underscore"}
-                )
+            status, reason = classify_tag(conn, tag)
+            if status == "ok":
                 continue
-            if query_exact(conn, tag) is not None:
-                continue
-            if _is_missing_comma_tag(conn, tag):
+            if status == "comma_ok":
                 stats["comma_ok"] += 1
                 continue
             stats["ng"] += 1
-            ng_list.append({"filename": filename, "group": group, "label": label, "tag": tag})
+            ng_list.append({"filename": filename, "group": group, "label": label, "tag": tag, "reason": reason})
     return ng_list, file_stats
 
 
@@ -477,7 +488,7 @@ def format_yaml_category(filename, group):
 
 def print_yaml_ng_line(ng):
     category = format_yaml_category(ng["filename"], ng["group"])
-    if ng.get("reason") == "underscore":
+    if ng.get("reason") == NG_REASON_UNDERSCORE:
         print(
             f"NG {category} ({ng['label']}) tag='{ng['tag']}': "
             "アンダースコアを含むタグは許容しません（スペース区切りで記述してください）。"
@@ -489,7 +500,7 @@ def print_yaml_ng_line(ng):
     )
 
 
-def _format_yaml_notes(skipped, comma_ok):
+def format_yaml_notes(skipped, comma_ok):
     notes = []
     if skipped:
         notes.append(f"LoRAエントリのため{skipped}件スキップ")
@@ -510,17 +521,17 @@ def print_yaml_summary(file_stats):
         total_ng += stats["ng"]
         total_skipped += stats["skipped"]
         total_comma_ok += stats["comma_ok"]
-        note = _format_yaml_notes(stats["skipped"], stats["comma_ok"])
+        note = format_yaml_notes(stats["skipped"], stats["comma_ok"])
         print(f"{filename}.yml: {stats['ng']}/{stats['checked']}件 NG{note}")
-    total_note = _format_yaml_notes(total_skipped, total_comma_ok)
+    total_note = format_yaml_notes(total_skipped, total_comma_ok)
     print(f"合計: {total_ng}/{total_checked}件 NG{total_note}")
 
 
 def main():
     parser = argparse.ArgumentParser(
         description=(
-            "Danbooru タグの実在確認・検索を行う（a1111-sd-webui-tagcomplete の "
-            "danbooru.csv をキャッシュした SQLite DB を利用）。"
+            "Danbooru タグの実在確認・検索を行う（danbooru.csv スナップショットを"
+            "キャッシュした SQLite DB を利用）。"
             "既定は部分一致、--exact でタグ名/別名との完全一致のみに絞る。"
         )
     )
@@ -603,9 +614,8 @@ def main():
             entries = load_yaml_entries(yaml_paths)
             ng_list, file_stats = verify_yaml_entries(conn, entries)
             print(
-                "（判定は a1111-sd-webui-tagcomplete の danbooru.csv スナップショットに"
-                "基づきます。スナップショットに未反映の新規タグ等はNGとして表示される"
-                "場合があります）"
+                f"（判定は {args.csv_path} の danbooru.csv スナップショットに基づきます。"
+                "スナップショットに未反映の新規タグ等はNGとして表示される場合があります）"
             )
             for ng in ng_list:
                 print_yaml_ng_line(ng)
