@@ -14,6 +14,7 @@ import argparse
 import csv
 import glob
 import os
+import re
 import sqlite3
 import sys
 
@@ -317,6 +318,38 @@ def load_yaml_entries(yaml_paths):
         for group, label, tags in search_tags.flatten(data, filename):
             entries.append((filename, group, label, tags))
     return entries
+
+
+def is_lora_entry(tags_str):
+    """タグ文字列に <lora: が含まれるか判定する（LoRAエントリの丸ごとスキップ判定用）。
+
+    <lora:...> の直後に置かれるトリガーワード（例: "zzHina"）は Danbooru タグ
+    ではないため、エントリ内の他の実タグと機械的に区別せず丸ごと検証対象外にする。
+    """
+    return "<lora:" in tags_str
+
+
+_WEIGHT_WRAPPER_RE = re.compile(r"^\((.*):\d+(?:\.\d+)?\)$")
+
+
+def extract_tags(tags_str):
+    """カンマ区切りのタグ文字列を個別タグのリストへ分解する。
+
+    各トークン全体が (<内容>:<数値>) の重みラップ形式であれば、外側の
+    括弧と :<数値> を剥がして <内容> だけを残す（内側のエスケープ括弧は
+    タグ名の一部としてそのまま残す）。空トークンは無視する。
+    """
+    tags = []
+    for token in tags_str.split(","):
+        token = token.strip()
+        if not token:
+            continue
+        m = _WEIGHT_WRAPPER_RE.match(token)
+        if m:
+            token = m.group(1).strip()
+        if token:
+            tags.append(token)
+    return tags
 
 
 def main():
