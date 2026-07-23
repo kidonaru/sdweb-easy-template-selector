@@ -395,28 +395,67 @@ def extract_tags(tags_str):
     return tags
 
 
+def _is_missing_comma_tag(conn, tag):
+    """空白区切りの各部分がすべて実在タグとなるよう分割できるか調べる。
+
+    カンマを打ち忘れて複数タグが連結された文字列（例: "black hair ribbon"
+    は本来 "black hair, ribbon"）は、プロンプトとして解釈しても実害が
+    少ないことが多いため、NG扱いせず許容するための判定に使う。
+    """
+    words = tag.split(" ")
+    n = len(words)
+    if n < 2:
+        return False
+
+    memo = {}
+
+    def solve(i):
+        if i == n:
+            return True
+        if i in memo:
+            return memo[i]
+        ok = False
+        for j in range(i + 1, n + 1):
+            candidate = " ".join(words[i:j])
+            if query_exact(conn, candidate) is not None and solve(j):
+                ok = True
+                break
+        memo[i] = ok
+        return ok
+
+    return solve(0)
+
+
 def verify_yaml_entries(conn, entries):
     """entries（(filename, group, label, tags_str)のリスト）を検証する。
 
     LoRAエントリ（is_lora_entry が真）は丸ごとスキップし、スキップした
-    タグ数を file_stats に計上する。戻り値は (ng_list, file_stats)。
+    タグ数を file_stats に計上する。カンマ抜けで複数タグが連結された
+    だけと判定できるタグ（_is_missing_comma_tag が真）もNG扱いせず、
+    comma_ok として file_stats に計上する。戻り値は (ng_list, file_stats)。
 
     ng_list: NGだったタグのみのリスト。各要素は
         {"filename", "group", "label", "tag"}
-    file_stats: {filename: {"checked": int, "ng": int, "skipped": int}}
+    file_stats: {filename: {"checked": int, "ng": int, "skipped": int, "comma_ok": int}}
     """
     ng_list = []
     file_stats = {}
     for filename, group, label, tags_str in entries:
-        stats = file_stats.setdefault(filename, {"checked": 0, "ng": 0, "skipped": 0})
+        stats = file_stats.setdefault(
+            filename, {"checked": 0, "ng": 0, "skipped": 0, "comma_ok": 0}
+        )
         if is_lora_entry(tags_str):
             stats["skipped"] += len(extract_tags(tags_str))
             continue
         for tag in extract_tags(tags_str):
             stats["checked"] += 1
-            if query_exact(conn, tag) is None:
-                stats["ng"] += 1
-                ng_list.append({"filename": filename, "group": group, "label": label, "tag": tag})
+            if query_exact(conn, tag) is not None:
+                continue
+            if _is_missing_comma_tag(conn, tag):
+                stats["comma_ok"] += 1
+                continue
+            stats["ng"] += 1
+            ng_list.append({"filename": filename, "group": group, "label": label, "tag": tag})
     return ng_list, file_stats
 
 
@@ -432,20 +471,31 @@ def print_yaml_ng_line(ng):
     )
 
 
+def _format_yaml_notes(skipped, comma_ok):
+    notes = []
+    if skipped:
+        notes.append(f"LoRAエントリのため{skipped}件スキップ")
+    if comma_ok:
+        notes.append(f"カンマ抜け許容{comma_ok}件")
+    return f"（{'、'.join(notes)}）" if notes else ""
+
+
 def print_yaml_summary(file_stats):
     print("--- サマリ ---")
     total_checked = 0
     total_ng = 0
     total_skipped = 0
+    total_comma_ok = 0
     for filename in sorted(file_stats):
         stats = file_stats[filename]
         total_checked += stats["checked"]
         total_ng += stats["ng"]
         total_skipped += stats["skipped"]
-        skip_note = f"（LoRAエントリのため{stats['skipped']}件スキップ）" if stats["skipped"] else ""
-        print(f"{filename}.yml: {stats['ng']}/{stats['checked']}件 NG{skip_note}")
-    skip_total_note = f"（LoRAスキップ合計{total_skipped}件）" if total_skipped else ""
-    print(f"合計: {total_ng}/{total_checked}件 NG{skip_total_note}")
+        total_comma_ok += stats["comma_ok"]
+        note = _format_yaml_notes(stats["skipped"], stats["comma_ok"])
+        print(f"{filename}.yml: {stats['ng']}/{stats['checked']}件 NG{note}")
+    total_note = _format_yaml_notes(total_skipped, total_comma_ok)
+    print(f"合計: {total_ng}/{total_checked}件 NG{total_note}")
 
 
 def main():
