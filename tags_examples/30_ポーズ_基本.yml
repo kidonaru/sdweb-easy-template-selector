@@ -64,6 +64,7 @@
   片手を後頭部に: arm behind head
   両手を後頭部に: arms behind head
   頭の後ろに腕を持ってく: arms behind head
+  両腕を頭に乗せる: arms on own head
   布を引っ張る: clothes pull
   両手を広げる: outstretched arms
   両腕を上げる: arms up
@@ -82,10 +83,13 @@
   胸を乗せる: breast rest
   胸を揉む: grabbing own breast
   手で口を覆う: covering own mouth
+  口に手を添える: hand over own mouth
   手ブラ: covering breasts
   片手ブラ: covering one breast
   乳首を隠す: covering nipples
   胸に触れる: touching breasts
+  他人の尻を掴む: grabbing another's ass
+  他人の顔に手を添える: hand on another's face
 
 衣装動作:
   服のたくし上げ: clothes lift
@@ -170,7 +174,9 @@
   足組み: crossed legs
   腿上げ: leg lift
   内股: pigeon-toed
+  がに股: bowlegged
   両足一緒に: legs together
+  膝を立てる: knee up
   M字: m legs
   V字: v legs
 
@@ -227,3 +233,5 @@
   頭を傾ける: head tilt
   尻尾が上がる: tail raised
   本を読む: reading a book
+  フレンチキス: french kiss
+  背中を反らす: arched back

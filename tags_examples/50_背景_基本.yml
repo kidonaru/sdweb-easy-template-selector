@@ -8,6 +8,7 @@
   バスタブ: bathtub
   プール: pool
   ベッドの上: on bed
+  畳の上: on tatami
   寝室: bedroom
   映画館: movie theater
   温泉: onsen
@@ -47,3 +48,7 @@
   本屋: bookstore
   図書館: library
   遊園地: amusement park
+  ホテルの寝室: hotel room,bedroom
+
+時間帯:
+  夕方: evening

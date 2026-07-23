@@ -4,9 +4,10 @@
 
 被写界深度: depth of field
 被写界深度/空間光: depth of field,volumetric lighting
-激しい呼吸: heavybreath
+激しい呼吸: heavy breathing
 被写界深度と背景のぼかし: depth of field,blurry background
 暗めの照明: dark
+暗い照明(独自表現): lighting dark
 モノクロの影とハート: monochrome,shadow,heart
 モーションライン: motion lines
 モーションエフェクト: motion effect
@@ -22,12 +23,16 @@
 リムライト: rim light
 ハートと無修正: heart,uncensored
 細部まで表現された布地: fine fabric emphasis
-Negative_for_anime: (negative_v2 Color_Balance_Calibration:0.8)
 前面ライトアップ: <lora:facelightup_xl_v10:1>
 パステルカラー: pastel colors
+木漏れ日: dappled sunlight
+陽光: sunlight
+被写界深度と背景ぼかし/人物にフォーカス(強調): depth of field,blurry background,soft blurred background,character in sharp focus
 甘く官能的な親密な雰囲気: intimate,sweet and erotic atmosphere
 水滴のついたレンズ: water droplets on lens
 視聴者への水滴: water drop on viewer
 飛沫: splash
 泡: bubble
 たくさんの泡: many foam
+背景のぼかし: blurry background
+腰振りの残像: humping afterimage

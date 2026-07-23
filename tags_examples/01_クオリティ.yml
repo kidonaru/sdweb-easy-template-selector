@@ -12,6 +12,7 @@ Model:
   ベスト: best quality
   ハイクオリティ: best quality,high quality
   驚異的: best quality,amazing quality
+  ハイパークオリティ: hyper quality
 
 汎用:
   高精細CGクオリティ: ultra detailed,extremely detailed absurdres,extremely detailed CG unity 8k wallpaper,detailed beautiful background,highly detailed beautiful face and eyes,no text
@@ -29,6 +30,7 @@ Model:
   高解像度(省略): highres
   異常な解像度: absurdres
   8K HDR: highres,8k,HDR,
+  8K: 8k
   異常な解像度で詳細: high resolution,ultra-detailed,absurdres
 
 詳細:
@@ -38,6 +40,12 @@ Model:
   詳細な髪: detailed hair
 
 スタイル:
+  繊細な線画: delicate linework
+  ファッション: fashion
+  ファッションアパレル: fashion apparel
+  モダンスタイル: modern style
+  キュート: cute
+  カワイイ: kawaii
   水彩画風: watercolor,pastel color
   アニメ: source anime
   アニメ(強調): 2d anime,source anime,anime
@@ -61,6 +69,7 @@ Model:
 背景:
   詳細な背景: detailed background
   風景: scenery
+  超詳細な背景: ultra detailed background
 
 ポーズ:
   躍動感: dynamic pose,dynamic angle
@@ -91,3 +100,4 @@ Model:
   官能的: sensual
   エロティック: erotic
   淫らな雰囲気: lewd atmosphere
+  物憂げで静かな雰囲気: moody and tranquil atmosphere

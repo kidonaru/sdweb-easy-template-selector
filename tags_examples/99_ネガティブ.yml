@@ -10,10 +10,14 @@ Embeddings:
   Bad-Hands-5: bad-hands-5
   unaestheticXL(アニメ): unaestheticXLv1
   unaestheticXL(リアル): unaestheticXLv13
+  lazyhand: lazyhand
+  lazyneg: lazyneg
+  Negative_for_anime: (negative_v2 Color_Balance_Calibration:0.8)
 
 品質:
   低解像度: lowres
   低品質: worst quality,bad quality,low quality,normal quality
+  雑な絵/素人絵: messy drawing,amateur drawing
 
 アートスタイル:
   アニメ・カートゥーン: cartoon
@@ -30,6 +34,7 @@ Embeddings:
   悪い目: bad eyes
   大きな頭: large head
   男性顔: man face
+  舌: tongue
 
 人体:
   悪い解剖学: bad anatomy
@@ -54,9 +59,22 @@ Embeddings:
   結合: conjoined
   減少拡張欠損: fewer,extra,missing
   ロリ: loli
+  華奢すぎる体型: slender
+  指の数が少ない: fewer fingers
+  反射する肌: reflective skin
+  長いトルソー: long torso
+  尻尾: tail
+  日焼け跡: sunburn
+
+衣装:
+  乱れた服: disheveled clothes
+  ランジェリー: lingerie
+  胸の谷間: cleavage
+  透け感: transparent
 
 評価:
   低評価: score_6,score_5,score_4,score_3,score_2,score_1
+  露骨レーティング回避: rating_explicit
 
 グラフィック:
   アーティファクト: artifacts,jpeg artifacts,scan artifacts
@@ -74,6 +92,8 @@ Embeddings:
   フィルムグレイン: film grain
   ハーフトーン: halftone,screentones,dithering
   複数視点: multiple views
+  3Dレンダー: source filmmaker,3D
+  コミック調: comic
 
 その他:
   曲がった: bendy
@@ -94,3 +114,7 @@ Embeddings:
   透かし過多: too many watermarks
   余白: negative space,blank page
   テイル: tale
+  海外アーティスト: western artist
+  海外アニメ作品: the simpsons,dc comics,avatar legends,adventure time,powerpuff girls,the grim adventures of billy & mandy,south park,gravity falls,marvel,steven universe,star wars,the loud house,ben 10,kim possible \(series\)
+  髪飾り/三つ編み: hair ornament,braid
+  靴: shoes
