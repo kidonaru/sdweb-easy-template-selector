@@ -38,7 +38,6 @@ sunlight highlighting soft sheen of sweat, floor subtly reflecting her outline, 
 <lora:Fixhands_anime_bdsqlsz_V1:1>,
 # 70_スタイルLoRA (MyTest),
 <lora:MyTest:1>,
-# 60_効果 (Negative_for_anime),
-(negative_v2 Color_Balance_Calibration:0.8),
+
 Negative prompt: badhandv4,bad quality,worst quality,worst detail,sketch,blurry,lowres,watermark,bad feet,bad hands,bad art,ugly artstyle,bad fingers,extra limbs,extra hands,lowres,blurry,simple background,sketch,poorly drawn,scan artifacts,bad skin,censor,disfigured,low contrast,extra digit,missing digit,bad limp,missing finger,lower finger,censorship,4fingers,6fingers,
 Steps: 38, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 6, Seed: 1918320052, Size: 768x1344, Model: novaAnimeXL_ilV60, Denoising strength: 0.6, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: Latent, 

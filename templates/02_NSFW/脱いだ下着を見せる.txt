@@ -31,8 +31,7 @@ pussy,(presenting removed panties:1.2),steam,(panties bukkake:1.2),(bukkake:1.2)
 <lora:r-hrtdrp:1>,
 # 70_スタイルLoRA (MyTest),
 <lora:MyTest:1>,
-# 60_効果 (Negative_for_anime),
-(negative_v2 Color_Balance_Calibration:0.8),
+
 Negative prompt: badhandv4,bad fingers, bad hands, missing fingers, lowres, (bad), bad anatomy, bad hands, extra digits, multiple views,fewer, extra, missing, text, error, worst quality, jpeg artifacts, low quality, watermark, unfinished, displeasing, oldest, early,chromatic aberration, signature,artistic error, username, scan, 
 2girl, multiple girls
 Steps: 25, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 4, Seed: 944138086, Size: 1344x768, Model: novaAnimeXL_ilV60, Denoising strength: 0.6, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: Latent,
