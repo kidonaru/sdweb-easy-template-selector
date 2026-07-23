@@ -33,7 +33,15 @@ CATEGORY_LABELS = {0: "general", 1: "artist", 3: "copyright", 4: "character", 5:
 
 
 def normalize(text):
-    """検索・照合用に、空白をアンダースコアに、小文字に正規化する。"""
+    """検索・照合用に、エスケープされた括弧 \\( \\) を通常の括弧へ戻した上で、
+    空白をアンダースコアに、小文字に正規化する。
+
+    テンプレート内のタグ表記は AUTOMATIC1111 の強調記法と衝突しないよう
+    括弧を \\( \\) とエスケープする慣習があるが、Danbooru タグ名自体には
+    バックスラッシュを含まないため、照合前に元の括弧へ戻す必要がある
+    （例: "mari \\(blue archive\\)" → 照合用には "mari_(blue_archive)"）。
+    """
+    text = text.replace("\\(", "(").replace("\\)", ")")
     return "_".join(text.strip().lower().split())
 
 
