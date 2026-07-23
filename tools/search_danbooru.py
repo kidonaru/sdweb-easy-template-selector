@@ -432,10 +432,16 @@ def verify_yaml_entries(conn, entries):
     LoRAエントリ（is_lora_entry が真）は丸ごとスキップし、スキップした
     タグ数を file_stats に計上する。カンマ抜けで複数タグが連結された
     だけと判定できるタグ（_is_missing_comma_tag が真）もNG扱いせず、
-    comma_ok として file_stats に計上する。戻り値は (ng_list, file_stats)。
+    comma_ok として file_stats に計上する。
+
+    タグ文字列にアンダースコアが含まれる場合は、Danbooru上の実在有無に
+    関わらずNG扱いにする。YAML側はスペース区切りで記述するのが本プロジェクトの
+    規約であり（normalize() がスペースをアンダースコアへ変換して照合するため
+    アンダースコア表記でも実在確認自体は通ってしまうが）、表記を統一するために
+    アンダースコアはスタイル違反として弾く。戻り値は (ng_list, file_stats)。
 
     ng_list: NGだったタグのみのリスト。各要素は
-        {"filename", "group", "label", "tag"}
+        {"filename", "group", "label", "tag", "reason"(省略可、"underscore"のみ設定)}
     file_stats: {filename: {"checked": int, "ng": int, "skipped": int, "comma_ok": int}}
     """
     ng_list = []
@@ -449,6 +455,12 @@ def verify_yaml_entries(conn, entries):
             continue
         for tag in extract_tags(tags_str):
             stats["checked"] += 1
+            if "_" in tag:
+                stats["ng"] += 1
+                ng_list.append(
+                    {"filename": filename, "group": group, "label": label, "tag": tag, "reason": "underscore"}
+                )
+                continue
             if query_exact(conn, tag) is not None:
                 continue
             if _is_missing_comma_tag(conn, tag):
@@ -465,6 +477,12 @@ def format_yaml_category(filename, group):
 
 def print_yaml_ng_line(ng):
     category = format_yaml_category(ng["filename"], ng["group"])
+    if ng.get("reason") == "underscore":
+        print(
+            f"NG {category} ({ng['label']}) tag='{ng['tag']}': "
+            "アンダースコアを含むタグは許容しません（スペース区切りで記述してください）。"
+        )
+        return
     print(
         f"NG {category} ({ng['label']}) tag='{ng['tag']}': "
         "Danbooru に実在するタグは見つかりませんでした（別名含め未検出）。"
