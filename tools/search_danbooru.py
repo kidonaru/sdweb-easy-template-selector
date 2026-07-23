@@ -352,6 +352,59 @@ def extract_tags(tags_str):
     return tags
 
 
+def verify_yaml_entries(conn, entries):
+    """entries（(filename, group, label, tags_str)のリスト）を検証する。
+
+    LoRAエントリ（is_lora_entry が真）は丸ごとスキップし、スキップした
+    タグ数を file_stats に計上する。戻り値は (ng_list, file_stats)。
+
+    ng_list: NGだったタグのみのリスト。各要素は
+        {"filename", "group", "label", "tag"}
+    file_stats: {filename: {"checked": int, "ng": int, "skipped": int}}
+    """
+    ng_list = []
+    file_stats = {}
+    for filename, group, label, tags_str in entries:
+        stats = file_stats.setdefault(filename, {"checked": 0, "ng": 0, "skipped": 0})
+        if is_lora_entry(tags_str):
+            stats["skipped"] += len(extract_tags(tags_str))
+            continue
+        for tag in extract_tags(tags_str):
+            stats["checked"] += 1
+            if query_exact(conn, tag) is None:
+                stats["ng"] += 1
+                ng_list.append({"filename": filename, "group": group, "label": label, "tag": tag})
+    return ng_list, file_stats
+
+
+def format_yaml_category(filename, group):
+    return f"{filename}:{group}" if group else filename
+
+
+def print_yaml_ng_line(ng):
+    category = format_yaml_category(ng["filename"], ng["group"])
+    print(
+        f"NG {category} ({ng['label']}) tag='{ng['tag']}': "
+        "Danbooru に実在するタグは見つかりませんでした（別名含め未検出）。"
+    )
+
+
+def print_yaml_summary(file_stats):
+    print("--- サマリ ---")
+    total_checked = 0
+    total_ng = 0
+    total_skipped = 0
+    for filename in sorted(file_stats):
+        stats = file_stats[filename]
+        total_checked += stats["checked"]
+        total_ng += stats["ng"]
+        total_skipped += stats["skipped"]
+        skip_note = f"（LoRAエントリのため{stats['skipped']}件スキップ）" if stats["skipped"] else ""
+        print(f"{filename}.yml: {stats['ng']}/{stats['checked']}件 NG{skip_note}")
+    skip_total_note = f"（LoRAスキップ合計{total_skipped}件）" if total_skipped else ""
+    print(f"合計: {total_ng}/{total_checked}件 NG{skip_total_note}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=(
@@ -360,7 +413,29 @@ def main():
             "既定は部分一致、--exact でタグ名/別名との完全一致のみに絞る。"
         )
     )
-    parser.add_argument("queries", nargs="+", help="検索語（クエリごとに個別に結果を表示する）")
+    parser.add_argument(
+        "queries", nargs="*", help="検索語（クエリごとに個別に結果を表示する。--yaml 指定時は使わない）"
+    )
+    parser.add_argument(
+        "--yaml",
+        nargs="+",
+        metavar="PATH",
+        default=None,
+        help=(
+            "tags/*.yml 内の全タグを一括で実在確認するモード。ファイルまたは"
+            "ディレクトリ（直下の *.yml を対象）を複数指定可能。queries とは併用不可"
+        ),
+    )
+    parser.add_argument(
+        "--exclude-category",
+        nargs="+",
+        default=[],
+        metavar="PREFIX",
+        help=(
+            "--yaml モードで検証対象から除外するカテゴリ（ファイル名プレフィックス、"
+            "複数指定可）。例: --exclude-category 01_クオリティ 10_キャラ_LoRA"
+        ),
+    )
     parser.add_argument(
         "--exact",
         action="store_true",
@@ -389,6 +464,11 @@ def main():
     )
     args = parser.parse_args()
 
+    if args.yaml and args.queries:
+        parser.error("--yaml と検索語(queries)は同時に指定できません")
+    if not args.yaml and not args.queries:
+        parser.error("検索語または --yaml のいずれかを指定してください")
+
     try:
         db_path = ensure_db(args.csv_path, args.db_path, force_rebuild=args.rebuild)
     except FileNotFoundError as e:
@@ -397,12 +477,35 @@ def main():
 
     conn = sqlite3.connect(db_path)
     try:
-        for query in args.queries:
-            if args.exact:
-                print_exact_result(query, query_exact(conn, query))
-            else:
-                results, total = query_partial(conn, query, args.limit)
-                print_partial_results(query, results, total, args.limit)
+        if args.yaml:
+            yaml_paths = resolve_yaml_paths(args.yaml)
+            if args.exclude_category:
+                # エントリ読み込み後ではなくパス解決後に除外することで、除外対象
+                # ファイルの不要なパース・警告出力を避ける。
+                yaml_paths = [
+                    p for p in yaml_paths
+                    if not any(
+                        os.path.splitext(os.path.basename(p))[0].startswith(prefix)
+                        for prefix in args.exclude_category
+                    )
+                ]
+            entries = load_yaml_entries(yaml_paths)
+            ng_list, file_stats = verify_yaml_entries(conn, entries)
+            print(
+                "（判定は a1111-sd-webui-tagcomplete の danbooru.csv スナップショットに"
+                "基づきます。スナップショットに未反映の新規タグ等はNGとして表示される"
+                "場合があります）"
+            )
+            for ng in ng_list:
+                print_yaml_ng_line(ng)
+            print_yaml_summary(file_stats)
+        else:
+            for query in args.queries:
+                if args.exact:
+                    print_exact_result(query, query_exact(conn, query))
+                else:
+                    results, total = query_partial(conn, query, args.limit)
+                    print_partial_results(query, results, total, args.limit)
     finally:
         conn.close()
 
