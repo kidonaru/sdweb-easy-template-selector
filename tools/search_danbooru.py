@@ -332,22 +332,62 @@ def is_lora_entry(tags_str):
 _WEIGHT_WRAPPER_RE = re.compile(r"^\((.*):\d+(?:\.\d+)?\)$")
 
 
+def _split_top_level_commas(text):
+    """かっこの深さを考慮し、最上位（かっこの外）のカンマでのみ分割する。
+
+    エスケープされた括弧 \\( \\) はタグ名の一部として深さに影響させない。
+    これにより、(tag1, tag2:1.2) のような複数タグへの重みラップ内のカンマを
+    誤って分割しないようにする。
+    """
+    tokens = []
+    current = []
+    depth = 0
+    i = 0
+    n = len(text)
+    while i < n:
+        ch = text[i]
+        if ch == "\\" and i + 1 < n and text[i + 1] in "()":
+            current.append(text[i:i + 2])
+            i += 2
+            continue
+        if ch == "(":
+            depth += 1
+            current.append(ch)
+        elif ch == ")":
+            depth = max(depth - 1, 0)
+            current.append(ch)
+        elif ch == "," and depth == 0:
+            tokens.append("".join(current))
+            current = []
+        else:
+            current.append(ch)
+        i += 1
+    tokens.append("".join(current))
+    return tokens
+
+
 def extract_tags(tags_str):
     """カンマ区切りのタグ文字列を個別タグのリストへ分解する。
 
-    各トークン全体が (<内容>:<数値>) の重みラップ形式であれば、外側の
-    括弧と :<数値> を剥がして <内容> だけを残す（内側のエスケープ括弧は
-    タグ名の一部としてそのまま残す）。空トークンは無視する。
+    かっこの深さを考慮した最上位のカンマでのみ分割するため、
+    (tag1, tag2:1.2) のような複数タグへの重みラップも壊さず扱える。
+    分割後の各トークン全体が (<内容>:<数値>) の重みラップ形式であれば、
+    外側の括弧と :<数値> を剥がし、<内容> をさらに最上位のカンマで分割して
+    個々のタグへ展開する（内側のエスケープ括弧はタグ名の一部としてそのまま
+    残す）。空トークンは無視する。
     """
     tags = []
-    for token in tags_str.split(","):
+    for token in _split_top_level_commas(tags_str):
         token = token.strip()
         if not token:
             continue
         m = _WEIGHT_WRAPPER_RE.match(token)
         if m:
-            token = m.group(1).strip()
-        if token:
+            for sub in _split_top_level_commas(m.group(1).strip()):
+                sub = sub.strip()
+                if sub:
+                    tags.append(sub)
+        else:
             tags.append(token)
     return tags
 
