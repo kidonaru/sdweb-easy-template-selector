@@ -12,9 +12,14 @@ create-template スキルで新規タグを tags/*.yml に追記する前に、
 """
 import argparse
 import csv
+import glob
 import os
 import sqlite3
 import sys
+
+import yaml
+
+import search_tags
 
 # Windows のコンソールは既定で cp932 になり得るため、日本語の出力が
 # 文字化けしないよう明示的に UTF-8 へ固定する。
@@ -256,6 +261,62 @@ def print_partial_results(query, results, total, limit):
         )
     if total > limit:
         print(f"  ...他 {total - limit} 件（--exact または具体的なクエリで絞り込んでください）")
+
+
+def resolve_yaml_paths(paths):
+    """--yaml に渡されたパス群を実際の .yml ファイルパスのリストへ解決する。
+
+    ディレクトリは tools/search_tags.py の load_entries と同じく、直下の
+    *.yml を非再帰でグロブする。存在しないパスは警告を出してスキップする。
+    ディレクトリ指定と個別ファイル指定が重複した場合（例: --yaml tags/
+    tags/10_キャラ.yml）に同一ファイルを二重集計しないよう、実体パス
+    （realpath）基準で重複を除去する。
+    """
+    resolved = []
+    seen_real = set()
+    for path in paths:
+        if os.path.isdir(path):
+            candidates = sorted(glob.glob(os.path.join(path, "*.yml")))
+        elif os.path.isfile(path):
+            candidates = [path]
+        else:
+            print(f"警告: 指定されたパスが見つかりません: {path}", file=sys.stderr)
+            continue
+        for candidate in candidates:
+            real = os.path.realpath(candidate)
+            if real in seen_real:
+                continue
+            seen_real.add(real)
+            resolved.append(candidate)
+    return resolved
+
+
+def load_yaml_entries(yaml_paths):
+    """yaml_paths（解決済みファイルパスのリスト）を読み込み、
+    (ファイル名, グループ, ラベル, タグ文字列) のリストを返す。
+
+    構文エラー・非辞書ファイルは警告を出してスキップする
+    （tools/search_tags.py の load_entries と同じ挙動。パース処理自体は
+    search_tags.flatten() を再利用する）。
+    """
+    entries = []
+    for path in yaml_paths:
+        filename = os.path.splitext(os.path.basename(path))[0]
+        try:
+            with open(path, encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+        except (yaml.YAMLError, OSError, UnicodeDecodeError) as e:
+            print(f"警告: {filename}.yml の読み込みに失敗したためスキップします: {e}", file=sys.stderr)
+            continue
+        if not data:
+            continue
+        if not isinstance(data, dict):
+            if filename not in search_tags.NON_DICT_WARNING_BLACKLIST:
+                print(f"警告: {filename}.yml はトップレベルが辞書形式ではないためスキップします", file=sys.stderr)
+            continue
+        for group, label, tags in search_tags.flatten(data, filename):
+            entries.append((filename, group, label, tags))
+    return entries
 
 
 def main():
