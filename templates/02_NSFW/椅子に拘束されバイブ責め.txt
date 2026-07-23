@@ -75,7 +75,7 @@ on the verge of orgasm,
 # 33_状況:基本 (絶頂),
 orgasm,
 
-# 50_背景:オリジナル (室内の光に舞う塵),
+# 60_効果 (室内の光に舞う塵),
 dust particles in roomlight,
 # 60_効果 (被写界深度),
 depth of field,

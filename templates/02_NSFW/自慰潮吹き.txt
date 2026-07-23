@@ -102,7 +102,7 @@ bokeh,
 shallow depth of field,
 # 60_効果 (リムライト),
 rim light,
-# 50_背景:オリジナル (月明かりに舞う塵),
+# 60_効果 (月明かりに舞う塵),
 dust particles in moonlight,
 
 # 71_ディテールLoRA (detaILeReij),
