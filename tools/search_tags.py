@@ -133,9 +133,25 @@ def main():
         default=default_tags_dir,
         help=f"tags ディレクトリのパス（デフォルト: {default_tags_dir}）",
     )
+    parser.add_argument(
+        "--exclude-category",
+        nargs="+",
+        default=[],
+        metavar="PREFIX",
+        help=(
+            "検索から除外するカテゴリ（ファイル名プレフィックス、複数指定可）。"
+            "例: --exclude-category 10_キャラ は 10_キャラ.yml・10_キャラ_LoRA.yml・"
+            "10_キャラ_ブルアカ.yml などをまとめて除外する"
+        ),
+    )
     args = parser.parse_args()
 
     entries = load_entries(args.tags_dir)
+    if args.exclude_category:
+        entries = [
+            e for e in entries
+            if not any(e[0].startswith(prefix) for prefix in args.exclude_category)
+        ]
     results = search(entries, args.queries, args.mode, args.exact)
 
     if not results:
