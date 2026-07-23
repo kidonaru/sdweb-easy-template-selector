@@ -28,10 +28,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# a1111-sd-webui-tagcomplete は本リポジトリと同じ extensions/ 配下に
-# 同居しているインストール構成を前提としたデフォルトパス。
-DEFAULT_CSV_PATH = os.path.join(
-    os.path.dirname(_REPO_ROOT), "a1111-sd-webui-tagcomplete", "tags", "danbooru.csv"
+# StabilityMatrix の Data/Packages/<パッケージ>/extensions/<拡張> という
+# インストール構成を前提に、_REPO_ROOT から Data/Tags/danbooru.csv を参照する
+# （ユーザーの明示指定によるデフォルト変更。なお共通タグの post_count 比較では
+# a1111-sd-webui-tagcomplete 同梱版の方が全体としては後年のスナップショットで
+# あることを確認済みだが、Data/Tags 側を使う運用が選択された）。
+DEFAULT_CSV_PATH = os.path.normpath(
+    os.path.join(_REPO_ROOT, "..", "..", "..", "..", "Tags", "danbooru.csv")
 )
 DEFAULT_DB_PATH = os.path.join(_REPO_ROOT, "tools", ".cache", "danbooru_tags.db")
 
