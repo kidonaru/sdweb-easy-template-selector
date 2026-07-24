@@ -4,6 +4,7 @@ SeaArt AI の解説記事（GrayMan 著、2025-03-18 更新）を元にした、
 
 - 出典: https://www.seaart.ai/articleDetail/cvceb6le878c73bckfig
 - 参考（v1.0/v1.1 ガイド）: https://www.seaart.ai/articleDetail/cvcdnn5e878c73fqe0s0
+- v1.0/v1.1 版のまとめ: [illustrious_xl_v1.0_v1.1_guide.md](illustrious_xl_v1.0_v1.1_guide.md)
 
 ## v2.0 の仕様
 
