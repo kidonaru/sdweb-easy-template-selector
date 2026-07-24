@@ -54,6 +54,7 @@
 トップス:
   ハーフトップ: crop top
   カーディガン: cardigan
+  オーバーサイズネイビーカーディガン: oversized navy cardigan
   サスペンダー: suspenders
   開いたジャケット: open jacket
   開いた服: open clothes
@@ -117,6 +118,7 @@
   セーラーシャツ: sailor shirt
   裸シャツ: naked shirt
   体操服のシャツ: gym shirt
+  スクールシャツ: school shirts
 
 コート:
   コート: coat
@@ -352,6 +354,7 @@
   短い靴下: ankle socks
   フリル付き靴下: frilled socks
   網タイツ: fishnet socks
+  紺色の靴下: navy socks
 
 手袋:
   手袋: gloves
@@ -416,3 +419,7 @@
   股間の前布: pelvic curtain
   ふんどし: loincloth
   ビスチェ: bustier
+
+ネクタイ:
+  スクールタイ: school tie
+  ネックリボン: neck ribbon

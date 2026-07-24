@@ -62,6 +62,7 @@ Model:
   立体的で動的な光: dynamic lighting,volumetric lighting
   立体的で映画のような照明効果: volumetric lighting, dynamic lighting, cinematic lighting,
   動的な陰影: dynamic shading
+  ソフトシェーディング: soft shading
   被写界深度: depth of field
   完璧な照明/下からの照明: perfect lighting,shiny skin,low light
   白い照明: white lighting

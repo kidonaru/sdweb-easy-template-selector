@@ -35,6 +35,9 @@ Embeddings:
   大きな頭: large head
   男性顔: man face
   舌: tongue
+  顔: face
+  頭: head
+  歯: teeth
 
 人体:
   悪い解剖学: bad anatomy
@@ -62,6 +65,8 @@ Embeddings:
   華奢すぎる体型: slender
   指の数が少ない: fewer fingers
   反射する肌: reflective skin
+  汗: sweat
+  女性器: pussy
   長いトルソー: long torso
   尻尾: tail
   日焼け跡: sunburn
@@ -71,6 +76,7 @@ Embeddings:
   ランジェリー: lingerie
   胸の谷間: cleavage
   透け感: transparent
+  パンツ: panties
 
 評価:
   低評価: score_6,score_5,score_4,score_3,score_2,score_1
