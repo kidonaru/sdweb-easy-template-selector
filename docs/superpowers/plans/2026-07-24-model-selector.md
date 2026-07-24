@@ -1,8 +1,8 @@
-# 95_モデル.yml モデル選択機能 Implementation Plan
+# 90_モデル.yml モデル選択機能 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** `tags/95_モデル.yml` のボタン押下でチェックポイントを切り替え、プロンプト中の `# 01_クオリティ:Model` / `# 99_ネガティブ:Model` セクションを選択モデル対応のタグへ差し替える。
+**Goal:** `tags/90_モデル.yml` のボタン押下でチェックポイントを切り替え、プロンプト中の `# 01_クオリティ:Model` / `# 99_ネガティブ:Model` セクションを選択モデル対応のタグへ差し替える。
 
 **Architecture:** `96_解像度` と同じ「プロンプトに挿入しない特殊カテゴリ」として実装。`ETSSection.isModelCategory()` で判定し、`ETSPromptEditor.addTag` で early return してモデル切替とセクション差し替えを行う。タグデータは `templateManager.getTags()` から参照。
 
@@ -36,7 +36,7 @@
   // モデルカテゴリかどうかを判定
   isModelCategory() {
     if (!this.category) return false
-    return this.category.startsWith('95_モデル')
+    return this.category.startsWith('90_モデル')
   }
 ```
 
@@ -59,7 +59,7 @@ git commit -m "feat: ETSSection にモデルカテゴリ判定を追加"
 - Produces: なし(内部処理のみ)
 
 **前提知識:**
-- `addTag(comment, tag, category, isAddMode)` の引数は、モデルボタンの場合 `comment` = 表示名(YAML キー)、`tag` = チェックポイント名(YAML 値)、`category` = `"95_モデル:Illustrious"` 等。
+- `addTag(comment, tag, category, isAddMode)` の引数は、モデルボタンの場合 `comment` = 表示名(YAML キー)、`tag` = チェックポイント名(YAML 値)、`category` = `"90_モデル:Illustrious"` 等。
 - `this.templateManager.getTags()` はファイル名 stem をキーとするオブジェクトを返す。`getTags()['01_クオリティ']['Model']['WAI-illustrious-SDXL v17.0']` でタグ列(カンマ区切り文字列)が引ける。
 - `ETSSection('表示名', 'タグ列', '01_クオリティ:Model').toString()` は `# 01_クオリティ:Model (表示名),\nタグ列,` を生成する。
 
@@ -159,16 +159,16 @@ git commit -m "feat: モデルカテゴリのボタンでモデル切替と Mode
 ### Task 3: タグ YAML の追加・リネーム
 
 **Files:**
-- Create: `tags/95_モデル.yml`
+- Create: `tags/90_モデル.yml`
 - Modify: `tags/01_クオリティ.yml`(`Model:` サブカテゴリのキー)
 - Modify: `tags/99_ネガティブ.yml`(`Model:` サブカテゴリのキー)
 
 **Interfaces:**
-- Produces: `95_モデル.yml` のキー(表示名)と `01/99` の `Model:` キーの完全一致対応
+- Produces: `90_モデル.yml` のキー(表示名)と `01/99` の `Model:` キーの完全一致対応
 
 **注意:** `tags/` は git 管理外。コミット対象は無いが、ファイル編集は通常どおり行う。
 
-- [ ] **Step 1: `tags/95_モデル.yml` を作成**
+- [ ] **Step 1: `tags/90_モデル.yml` を作成**
 
 インストール済みチェックポイントのうち `Model:` タグを持つもの・持たせるものを登録:
 
@@ -204,7 +204,7 @@ Model:
 - [ ] **Step 4: YAML 構文チェック**
 
 ```bash
-python -c "import yaml, sys; [yaml.safe_load(open(f, encoding='utf-8')) for f in sys.argv[1:]]" tags/95_モデル.yml tags/01_クオリティ.yml tags/99_ネガティブ.yml
+python -c "import yaml, sys; [yaml.safe_load(open(f, encoding='utf-8')) for f in sys.argv[1:]]" tags/90_モデル.yml tags/01_クオリティ.yml tags/99_ネガティブ.yml
 ```
 
 Expected: エラーなしで終了(exit 0)
@@ -215,7 +215,7 @@ Expected: エラーなしで終了(exit 0)
 
 **Files:** なし(動作確認のみ。UI の Reload で JS/YAML を反映)
 
-- [ ] **Step 1: UI に「95_モデル」カテゴリが表示され、4 ボタンが並ぶことを確認**
+- [ ] **Step 1: UI に「90_モデル」カテゴリが表示され、4 ボタンが並ぶことを確認**
 - [ ] **Step 2: 現在と異なるモデルのボタン押下でチェックポイントが切り替わることを確認**
 - [ ] **Step 3: プロンプトに `# 01_クオリティ:Model` / `# 99_ネガティブ:Model` セクションがある状態でボタン押下 → 両セクションのコメントとタグが選択モデルのものに差し替わり、プロンプトへの新規タグ挿入が無いことを確認**
 - [ ] **Step 4: Model セクションが無いプロンプトでボタン押下 → プロンプトが変化しないことを確認**

@@ -103,6 +103,6 @@ class ETSSection {
   // モデルカテゴリかどうかを判定
   isModelCategory() {
     if (!this.category) return false
-    return this.category.startsWith('95_モデル')
+    return this.category.startsWith('90_モデル')
   }
 }
