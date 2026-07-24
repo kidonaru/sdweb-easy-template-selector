@@ -37,6 +37,11 @@ BREAK
 dark,rim light,depth of field,detailed eyes,volumetric lighting,ray tracing,vignetting,
 # 61_テーマ (ピンク),
 pink theme,
+
+# 71_ディテールLoRA (detaILeReij),
+<lora:r-hrtdrp:1>,
+# 70_スタイルLoRA (MyTest),
+<lora:MyTest:1>,
 Negative prompt: # 99_ネガティブ:Model (Nova Anime XL),
 modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated,
-Steps: 20, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 4.5, Seed: 3768548286, Size: 768x1344, Model: novaAnimeXL_ilV60, Denoising strength: 0.4, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: Latent, 
+Steps: 38, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 4.5, Seed: 1918320052, Size: 768x1344, Model: novaAnimeXL_ilV60, Denoising strength: 0.4, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: Latent, 
