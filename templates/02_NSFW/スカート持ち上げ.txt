@@ -4,6 +4,8 @@
 delicate linework,
 # 01_クオリティ:Model (Nova Anime XL),
 masterpiece,best quality,amazing quality,
+
+BREAK
 # 02_対象 (一人の女の子(強調)),
 1girl,solo,
 # 11_体型 (若々しい/小柄),
@@ -16,6 +18,8 @@ cute,
 kawaii,
 # 01_クオリティ:レーティング (NSFW),
 nsfw,
+
+BREAK
 # 41_フォーカス (クローズアップの女性器),
 (close-up pussy:1.4),
 # 41_フォーカス (閉じた膣口),
@@ -32,6 +36,8 @@ lace panties,
 panty pull,
 # 30_ポーズ_基本:衣装動作 (スカートを持つ),
 holding skirt,
+
+BREAK
 # 30_ポーズ_NSFW:自慰 (くぱぁ),
 (spread pussy:0.5),
 # 30_ポーズ:オリジナル (直立して立つ),
