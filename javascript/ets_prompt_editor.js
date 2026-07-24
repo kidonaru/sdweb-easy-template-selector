@@ -70,6 +70,72 @@ class ETSPromptEditor {
     return sections
   }
 
+  // 指定 textarea 内の対象カテゴリセクションを差し替える(存在しない場合は何もしない)
+  replaceSection(textareaId, newSection) {
+    const textarea = gradioApp().getElementById(textareaId).querySelector('textarea')
+    const targetName = `# ${newSection.category}`
+    const sections = this.splitSections(textarea.value)
+    let found = false
+
+    const newSections = sections.map(section => {
+      if (!found && section.startsWith(targetName)) {
+        found = true
+        return newSection.toString()
+      }
+      return section
+    })
+
+    if (!found) {
+      return false
+    }
+
+    textarea.value = newSections.join('\n')
+    updateInput(textarea)
+    return true
+  }
+
+  // モデル選択: チェックポイント切替と Model セクションの差し替え
+  applyModelTag(modelName, checkpointName) {
+    // チェックポイント切り替え(現在と同じ場合はスキップ)
+    if (typeof selectCheckpoint !== 'function') {
+      console.error('selectCheckpoint が見つかりません。WebUI のバージョンを確認してください')
+      return
+    }
+    if (checkpointName !== this.templateManager.getCurrentModel()) {
+      selectCheckpoint(checkpointName)
+    }
+
+    // Model セクションの差し替え(01_クオリティ / 99_ネガティブ)
+    const tags = this.templateManager.getTags()
+    let replaced = false
+    let entryFound = false
+
+    const targets = [
+      { file: '01_クオリティ', textareaId: 'txt2img_prompt' },
+      { file: '99_ネガティブ', textareaId: 'txt2img_neg_prompt' },
+    ]
+    for (const { file, textareaId } of targets) {
+      const modelTag = tags?.[file]?.['Model']?.[modelName]
+      if (!modelTag) {
+        continue
+      }
+      entryFound = true
+      const newSection = new ETSSection(modelName, modelTag, `${file}:Model`)
+      if (this.replaceSection(textareaId, newSection)) {
+        replaced = true
+      }
+    }
+
+    // 表記ゆれによるキー不一致の切り分け用(01/99 のどちらにもエントリが無い場合)
+    if (!entryFound) {
+      console.warn(`Model エントリが見つかりません: ${modelName}(01_クオリティ / 99_ネガティブ の Model: キーと完全一致しているか確認してください)`)
+    }
+
+    if (replaced) {
+      this.history.saveTextHistory()
+    }
+  }
+
   addTag(comment, tag, category, isAddMode) {
     const targetSection = new ETSSection(comment, tag, category)
     const isNegativeCategory = targetSection.isNegativeCategory()
@@ -85,6 +151,12 @@ class ETSPromptEditor {
         this.templateManager.applyMeta('Width', width)
         this.templateManager.applyMeta('Height', height)
       }
+      return
+    }
+
+    // モデルカテゴリの場合、モデル切替と Model セクションの差し替えを行う
+    if (targetSection.isModelCategory()) {
+      this.applyModelTag(comment, tag)
       return
     }
 
