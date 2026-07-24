@@ -99,4 +99,10 @@ class ETSSection {
     if (!this.category) return false
     return this.category.startsWith('96_解像度')
   }
+
+  // モデルカテゴリかどうかを判定
+  isModelCategory() {
+    if (!this.category) return false
+    return this.category.startsWith('95_モデル')
+  }
 }
