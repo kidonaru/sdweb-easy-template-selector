@@ -108,6 +108,8 @@ Embeddings:
   複数視点: multiple views
   3Dレンダー: source filmmaker,3D
   コミック調: comic
+  ソース: source pony,source furry,source cartoon
+  画風混入防止: source pony,source furry,source cartoon,comic,source filmmaker,3D
 
 その他:
   曲がった: bendy
@@ -118,7 +120,6 @@ Embeddings:
   検閲: censored
   検閲(強調): (censored, bar_censor, mosaic_censor:1.2)
   シンプルな背景: simple background
-  ソース: source pony,source furry,source cartoon
   エラー: error
   未完成: unfinished
   色収差: chromatic aberration
