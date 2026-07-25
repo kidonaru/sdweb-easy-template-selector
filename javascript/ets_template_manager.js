@@ -22,10 +22,9 @@ class ETSTemplateManager {
       { key: 'Height', id: 'txt2img_height', type: 'input' },
       { key: 'Model', id: 'setting_sd_model_checkpoint', type: 'dropdown' },
       { key: 'Denoising strength', id: 'txt2img_denoising_strength', type: 'input' },
-      // 適用時は本体が infotext の Clip skip を破棄する (Forge Neo) ため Settings スライダーを直接書き換える。
-      // 保存時の値取得だけ opts API 経由にする (Settings タブが未描画だと DOM から読めないため)。
-      // id は残す: API が使えないときの DOM フォールバック先として使う
-      { key: 'Clip skip', id: 'setting_CLIP_stop_at_last_layers', type: 'input', readFrom: 'opts' },
+      // テンプレ適用は Settings スライダーの DOM 書き換えのみで shared.opts に即時反映されないため、
+      // 保存時も opts API ではなく従来どおり DOM (element.value) から読む
+      { key: 'Clip skip', id: 'setting_CLIP_stop_at_last_layers', type: 'input' },
       // RNG はテンプレに書いておかないと本体が既定値を補完して Override Settings に積む。
       // 適用は本体の貼り付け経路に任せるので id は持たない
       { key: 'RNG', id: '', type: '', readFrom: 'opts' },
