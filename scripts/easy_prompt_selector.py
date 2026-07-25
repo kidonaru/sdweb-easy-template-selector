@@ -8,6 +8,7 @@ import modules.scripts as scripts
 from modules.scripts import AlwaysVisible
 from modules import shared
 from scripts.setup import load_tags, get_tags
+from scripts.hr_cfg_inherit import resolve_hr_cfg
 
 FILE_DIR = Path().absolute()
 
@@ -164,5 +165,23 @@ class Script(scripts.Script):
 
         p.extra_generation_params.update({name: prompt.replace('\n', ' ')})
 
+    def inherit_hr_cfg(self, p):
+        if not shared.opts.easy_template_inherit_hr_cfg:
+            return
+
+        # img2img には hr_cfg / enable_hr が無いため getattr で防御する
+        # (本 Script は AlwaysVisible で img2img でも process が走る)
+        hr_cfg = getattr(p, 'hr_cfg', None)
+        if hr_cfg is None:
+            return
+
+        resolved = resolve_hr_cfg(getattr(p, 'enable_hr', False), hr_cfg, p.cfg_scale)
+        if resolved is None:
+            return
+
+        p.hr_cfg = resolved
+        print(f'[easy-template] Hires CFG Scale が 0 のため CFG Scale ({resolved}) を継承しました')
+
     def process(self, p, *args):
         self.replace_template_tags(p)
+        self.inherit_hr_cfg(p)
