@@ -6,6 +6,8 @@ from fastapi import FastAPI
 import yaml
 from modules import scripts, script_callbacks, shared
 
+from scripts.upscaler_aliases import to_display, to_storage
+
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(scripts.basedir())
 TEMP_DIR = FILE_DIR.joinpath('tmp')
@@ -37,6 +39,24 @@ def load_tags():
 def get_tags():
     return tags
 
+def available_upscaler_names():
+    """現在の環境で Hires upscaler として選択できる名前の一覧
+
+    取得に失敗しても致命的ではないため例外は投げず、取れた分だけ返す
+    （両方失敗すれば空リストになり、呼び出し側は変換をスキップする）。
+    片方の失敗でもう片方を巻き添えにしないよう個別に握る。
+    """
+    names = []
+    try:
+        names += list(shared.latent_upscale_modes)
+    except Exception as e:
+        print(f'[easy-template] latent upscale モードの取得に失敗しました: {e}')
+    try:
+        names += [x.name for x in shared.sd_upscalers]
+    except Exception as e:
+        print(f'[easy-template] upscaler 一覧の取得に失敗しました: {e}')
+    return names
+
 class EasyTemplateError(Exception):
     def __init__(self, message: str, status_code: int = 400):
         self.message = message
@@ -53,6 +73,8 @@ def api_networks(_: gr.Blocks, app: FastAPI):
     async def get_templates():
         try:
             templates = {}
+            upscaler_names = available_upscaler_names()
+            unresolved_upscalers = set()
             for filepath in template_files():
                 # 相対パスを取得
                 rel_path = filepath.relative_to(TEMPLATE_DIR)
@@ -67,8 +89,23 @@ def api_networks(_: gr.Blocks, app: FastAPI):
                 
                 # 最後のファイル名でテキストを保存
                 with open(filepath, 'r', encoding='utf-8') as f:
-                    current[filepath.stem] = f.read()
-            
+                    content = f.read()
+
+                try:
+                    # Hires upscaler を実行環境で選択できる名前へ解決する
+                    content, unresolved = to_display(content, upscaler_names)
+                    unresolved_upscalers.update(unresolved)
+                except Exception as e:
+                    # 変換に失敗してもテンプレ自体は返す（読めなくなるより無変換のほうがマシ）
+                    print(f'[easy-template] Hires upscaler の解決に失敗しました ({filepath.name}): {e}')
+
+                current[filepath.stem] = content
+
+            if unresolved_upscalers:
+                # 未導入モデルや記述ミスに気付けるよう、リクエストごとに 1 行だけ出す
+                names = ', '.join(sorted(unresolved_upscalers))
+                print(f'[easy-template] 現在の環境に存在しない Hires upscaler: {names}')
+
             return templates
         except Exception as e:
             raise EasyTemplateError(f"テンプレートの取得に失敗しました: {str(e)}")
@@ -125,6 +162,13 @@ def api_networks(_: gr.Blocks, app: FastAPI):
             template_path.resolve().relative_to(TEMPLATE_DIR.resolve())
         except Exception as e:
             raise EasyTemplateError("無効なテンプレート名です", 400)
+
+        try:
+            # Hires upscaler は環境非依存の正規形（ファイル名 stem）で保存する
+            content = to_storage(content)
+        except Exception as e:
+            # 変換に失敗しても元の内容で保存する
+            print(f'[easy-template] Hires upscaler の正規化に失敗しました: {e}')
 
         try:
             # 親ディレクトリが存在しない場合は作成
