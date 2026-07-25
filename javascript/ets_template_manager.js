@@ -22,7 +22,13 @@ class ETSTemplateManager {
       { key: 'Height', id: 'txt2img_height', type: 'input' },
       { key: 'Model', id: 'setting_sd_model_checkpoint', type: 'dropdown' },
       { key: 'Denoising strength', id: 'txt2img_denoising_strength', type: 'input' },
-      { key: 'Clip skip', id: 'setting_CLIP_stop_at_last_layers', type: 'input' },
+      // 適用時は本体が infotext の Clip skip を破棄する (Forge Neo) ため Settings スライダーを直接書き換える。
+      // 保存時の値取得だけ opts API 経由にする (Settings タブが未描画だと DOM から読めないため)。
+      // id は残す: API が使えないときの DOM フォールバック先として使う
+      { key: 'Clip skip', id: 'setting_CLIP_stop_at_last_layers', type: 'input', readFrom: 'opts' },
+      // RNG はテンプレに書いておかないと本体が既定値を補完して Override Settings に積む。
+      // 適用は本体の貼り付け経路に任せるので id は持たない
+      { key: 'RNG', id: '', type: '', readFrom: 'opts' },
       { key: 'Hires visible', id: 'txt2img_hr-visible-checkbox', type: 'checkbox' },
       { key: 'Hires CFG Scale', id: 'txt2img_hr_cfg', type: 'input' },
       { key: 'Hires upscale', id: 'txt2img_hr_scale', type: 'input' },
@@ -222,8 +228,24 @@ class ETSTemplateManager {
     return result
   }
 
-  getCurrentMetaDataMap() {
+  // 設定由来のメタ値を拡張 API から取得する。Settings タブの DOM 依存を避けるため
+  async fetchOptsInfotext() {
+    try {
+      const response = await fetch('/easy-template/opts-infotext')
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`)
+      }
+      return await response.json()
+    } catch (error) {
+      // API が使えないときは呼び出し側が DOM 読み取りへフォールバックする
+      console.error('設定値の取得に失敗しました:', error)
+      return {}
+    }
+  }
+
+  async getCurrentMetaDataMap() {
     let metaDataMap = {}
+    const optsInfotext = await this.fetchOptsInfotext()
 
     for (const metaInfo of this.metaInfoMap) {
       if (metaInfo.key === 'Model') {
@@ -233,6 +255,23 @@ class ETSTemplateManager {
       } else if (metaInfo.key === 'Size') {
         const size = this.getCurrentSize()
         metaDataMap[metaInfo.key] = size
+        continue
+      }
+
+      if (metaInfo.readFrom === 'opts') {
+        const value = optsInfotext[metaInfo.key]
+        if (value !== undefined && value !== null) {
+          metaDataMap[metaInfo.key] = String(value)
+          continue
+        }
+        // API から取れないときは従来どおり Settings の DOM を読む
+        const fallback = this.getMetaElement(metaInfo.key)
+        if (fallback) {
+          console.warn(`設定値を API から取得できないため DOM から読み取ります: ${metaInfo.key}`)
+          metaDataMap[metaInfo.key] = fallback.value
+        } else {
+          console.warn(`設定値が取得できないためテンプレに書き込みません: ${metaInfo.key}`)
+        }
         continue
       }
 
@@ -253,7 +292,7 @@ class ETSTemplateManager {
     const prompt = gradioApp().getElementById('txt2img_prompt').querySelector('textarea').value
     const negPrompt = gradioApp().getElementById('txt2img_neg_prompt').querySelector('textarea').value
 
-    var metaDataMap = this.getCurrentMetaDataMap()
+    var metaDataMap = await this.getCurrentMetaDataMap()
 
     // テンプレ名を取得
     const templateName = metaDataMap['Template name']
