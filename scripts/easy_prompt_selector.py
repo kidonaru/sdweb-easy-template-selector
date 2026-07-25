@@ -65,6 +65,36 @@ def replace_template(prompt, seed = None):
     random.seed()
     return prompt
 
+# 本体 modules/processing_scripts/comments.py と同じコメント構文を対象にする。
+# 本体はコメント本文だけを消して改行を残すため、空行削除より前に自前で除去する必要がある
+COMMENT_BLOCK_PATTERN = re.compile(r'/\*.*?\*/', re.DOTALL)
+COMMENT_LINE_PATTERN = re.compile(r'[^\S\n]*(#|//).*')
+
+def strip_comment_lines(text):
+    """プロンプトからコメント（/* */, #, //）を除去する。
+
+    コメントだけの行は中身が空になるだけで改行は残るため、後段の空行削除で行ごと消える。
+    """
+    text = COMMENT_BLOCK_PATTERN.sub('', text)
+    return COMMENT_LINE_PATTERN.sub('', text)
+
+def format_prompt(text, strip_comments, remove_blank_line, remove_new_line):
+    """プロンプトを出力用に整形する。
+
+    コメント除去 → 空行削除 → 改行削除の順に適用する。
+    コメント除去を先に行うのは、本体側のコメント除去（本文のみ削除・改行は残す）が
+    本拡張より後に走るため、順序を逆にすると消したはずの空行が復活するから。
+    """
+    if strip_comments:
+        text = strip_comment_lines(text)
+
+    if remove_blank_line or remove_new_line:
+        lines = [line for line in text.split('\n') if len(line.strip()) > 0]
+        # 改行削除が有効なら 1 行に連結する
+        text = (' ' if remove_new_line else '\n').join(lines)
+
+    return text
+
 class Script(scripts.Script):
     def __init__(self):
         super().__init__()
@@ -97,8 +127,10 @@ class Script(scripts.Script):
             [p.prompt, p.all_prompts, 'Input Prompt'],
             [p.negative_prompt, p.all_negative_prompts, 'Input NegativePrompt'],
         ]
-        if getattr(p, 'hr_prompt', None): prompts.append([p.hr_prompt, p.all_hr_prompts, 'Input Prompt(Hires)'])
-        if getattr(p, 'hr_negative_prompt', None): prompts.append([p.hr_negative_prompt, p.all_hr_negative_prompts, 'Input NegativePrompt(Hires)'])
+        # Hires.fix が無効なとき本体は all_hr_prompts を None のままにするため、リスト側の有無で判定する
+        # (hr_prompt だけを見ると None を添字アクセスして TypeError になり、process 全体が無言で止まる)
+        if getattr(p, 'all_hr_prompts', None): prompts.append([p.hr_prompt, p.all_hr_prompts, 'Input Prompt(Hires)'])
+        if getattr(p, 'all_hr_negative_prompts', None): prompts.append([p.hr_negative_prompt, p.all_hr_negative_prompts, 'Input NegativePrompt(Hires)'])
 
         for i in range(len(p.all_prompts)):
             seed = random.random()
@@ -110,21 +142,22 @@ class Script(scripts.Script):
                 replaced = "".join(replace_template(all_prompts[i], seed))
                 all_prompts[i] = replaced
 
-        # Remove blank line
-        if shared.opts.easy_template_remove_blank_line:
-            for i in range(len(p.all_prompts)):
-                for [prompt, all_prompts, raw_prompt_param_name] in prompts:
-                    lines = all_prompts[i].split('\n')
-                    lines = list(filter(lambda x: len(x.strip()) > 0, lines))
-                    all_prompts[i] = '\n'.join(lines)
+        # 本体のコメント除去（本文のみ削除・改行は残す）が本拡張より後に走るため、
+        # ここでコメント行を落としておかないと空行削除をすり抜けて空行が復活する。
+        # save_prompt_comments が ON のときは本体が infotext 用の生コピーを本拡張の後に取るので手を出さない
+        strip_comments = (
+            getattr(shared.opts, 'enable_prompt_comments', False)
+            and not getattr(shared.opts, 'save_prompt_comments', False)
+        )
+        remove_blank_line = shared.opts.easy_template_remove_blank_line
+        remove_new_line = shared.opts.easy_template_remove_new_line
 
-        # Remove new line
-        if shared.opts.easy_template_remove_new_line:
-            for i in range(len(p.all_prompts)):
-                for [prompt, all_prompts, raw_prompt_param_name] in prompts:
-                    lines = all_prompts[i].split('\n')
-                    lines = list(filter(lambda x: len(x.strip()) > 0, lines))
-                    all_prompts[i] = ' '.join(lines)
+        if not (strip_comments or remove_blank_line or remove_new_line):
+            return
+
+        for i in range(len(p.all_prompts)):
+            for [prompt, all_prompts, raw_prompt_param_name] in prompts:
+                all_prompts[i] = format_prompt(all_prompts[i], strip_comments, remove_blank_line, remove_new_line)
 
     def save_prompt_to_pnginfo(self, p, prompt, name):
         if shared.opts.easy_template_enable_save_raw_prompt_to_pnginfo == False:
