@@ -32,7 +32,7 @@ BREAK
 (little cum overflow:0.7),
 # 16_肌の状態 (汗),
 (sweat:0.7),
-# 33_状況:基本 (糸引く精液),
+# 33_状況:精液 (糸引く精液),
 (cum string:0.7),
 # 13_衣装_基本:パンツ (レース付きパンツ),
 lace panties,

@@ -21,7 +21,7 @@ track jacket,gym shorts,kneehighs,sneakers,
 cute rabbit pose, headtilt,
 # 21_視線 (カメラを見る),
 looking at viewer,
-# 23_表情 (照れ嫌いな赤面した可愛い表情),
+# 23_表情:オリジナル (照れ嫌いな赤面した可愛い表情),
 (jitome eyes1.4),disgusted face,blush,very cute,
 
 BREAK,
