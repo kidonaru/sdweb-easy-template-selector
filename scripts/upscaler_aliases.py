@@ -27,7 +27,6 @@ UPSCALER_ALIASES = {
     'realesr-animevideov3': 'R-ESRGAN AnimeVideo',
 }
 
-# 別名 -> 正規形の逆引き
 _ALIAS_TO_CANONICAL = {alias: canonical for canonical, alias in UPSCALER_ALIASES.items()}
 
 # パラメータ行の "Hires upscaler: <値>" を捉える。
