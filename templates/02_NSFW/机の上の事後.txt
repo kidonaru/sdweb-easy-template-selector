@@ -18,7 +18,7 @@ cute,
 kawaii,
 
 BREAK
-# 23_表情:基本 (半開きの唇),
+# 24_口の形:基本 (半開きの唇),
 parted lips,
 # 33_状況:基本 (唾液),
 saliva,
