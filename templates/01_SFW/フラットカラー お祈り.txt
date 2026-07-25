@@ -26,7 +26,7 @@ praying, hands up,
 
 # 50_背景:オリジナル (たくさんの花と葉),
 many flowers in background, leaf,
-# 21_視線 (何かを見ている),
+# 21_視線 (横を見ている),
 looking to the side,
 # 50_背景:オリジナル (ピンクのグラデーション背景に白い太い枠),
 simple gradient pink background with thick white border,

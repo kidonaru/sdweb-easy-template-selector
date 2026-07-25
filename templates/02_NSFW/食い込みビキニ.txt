@@ -1,6 +1,6 @@
 # URL: https://civitai.com/images/64689961,
 
-# 01_クオリティ:Model (Nova Anime XL),
+# 01_クオリティ:Model (Nova Anime XL v6.0),
 masterpiece, best quality, amazing quality, very aesthetic, high resolution, ultra-detailed, absurdres, newest, scenery,
 # 01_クオリティ:効果 (完璧な照明/下からの照明),
 perfect lighting,shiny skin,low light,

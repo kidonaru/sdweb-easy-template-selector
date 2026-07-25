@@ -24,9 +24,9 @@ looking to the side,
 blush,closed mouth,
 
 BREAK
-# 41_フォーカス (クローズアップの女性器),
+# 41_フォーカス (女性器のクローズアップ),
 (close-up pussy:1.4),
-# 41_フォーカス (閉じた膣口),
+# 33_状況:基本 (閉じた膣口),
 (closed pussy:1.2),
 # 33_状況:オリジナル (少し溢れた精液),
 (little cum overflow:0.7),

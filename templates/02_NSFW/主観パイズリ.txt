@@ -1,6 +1,6 @@
 # URL: https://civitai.com/images/54275264,
 
-# 01_クオリティ:Model (Nova Anime XL),
+# 01_クオリティ:Model (Nova Anime XL v6.0),
 masterpiece, best quality, amazing quality, very aesthetic, high resolution, ultra-detailed, absurdres, newest, scenery,
 # 01_クオリティ:レーティング (無修正),
 uncensored,
@@ -13,7 +13,7 @@ mari \(track\) \(blue archive\),blue eyes,orange hair,mari halo,hair flower,whit
 youthful,petite,
 # 13_衣装_ブルアカ:トリニティ (マリー(体操服)),
 track jacket,gym shorts,kneehighs,sneakers,
-# 30_ポーズ:LoRA (四つん這いでパイズリ(主観/平胸)),
+# 30_ポーズ_LoRA:LoRA (四つん這いでパイズリ(主観/平胸)),
 <lora:Pov_Blowjob__Titjob__Handjob_Illustrious:0.8> dutch angle,pov B+T+H,1girl,1boy,on all fours,butt,from below,(paizuri:1.2),small breasts,
 # 33_状況:オリジナル (唾液を男性器に垂らす),
 tongue out, drooling, saliva on penis,

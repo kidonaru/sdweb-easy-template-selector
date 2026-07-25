@@ -1,6 +1,6 @@
 # URL: https://civitai.com/images/71492109,
 
-# 01_クオリティ:Model (Nova Anime XL),
+# 01_クオリティ:Model (Nova Anime XL v6.0),
 masterpiece, best quality, amazing quality, very aesthetic, high resolution, ultra-detailed, absurdres, newest, scenery,
 # 01_クオリティ:詳細 (複雑でシャープなライン),
 intricate details,sharp lines,
@@ -15,7 +15,7 @@ mari \(track\) \(blue archive\),blue eyes,orange hair,mari halo,hair flower,whit
 youthful,petite,
 # 13_衣装:bolero537/制服 (スク水),
 school swimsuit,
-# 14_衣装小物 (仕込みローター),
+# 15_衣装状態:bolero537 (仕込みローター),
 <lora:vibrator under clothes_illustrious_V1.0:1> vibrator under clothes, egg vibrator,
 # 33_状況:基本 (愛液),
 pussy juice,

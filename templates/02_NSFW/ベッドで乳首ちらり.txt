@@ -31,7 +31,7 @@ parted lips,
 saliva drip,
 # 21_視線 (カメラを見る),
 looking at viewer,
-# 20_目の状態 (半目2),
+# 20_目の状態 (半目),
 half-closed eyes,
 
 # 30_ポーズ_基本:座り方 (座っている),

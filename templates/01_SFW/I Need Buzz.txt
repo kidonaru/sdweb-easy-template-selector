@@ -1,11 +1,11 @@
 # URL: https://civitai.com/images/70130438,
 
-# 01_クオリティ:Model (Nova Anime XL),
+# 01_クオリティ:Model (Nova Anime XL v6.0),
 masterpiece, best quality, amazing quality, very aesthetic, high resolution, ultra-detailed, absurdres, newest, scenery,
 
 # 02_対象 (一人の女の子(強調)),
 1girl,solo,
-# 30_ポーズ:LoRA (I Need Buzz),
+# 30_ポーズ_LoRA:LoRA (I Need Buzz),
 <lora:NeedBuzz_sign_Illustrious:0.95> need_buzz,holding sign,
 # 10_キャラ_ブルアカ:トリニティ (マリー),
 mari \(blue archive\),blue eyes,orange hair,mari halo,habit,single braid,hat flower,
@@ -33,6 +33,6 @@ depth of field,volumetric lighting,
 
 Negative prompt: # 99_ネガティブ:Embeddings (badhandv4),
 badhandv4,
-# 99_ネガティブ:Model (Nova Anime XL),
+# 99_ネガティブ:Model (Nova Anime XL v6.0),
 modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated,
 Steps: 20, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 5, Seed: 1198585072, Size: 768x1344, Model: novaAnimeXL_ilV60, Denoising strength: 0.6, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: 4x_foolhardy_Remacri,
