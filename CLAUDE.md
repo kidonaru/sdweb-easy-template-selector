@@ -107,7 +107,7 @@ PYTHONIOENCODING=utf-8 python tools/audit_templates.py                 # 明細�
 PYTHONIOENCODING=utf-8 python tools/audit_templates.py --json out.json # JSON（ファイル・行番号つき）
 ```
 
-- 不整合が 1 件以上なら終了コード 1、0 件なら 0。**現状のクリーンな状態は `合計: 0 件`** なので、テンプレやタグを編集したら実行して 0 件を維持する。
+- 不整合が 1 件以上なら終了コード 1、0 件なら 0。**2026-07-25 時点のベースラインは `合計: 1 件`**（`templates/02_NSFW/机上で着崩れた制服と精液.txt:70` の `70_スタイルLoRA_Artist_` 由来。ローカル専用タグに依存する既知の残件）。テンプレやタグを編集したら実行し、**この件数から増えていないこと**を確認する。0 件を目標にしないこと。
 
 不整合の分類:
 
@@ -124,6 +124,22 @@ PYTHONIOENCODING=utf-8 python tools/audit_templates.py --json out.json # JSON（
 - 理由: ラベルに入れ子カッコを含むものがある（例: `マリー(体操服)`）
 - 実装: JS 側の `ets_prompt_editor.js` の `parseSection` と同じ、末尾 `)` にアンカーする正規表現を使う
 - 注意: 文字クラス `([^)]*)` に書き換えると入れ子カッコの行を取りこぼすので変更しないこと
+
+### `backfill_template_rng.py` — テンプレへの RNG 追記
+
+テンプレのパラメータ行に `RNG: <値>` を追記する。既に `RNG:` があるファイルはスキップする。
+
+```bash
+PYTHONIOENCODING=utf-8 python tools/backfill_template_rng.py              # dry-run（対象一覧と件数のみ）
+PYTHONIOENCODING=utf-8 python tools/backfill_template_rng.py --apply      # 実際に書き換える
+PYTHONIOENCODING=utf-8 python tools/backfill_template_rng.py --value CPU --apply  # 値を変えて焼き直す
+```
+
+必要な理由: Forge Neo は infotext に `RNG` が無いと `_populate_defaults()` が既定値（`CPU`）を補完し、現在の `randn_source` 設定と食い違うとテンプレ読込ごとに `RNG: CPU` の Override Settings を積む（本体 `modules/infotext_utils.py` の `_populate_defaults` / `get_override_settings`）。テンプレ側に明示しておくことでこれを防ぐ。
+
+- 挿入位置は `Clip skip: N,` の直後。JS 側 `metaInfoMap` の並び順と揃えているため、UI から再保存しても差分が出ない
+- Settings の Random Number Generator を変えたら `--value` を変えて再実行し、全テンプレを焼き直す（テンプレに値が焼かれているため、設定変更だけでは追随しない）
+- `templates/*.txt` は CRLF 管理なので `newline=''` で読み書きしている（`_apply_audit_fix.py` と同じ理由）
 
 ### `_apply_audit_fix.py` — 監査結果によるコメント行の一括置換
 
