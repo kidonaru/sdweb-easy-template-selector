@@ -4,7 +4,7 @@ import os
 import gradio as gr
 from fastapi import FastAPI
 import yaml
-from modules import scripts, script_callbacks
+from modules import scripts, script_callbacks, shared
 
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(scripts.basedir())
@@ -83,6 +83,33 @@ def api_networks(_: gr.Blocks, app: FastAPI):
             return tags
         except Exception as e:
             raise EasyTemplateError(f"タグの取得に失敗しました: {str(e)}")
+
+    @app.get("/easy-template/opts-infotext")
+    async def get_opts_infotext():
+        """infotext 名 → 現在の設定値のマップを返す。
+
+        テンプレ保存時に Settings タブの DOM を読む代わりに使う。
+        DOM は Settings タブが未描画だと取得できず不安定なため。
+        対象は shared.opts.data_labels のうち infotext 名を持つ設定に限る
+        （どの設定が infotext に出るかは本体側の定義に従い、拡張側では持たない）。
+
+        注意: Model キーは Forge が管理する生の checkpoint 文字列で、
+        JS 側の getCurrentModel() が返す加工済みの名前とは形式が異なる。
+        Model をこの API 経由に移す場合は形式変換が必要。
+
+        失敗しても致命的ではないため例外は投げず、空の dict を返す
+        （JS 側は空 dict を受けて従来の DOM 読み取りへフォールバックする）。
+        """
+        try:
+            result = {}
+            for setting_name, info in shared.opts.data_labels.items():
+                if not getattr(info, 'infotext', None):
+                    continue
+                result[info.infotext] = getattr(shared.opts, setting_name, None)
+            return result
+        except Exception as e:
+            print(f'[easy-template] 設定値の取得に失敗しました: {e}')
+            return {}
 
     @app.post("/easy-template/save-template")
     async def save_template(request: dict):
