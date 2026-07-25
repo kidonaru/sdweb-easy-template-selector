@@ -157,6 +157,8 @@ python tools/split_lora.py <ファイル> [--split-comma]     # <名前>_lora.ym
 
 実装の標準フロー:
 
+- **git worktree は使用しない**: WebUI は本拡張を `extensions/sdweb-easy-template-selector` の実パスから直接読み込むため、worktree 内で変更しても実機確認（WebUI 再起動）に反映されない。作業は本リポジトリのチェックアウト上で直接行う
+
 1. **計画作成**: 自明な一行修正・タイポ・タグ YAML の単純追加を除き、**superpowers:writing-plans** スキルで計画を作成する（対象ファイル・変更方針・影響範囲・テスト方針を含める）
 2. **計画レビュー**: ユーザーに提示する前に必ず **plan-review** スキルでレビューする
 3. **ユーザー承認**: 計画を提示し承認を得てから実装に着手する
