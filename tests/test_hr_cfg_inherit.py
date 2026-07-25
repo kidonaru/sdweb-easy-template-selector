@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scripts.hr_cfg_inherit import resolve_hr_cfg
+from scripts.hr_cfg_inherit import resolve_hr_cfg, is_hr_negative_interactive
 
 
 def test_zero_inherits_cfg_scale():
@@ -58,6 +58,26 @@ def test_zero_cfg_scale_is_left_untouched():
 def test_negative_hr_cfg_is_left_untouched():
     # 負値は reForge 固有の uncond スキップ指定。Neo では扱えないため素通しする
     assert resolve_hr_cfg(True, -1.0, 5.0) is None
+
+
+def test_negative_is_interactive_for_sentinel_zero():
+    # 0 は「CFG Scale を継承」のセンチネル。継承後は negative が効くので編集可能に保つ
+    assert is_hr_negative_interactive(0.0) is True
+
+
+def test_negative_is_not_interactive_at_one():
+    # 1.0 は Neo で「Hires のネガティブ無効」を意味する正規値
+    assert is_hr_negative_interactive(1.0) is False
+
+
+def test_negative_is_interactive_above_one():
+    # 本体 modules/ui.py:62 の use_cfg と同じ判定
+    assert is_hr_negative_interactive(6.0) is True
+
+
+def test_negative_is_not_interactive_below_one():
+    # 0.5 等はセンチネルではないため本体と同じく無効扱いにする
+    assert is_hr_negative_interactive(0.5) is False
 
 
 if __name__ == '__main__':

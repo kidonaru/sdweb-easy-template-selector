@@ -25,6 +25,7 @@ sdweb-easy-template-selector/
 ├── scripts/
 │   ├── easy_prompt_selector.py   # WebUI 拡張エントリ（テンプレート置換・Gradio 連携）
 │   ├── hr_cfg_inherit.py         # Hires CFG Scale の 0 = CFG Scale 継承の解決（reForge 互換）
+│   ├── hr_cfg_ui.py              # Hires CFG Scale スライダーの下限緩和（0 センチネルの保持）
 │   ├── settings.py               # 拡張設定
 │   ├── setup.py                  # タグ読み込み・API エンドポイント
 │   └── upscaler_aliases.py       # Hires upscaler 名の環境差の吸収（reForge ↔ Forge Neo）
@@ -46,7 +47,13 @@ sdweb-easy-template-selector/
 - テンプレート `.txt` の `Hires CFG Scale: 0` は reForge 固有の「本体 CFG Scale を継承する」センチネル値。Forge Neo にはこの仕様が無く 0 がそのまま CFG 0 としてサンプラーへ渡るため、`scripts/hr_cfg_inherit.py` が生成直前（`Script.process`）に実値へ展開する。設定 `easy_template_inherit_hr_cfg` で OFF にできる
 - テンプレート側の `Hires CFG Scale: 0` は書き換えない。0 のままにしておくことで `CFG Scale` を変えたときに Hires 側も追従する（reForge と同じ挙動）
 - 落とし穴: 生成画像の infotext には継承後の実値が焼かれる。**生成画像を PNG Info から txt2img へ送った状態でテンプレを保存すると、`Hires CFG Scale` が 0 ではなく実値で固定される**（センチネルが失われる）。テンプレを作り直すときはテンプレ適用直後の状態から保存すること
-- 落とし穴: Forge Neo のスライダー下限は 1.0 で、Gradio 4.40 は blur 時にクランプする。テンプレ適用後に `Hires CFG Scale` 入力欄を触ると 0 が 1.0 に丸められることがある（実機確認済み）。1.0 は Neo で「Hires のネガティブ無効」を意味する正規値のため継承は発動せず、ログも出ない
+- Forge Neo の `Hires CFG Scale` スライダーは本体側の定義が下限 1.0 で、Gradio 4.40 は blur 時にここまでクランプする。センチネル値 0 が UI 操作で 1.0 に丸められるのを防ぐため、`scripts/hr_cfg_ui.py` が下限を 0 に緩和している。`easy_template_inherit_hr_cfg` が OFF のときは元の下限に戻す（0 を入力できるのに継承しないのは事故のもと）。設定変更はブラウザの再読み込みで反映される
+- 下限の書き換えは **`on_app_started` で行う**。本体の `ui_loadsave` が UI 構築中に `ui-config.json` の `minimum` を書き戻すため（本体 `modules/ui_loadsave.py:96`、`_internal_preset_param` のスキップ対象は `value` / `step` のみ）、`on_after_component` で書き換えても直後に上書きされる。この順序なら `dump_defaults()` より後になるので、緩和値が `ui-config.json` に焼き付くこともない
+- 落とし穴: Gradio 4.40 はフロントへ渡す config を `Blocks.queue()` / `launch()` の時点で `Blocks.config` にキャッシュし、ページ配信時はそれを使い回す（`gradio/routes.py:385`）。**`minimum` 属性を書き換えるだけでは反映されない**ため、書き換え後に `demo.config = demo.get_config_file()` でキャッシュを作り直す必要がある（`on_app_started` は `launch()` より後なので必須）
+- `Slider` は `preprocess` / `postprocess` のどちらでもクランプしないので、下限を下げても生成側への副作用は無い
+- 本体は `Hires CFG Scale > 1.0` のときだけ `Hires negative prompt` を編集可能にする（本体 `modules/ui.py:61` の `use_cfg`）。0 は継承後に negative が効くため、`scripts/hr_cfg_ui.py` が `on_before_ui` で `modules.ui.use_cfg` を差し替え、0 も編集可能側に含めている（`create_ui()` の実行中に `fn=use_cfg` が評価されるので、その前に差し替える）。同じ関数は本体 `CFG Scale` 側（`modules/ui.py:244, 642`）にも使われるが、そちらの下限は 1.0 で 0 に到達しないため挙動は変わらない。`easy_template_inherit_hr_cfg` が OFF のときは 0 が文字通りの CFG 0 になるので、本体と同じ判定にフォールバックする
+- 落とし穴: 緩和により `step` 0.5 刻みで 0.5 も入力できるようになった。センチネルは **0 のみ**で、0.5 は明示指定として素通しされ CFG 0.5 で生成される
+- 落とし穴: 1.0 は Neo で「Hires のネガティブ無効」を意味する正規値。誤って 1.0 が入ると継承は発動せずログも出ないため、テンプレ側の値が 0 のままか目視で確認すること
 
 ## Build & Test
 

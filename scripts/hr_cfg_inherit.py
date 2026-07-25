@@ -34,3 +34,19 @@ def resolve_hr_cfg(enable_hr, hr_cfg, cfg_scale):
 
     # infotext の表記を安定させるため float に揃える
     return float(cfg_scale)
+
+
+def is_hr_negative_interactive(hr_cfg):
+    """Hires negative prompt 欄を編集可能にすべきかを返す
+
+    本体 modules/ui.py:61 の use_cfg は `hr_cfg > 1.0` で判定するが、
+    センチネル値 0 は継承後に本体 CFG Scale へ展開されて negative が効くため、
+    グレーアウトさせると表示と実挙動が食い違う。0 を編集可能側に加える。
+
+    Args:
+        hr_cfg: 現在の Hires CFG Scale
+
+    Returns:
+        編集可能にすべきなら True
+    """
+    return hr_cfg == 0 or hr_cfg > 1.0
