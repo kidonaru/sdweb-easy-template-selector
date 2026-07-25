@@ -27,4 +27,4 @@ high resolution,
 # 01_クオリティ:美的 (非常に美的),
 very aesthetic,
 Negative prompt: blurry eyes,text,signature,simple background,looking at viewer,fingernail, nail polish, nsfw,frown,twintails,full body,see-through,water,[:cleavage:10], worst quality, low quality, watermark,bad anatomy, bad proportions, extra limbs, extra digit, extra legs, extra legs and arms, disfigured, missing arms, too many fingers, fused fingers, missing fingers, unclear eyes,watermark,username,furry,3fingers,6fingers
-Steps: 28, Sampler: Euler, Schedule type: Simple, CFG Scale: 5, Seed: 3446040382, Size: 1216x832, Model: waiNSFWIllustrious_v130, Clip skip: 2, 
+Steps: 20, Sampler: Euler, Schedule type: Simple, CFG Scale: 5, Seed: 1198585072, Size: 1216x832, Model: waiIllustriousSDXL_v170, Clip skip: 2, 

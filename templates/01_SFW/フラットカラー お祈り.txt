@@ -1,11 +1,9 @@
 # URL: https://civitai.com/images/71347268,
 
-# 01_クオリティ:Model (WAI-NSFW-illustrious v14.0),
-masterpiece,best quality,amazing quality,
+# 01_クオリティ:Model (Nova Anime XL v6.0),
+masterpiece, best quality, amazing quality, very aesthetic, high resolution, ultra-detailed, absurdres, newest, scenery,
 # 01_クオリティ:世代 (最新),
 newest,
-# 01_クオリティ:解像度 (異常な解像度),
-absurdres,
 
 # 40_アングル (下から見上げる),
 from below,
@@ -39,6 +37,6 @@ abandoned city covered by snow in background,
 
 # 70_スタイルLoRA (fl4t / flat color(強調)),
 <lora:fl4t:1.2> Flat vector illustration, fl4t,
-Negative prompt: bad quality, worst quality, worst detail,
-bad anatomy, extra fingers,
-Steps: 32, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 5.5, Seed: 399684285, Size: 832x1216, Model: waiNSFWIllustrious_v140, Denoising strength: 0.35, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: 4x_foolhardy_Remacri, 
+Negative prompt: # 99_ネガティブ:Model (Nova Anime XL v6.0),
+modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated,
+Steps: 20, Sampler: Euler a, Schedule type: Automatic, CFG Scale: 5.5, Seed: -1, Size: 832x1216, Model: novaAnimeXL_ilV60, Denoising strength: 0.35, Clip skip: 2, Hires CFG Scale: 0, Hires upscale: 1.5, Hires steps: 20, Hires upscaler: 4x_foolhardy_Remacri, 
