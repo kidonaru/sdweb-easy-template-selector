@@ -25,10 +25,12 @@ sdweb-easy-template-selector/
 ├── scripts/
 │   ├── easy_prompt_selector.py   # WebUI 拡張エントリ（テンプレート置換・Gradio 連携）
 │   ├── settings.py               # 拡張設定
-│   └── setup.py                  # タグ読み込み
+│   ├── setup.py                  # タグ読み込み・API エンドポイント
+│   └── upscaler_aliases.py       # Hires upscaler 名の環境差の吸収（reForge ↔ Forge Neo）
 ├── tags/                         # タグ定義 YAML（番号_カテゴリ名.yml 形式、末尾 `_` はローカル専用で git 管理外）
 ├── templates/                    # プロンプトテンプレート（pnginfo の .txt、階層管理可）
 ├── tools/                        # 検索・監査・変換スクリプト（後述の Tools 参照）
+├── tests/                        # WebUI 非依存モジュールの単体テスト（素の Python で実行）
 └── style.css                     # UI スタイル
 ```
 
@@ -38,15 +40,22 @@ sdweb-easy-template-selector/
 - タグ YAML のカテゴリは番号プレフィックスで表示順を制御している。新規カテゴリ追加時は既存の番号帯（01=クオリティ、10番台=キャラ/衣装、20番台=表情、30番台=ポーズ、40番台=アングル、50番台=背景、60番台以降=効果/その他、99=ネガティブ）に合わせる。
 - テンプレート `.txt` 内のカテゴリコメント行は `# カテゴリ名 (説明),` 形式。この形式をパーサが解釈するため崩さないこと。
 - `javascript/` 配下の各ファイルは、トップレベルで他ファイルのクラスを参照しないこと（WebUI はアルファベット順に読み込むため、クラス参照は `onUiLoaded` 以降の実行時に限る）。
+- テンプレート `.txt` の `Hires upscaler` は、モデルファイルの stem（拡張子を除いたファイル名）を正規形として保存する。reForge の組み込み表示名（`R-ESRGAN 4x+ Anime6B` など）で書かない。環境差の吸収は `scripts/upscaler_aliases.py` が行い、`GET /easy-template/templates` の配信時に実行環境の表示名へ解決し、`POST /easy-template/save-template` の保存時に正規形へ戻す
+- `UPSCALER_ALIASES` に載せるのは reForge / A1111 側にだけ存在する別名に限る。実機で確認していない別名は追加しない（誤変換は素通しより状況が悪い）
 
 ## Build & Test
 
-ビルド・テスト基盤はない。動作確認は WebUI / reForge 上で行う。
+ビルド基盤とテストフレームワークはない。動作確認は基本的に WebUI / reForge 上で行う。
+
+例外として、WebUI に依存しないモジュール（`scripts/upscaler_aliases.py`）だけは `tests/` に単体テストがあり、素の Python で実行できる。新しく WebUI 非依存の純粋モジュールを追加する場合は同じ形式でテストを添える。
 
 ```bash
 # WebUI の extensions/ 配下に配置済み。反映は WebUI の再起動または UI の Reload で行う
 # タグ YAML の構文確認（簡易チェック）
 python -c "import yaml, sys; yaml.safe_load(open(sys.argv[1], encoding='utf-8'))" tags/対象ファイル.yml
+
+# WebUI 非依存モジュールの単体テスト（リポジトリルートで実行）
+PYTHONIOENCODING=utf-8 python tests/test_upscaler_aliases.py
 ```
 
 - Python 側の変更は WebUI 再起動が必要。JavaScript / YAML の変更は UI リロードで反映される。
