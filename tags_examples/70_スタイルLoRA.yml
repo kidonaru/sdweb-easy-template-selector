@@ -2,6 +2,7 @@
 PowerPuffMixLora: <lora:PowerPuffMixLora:1>
 MyTest: <lora:MyTest:1>
 AIイラストおじさん: <lora:AIイラストおじさん_style_illustrious_goofy:0.8>
+AIイラストおじさんV3: <lora:AIイラストおじさん_V3-Exp:0.7>
 kanon648 Style: <lora:kanon648:0.9>
 Aesthetic Style: <lora:nw3:1>
 Create Concept: <lora:CreateConcept_Illustrious_v2:1>
@@ -21,3 +22,4 @@ Bright - Shiiro's Styles: <lora:Bright_style:0.75> Bright_illu,sparkle,too many 
 tu11 Illustrious: <lora:tu11_v1:0.9> MF9f
 Ethereal Brushstroke: <lora:Illustrious:0.45> Ethereal Brushstroke
 <Alice In Cradle> Pixel Artstyle: <lora:pixels_hinayua:0.8> hinayua
+薄塗り: <lora:USNR_STYLE_ILL_V1_lokr3:1>

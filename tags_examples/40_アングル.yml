@@ -3,20 +3,18 @@
 横から: from side
 後ろから: from behind
 上から見下ろす: from above
-上から見下ろす(オランダアングル): dutch angle,from above
-上から見下ろす(オランダアングル/主観): dutch angle,from above,pov
+上から見下ろす(傾け): dutch angle,from above
+上から見下ろす(傾け/主観): dutch angle,from above,pov
 下から見上げる: from below
-下から見上げる(オランダアングル): from below,dutch angle
+下から見上げる(傾け): from below,dutch angle
 ローアングル: low angle
-オランダアングル: dutch angle
-オランダアングル(パース): dutch angle,perspective
+傾け: dutch angle
+傾け(パース): dutch angle,perspective
 主観: pov
-主観(オランダアングル): dutch angle,pov
+主観(傾け): dutch angle,pov
 主観手コキ: pov B+T+H
-主観手コキ(オランダアングル): dutch angle,pov B+T+H
+主観手コキ(傾け): dutch angle,pov B+T+H
 窓越し: view through a window
 躍動感のあるアングル: dynamic angle
 クローズアップショット: close-up shot
-正面からの構図: from front view
 ズームアウト: zooming out
-

@@ -1,7 +1,12 @@
 Model:
-  Nova Anime XL: modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated
-  Unholy Desire Mix: bad quality,worst quality,worst detail,sketch,censor
-  WAI-NSFW-illustrious-SDXL: bad quality,worst quality,worst detail,sketch,censor
+  WAI-illustrious-SDXL v17.0: bad quality,worst quality,worst detail,sketch,censor
+  WAI-illustrious-SDXL v15.0: bad quality,worst quality,worst detail,sketch,censor
+  WAI-NSFW-illustrious v14.0: bad quality,worst quality,worst detail,sketch,censor
+  Nova Anime XL v19.0: modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated
+  Nova Anime XL v6.0: modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated
+  Nova Flat XL v9.0: modern,recent,old,oldest,cartoon,graphic,text,painting,crayon,graphite,abstract,glitch,deformed,mutated,ugly,disfigured,long body,lowres,bad anatomy,bad hands,missing fingers,extra digits,fewer digits,cropped,very displeasing,(worst quality, bad quality:1.2),bad anatomy,sketch,jpeg artifacts,signature,watermark,username,signature,simple background,conjoined,bad ai-generated
+  RIN Flanime Illustrious v4.4: bad hands, comic, jpeg artifacts, patreon logo, patreon username, web address, signature, watermark, text, logo, artist name, username, twitter username
+  Unholy Desire Mix v5.0: bad quality,worst quality,worst detail,sketch,censor
   KonpaEvo Mix: lowres,worst quality,low quality,simple background,bad anatomy,bad hands,signature,text,watermark
   LunarCherryMix: lowres, worst quality, bad quality, bad anatomy, sketch, jpeg artifacts, signature, watermark, old, oldest.
 
@@ -13,6 +18,7 @@ Embeddings:
   lazyhand: lazyhand
   lazyneg: lazyneg
   Negative_for_anime: (negative_v2 Color_Balance_Calibration:0.8)
+  SmoothNegative_Hands: SmoothNegative_Hands
 
 品質:
   低解像度: lowres
@@ -70,6 +76,8 @@ Embeddings:
   長いトルソー: long torso
   尻尾: tail
   日焼け跡: sunburn
+  悪い手: bad hands,bad fingers
+  陰毛: pubic hair
 
 衣装:
   乱れた服: disheveled clothes
@@ -115,7 +123,7 @@ Embeddings:
   未完成: unfinished
   色収差: chromatic aberration
   抽象: abstract
-  効果音: sound effects
+  擬音: sound effects
   レンズフレア: lens flare
   透かし過多: too many watermarks
   余白: negative space,blank page
@@ -124,3 +132,4 @@ Embeddings:
   海外アニメ作品: the simpsons,dc comics,avatar legends,adventure time,powerpuff girls,the grim adventures of billy & mandy,south park,gravity falls,marvel,steven universe,star wars,the loud house,ben 10,kim possible \(series\)
   髪飾り/三つ編み: hair ornament,braid
   靴: shoes
+  複数の女性: multiple girls,2girls
