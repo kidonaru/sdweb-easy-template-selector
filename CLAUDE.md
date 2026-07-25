@@ -24,6 +24,7 @@ sdweb-easy-template-selector/
 │   └── js-yaml.min.js            # YAML パーサ（vendored、編集禁止）
 ├── scripts/
 │   ├── easy_prompt_selector.py   # WebUI 拡張エントリ（テンプレート置換・Gradio 連携）
+│   ├── hr_cfg_inherit.py         # Hires CFG Scale の 0 = CFG Scale 継承の解決（reForge 互換）
 │   ├── settings.py               # 拡張設定
 │   ├── setup.py                  # タグ読み込み・API エンドポイント
 │   └── upscaler_aliases.py       # Hires upscaler 名の環境差の吸収（reForge ↔ Forge Neo）
@@ -42,6 +43,10 @@ sdweb-easy-template-selector/
 - `javascript/` 配下の各ファイルは、トップレベルで他ファイルのクラスを参照しないこと（WebUI はアルファベット順に読み込むため、クラス参照は `onUiLoaded` 以降の実行時に限る）。
 - テンプレート `.txt` の `Hires upscaler` は、モデルファイルの stem（拡張子を除いたファイル名）を正規形として保存する。reForge の組み込み表示名（`R-ESRGAN 4x+ Anime6B` など）で書かない。環境差の吸収は `scripts/upscaler_aliases.py` が行い、`GET /easy-template/templates` の配信時に実行環境の表示名へ解決し、`POST /easy-template/save-template` の保存時に正規形へ戻す
 - `UPSCALER_ALIASES` に載せるのは reForge / A1111 側にだけ存在する別名に限る。実機で確認していない別名は追加しない（誤変換は素通しより状況が悪い）
+- テンプレート `.txt` の `Hires CFG Scale: 0` は reForge 固有の「本体 CFG Scale を継承する」センチネル値。Forge Neo にはこの仕様が無く 0 がそのまま CFG 0 としてサンプラーへ渡るため、`scripts/hr_cfg_inherit.py` が生成直前（`Script.process`）に実値へ展開する。設定 `easy_template_inherit_hr_cfg` で OFF にできる
+- テンプレート側の `Hires CFG Scale: 0` は書き換えない。0 のままにしておくことで `CFG Scale` を変えたときに Hires 側も追従する（reForge と同じ挙動）
+- 落とし穴: 生成画像の infotext には継承後の実値が焼かれる。**生成画像を PNG Info から txt2img へ送った状態でテンプレを保存すると、`Hires CFG Scale` が 0 ではなく実値で固定される**（センチネルが失われる）。テンプレを作り直すときはテンプレ適用直後の状態から保存すること
+- 落とし穴: Forge Neo のスライダー下限は 1.0 で、Gradio 4.40 は blur 時にクランプする。テンプレ適用後に `Hires CFG Scale` 入力欄を触ると 0 が 1.0 に丸められることがある（実機確認済み）。1.0 は Neo で「Hires のネガティブ無効」を意味する正規値のため継承は発動せず、ログも出ない
 
 ## Build & Test
 
@@ -56,6 +61,7 @@ python -c "import yaml, sys; yaml.safe_load(open(sys.argv[1], encoding='utf-8'))
 
 # WebUI 非依存モジュールの単体テスト（リポジトリルートで実行）
 PYTHONIOENCODING=utf-8 python tests/test_upscaler_aliases.py
+PYTHONIOENCODING=utf-8 python tests/test_hr_cfg_inherit.py
 ```
 
 - Python 側の変更は WebUI 再起動が必要。JavaScript / YAML の変更は UI リロードで反映される。
