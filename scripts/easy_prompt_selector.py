@@ -90,7 +90,6 @@ def format_prompt(text, strip_comments, remove_blank_line, remove_new_line):
 
     if remove_blank_line or remove_new_line:
         lines = [line for line in text.split('\n') if len(line.strip()) > 0]
-        # 改行削除が有効なら 1 行に連結する
         text = (' ' if remove_new_line else '\n').join(lines)
 
     return text

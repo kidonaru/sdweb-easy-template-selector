@@ -11,7 +11,7 @@ https://github.com/user-attachments/assets/bdbc3e6c-161f-498f-96c7-950938b90c3a
 
 # インストール方法
 
-WebUIとreForgeで動作確認しています
+WebUI・reForge・Forge Neo で動作確認しています
 
 WebUIの`Extensions` - `Install from URL`に以下のURLを入力してインストールしてください。
 
