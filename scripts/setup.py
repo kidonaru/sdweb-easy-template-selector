@@ -1,5 +1,4 @@
 from pathlib import Path
-import shutil
 import os
 
 import gradio as gr
@@ -12,19 +11,9 @@ BASE_DIR = Path(scripts.basedir())
 TEMP_DIR = FILE_DIR.joinpath('tmp')
 
 TAGS_DIR = BASE_DIR.joinpath('tags')
-EXAMPLES_DIR = BASE_DIR.joinpath('tags_examples')
 TEMPLATE_DIR = BASE_DIR.joinpath('templates')
 
 os.makedirs(TEMP_DIR, exist_ok=True)
-
-def examples():
-    return EXAMPLES_DIR.rglob("*.yml")
-
-def copy_examples():
-    for file in examples():
-        file_path = str(file).replace('tags_examples', 'tags')
-        if not os.path.exists(file_path):
-            shutil.copy2(file, file_path)
 
 def tag_files():
     return TAGS_DIR.rglob("*.yml")
@@ -47,8 +36,6 @@ def load_tags():
 
 def get_tags():
     return tags
-
-copy_examples()
 
 class EasyTemplateError(Exception):
     def __init__(self, message: str, status_code: int = 400):

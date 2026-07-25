@@ -26,8 +26,7 @@ sdweb-easy-template-selector/
 │   ├── easy_prompt_selector.py   # WebUI 拡張エントリ（テンプレート置換・Gradio 連携）
 │   ├── settings.py               # 拡張設定
 │   └── setup.py                  # タグ読み込み
-├── tags/                         # タグ定義 YAML（番号_カテゴリ名.yml 形式）
-├── tags_examples/                # タグ定義のサンプル
+├── tags/                         # タグ定義 YAML（番号_カテゴリ名.yml 形式、末尾 `_` はローカル専用で git 管理外）
 ├── templates/                    # プロンプトテンプレート（pnginfo の .txt、階層管理可）
 ├── tools/                        # 変換・分割スクリプト（convert_to_yaml.sh 等）
 └── style.css                     # UI スタイル
