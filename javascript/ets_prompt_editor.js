@@ -1,10 +1,41 @@
 // プロンプトテキストのセクション分解とタグの追加・削除・移動・選択状態管理
 class ETSPromptEditor {
+  // キャレットが動くキー。上下移動はセクションをまたぐので必須
+  static CARET_KEYS = [
+    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+    'Home', 'End', 'PageUp', 'PageDown',
+  ]
+
+  // キャレット位置が属するセクションの添字を返す（範囲外は -1）。
+  // splitSections() の結果は '\n' で join すると元テキストに戻るので、
+  // 各セクションの長さ + 区切りの 1 文字を積み上げれば位置を特定できる
+  static indexOfSectionAtCaret(sections, caret) {
+    let offset = 0
+
+    for (let i = 0; i < sections.length; i++) {
+      const end = offset + sections[i].length
+      if (caret <= end) {
+        return i
+      }
+      offset = end + 1 // join('\n') の区切り分
+    }
+
+    return -1
+  }
+
+  // 選択の同期対象となるセクションか。確定済みのコメント行は必ず `,` で終わる
+  // （ETSSection.toString()）ので、入力途中の `#細めた` のような行と区別できる
+  static isSyncableSection(sectionText) {
+    const head = sectionText.split('\n')[0]
+    return head.startsWith('#') && head.endsWith(',')
+  }
+
   constructor({ ids, history, templateManager }) {
     this.ids = ids
     this.history = history
     this.templateManager = templateManager
     this.currentSection = new ETSSection(null, null, null)
+    this.caretSyncAttached = false
   }
 
   // 選択状態を初期化しタグ情報ドロップダウンを更新する
