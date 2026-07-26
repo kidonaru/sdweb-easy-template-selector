@@ -19,14 +19,30 @@ WebUIの`Extensions` - `Install from URL`に以下のURLを入力してインス
 https://github.com/kidonaru/sdweb-easy-template-selector
 ```
 
+## 必要なモデル
+
 既存のテンプレートの読み込みには下記モデルが必要です
 
-- Nova Anime XL v6.0
-- WAI-NSFW-illustrious-SDXL v13.0
+| モデル | ファイル名 |
+| --- | --- |
+| Nova Anime XL v6.0 | `novaAnimeXL_ilV60` |
+| WAI-illustrious-SDXL v17.0 | `waiIllustriousSDXL_v170` |
 
-別途LoRAなどを参照している場合もあるので、適宜インストールしてください (ほとんどCivitaiでダウンロードできます)
+## よく使うLoRA
 
-また、`Settings` - `User Interface` - `Quicksettings list` の項目に`CLIP_stop_at_last_layers` を追加してください
+多くのテンプレートが下記のLoRAを参照しています (Civitaiでダウンロードできます)
+
+| タグ名 | ファイル名 |
+| --- | --- |
+| Smooth Detailer Booster v3 | `Smooth_Booster_v3` |
+| detaILeReij | `r-hrtdrp` |
+| MyTest | `MyTest` |
+
+上記以外のLoRAを参照しているテンプレートもあるので、適宜インストールしてください
+
+## 必須設定
+
+`Settings` - `User Interface` - `Quicksettings list` の項目に`CLIP_stop_at_last_layers` を追加してください
 
 `Clip skip: 2` 以外ではテンプレートの読み込みが正常にできない可能性があります
 
@@ -77,6 +93,15 @@ outdoors,
 ## タグカラーのサポート
 - タグ名に`[#RRGGBB]`形式で色指定するとボタンの色に反映されます (例: `赤いタグ[#FF0000]`)
 
+## Hires CFG Scale の継承 (Forge Neo 向け)
+- reForge では `Hires CFG Scale: 0` は「本体の `CFG Scale` を継承する」という意味ですが、Forge Neo にはこの仕様がなく、0 がそのまま CFG 0 として扱われてしまいます
+- 本拡張機能は生成の直前に 0 を `CFG Scale` の値へ置き換えることで、reForge と同じ挙動を再現します
+  - あわせて `Hires CFG Scale` スライダーの下限を 0 に緩和し、`Hires negative prompt` も編集可能にしています
+- `Settings` - `Easy Template Selector` の `Hires CFG Scale が 0 のとき CFG Scale を継承する (reForge 互換)` でOFFにできます (反映にはブラウザの再読み込みが必要)
+- 同梱テンプレートの `Hires CFG Scale` は 0 のままにしてあります。`CFG Scale` を変更すると Hires 側も追従します
+  - 0 のまま保存してほしいので、テンプレートを保存するときはテンプレート適用直後の状態から行ってください
+  - 生成画像のpnginfoには継承後の実値が焼かれるため、`PNG Info`から送った状態で保存すると 0 が実値で固定されてしまいます
+
 
 # UI
 
@@ -104,15 +129,6 @@ outdoors,
 `10_キャラ_ほげほげ.yml`のようにカテゴリIDだけ合わせると同カテゴリ扱いになり、タグ追加時に上書き対象になります
 
 `10_キャラ_ほげほげ_.yml`のようにファイル名の末尾を`_`にすると更新の対象外になるので、ローカル専用のタグはこの形式を推奨します
-
-
-# 更新履歴
-
-- 2025/05/07: タグ上書きロジックの修正、サブカテゴリの一致を優先するように
-- 2025/05/08: 編集中のプロンプト行をドロップダウンリストで選択できるように
-- 2025/05/09: フラットカラー/ピクセルアートのテンプレートを追加
-- 2025/05/10: `96_解像度` タブから解像度の変更を可能に
-- 2025/05/10.2: テンプレート追加
 
 
 # 注意
