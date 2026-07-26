@@ -76,9 +76,10 @@ class ETSCompletion {
     return nextEnd
   }
 
-  constructor({ ids, history }) {
+  constructor({ ids, history, onConfirm }) {
     this.ids = ids
     this.history = history
+    this.onConfirm = onConfirm
     this.index = null
     this.popup = null
     this.entries = []
@@ -333,5 +334,9 @@ class ETSCompletion {
     updateInput(textarea)
 
     this.history.saveTextHistory()
+
+    // 確定した行のセクションを選択へ反映する。updateInput() の input は
+    // isTrusted が false なのでキャレット同期側では拾えない
+    this.onConfirm?.(textarea)
   }
 }

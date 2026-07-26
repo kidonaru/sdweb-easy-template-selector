@@ -38,6 +38,7 @@ class EasyTemplateSelector {
     this.completion = new ETSCompletion({
       ids: EasyTemplateSelector.IDS,
       history: this.history,
+      onConfirm: (textarea) => this.promptEditor.syncFromCaret(textarea),
     })
     this.templateManager.setPromptEditor(this.promptEditor)
   }
@@ -75,6 +76,7 @@ class EasyTemplateSelector {
       .getElementById('txt2img_toprow')
       .after(this.render())
 
+    this.promptEditor.attachCaretSync()
     this.completion.attach()
   }
 

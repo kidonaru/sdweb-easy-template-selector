@@ -327,6 +327,68 @@ class ETSPromptEditor {
     this.updateTagInfo()
   }
 
+  // キャレット行のセクションを選択状態へ反映する。
+  // 同期しないケース(いずれも直前の選択を維持する):
+  //   - キャレットが範囲外
+  //   - コメント行を持たないセクション / 入力途中のコメント行(isSyncableSection)
+  //   - selectCurrent() が弾く除外カテゴリ(97_Color / 98_特殊 / 99_ネガティブ)
+  syncFromCaret(textarea) {
+    const sections = this.splitSections(textarea.value)
+    const index = ETSPromptEditor.indexOfSectionAtCaret(sections, textarea.selectionStart)
+    if (index === -1) {
+      return
+    }
+
+    const sectionText = sections[index]
+    if (!ETSPromptEditor.isSyncableSection(sectionText)) {
+      return
+    }
+
+    const section = this.parseSection(sectionText)
+    // ヘッダーで比較する。タグ本文で比べると同一セクションの編集中も差分ありになり、
+    // キー入力ごとに updateTagInfo() が select を作り直してしまう
+    if (section.getHeader() === this.currentSection.getHeader()) {
+      return
+    }
+
+    this.selectCurrent(section)
+  }
+
+  // キャレット監視の配線。init() は Reload のたびに走るので二重配線を防ぐ。
+  // 対象はポジティブ欄のみ(ドロップダウンが txt2img_prompt のセクションしか列挙しないため)
+  attachCaretSync() {
+    if (this.caretSyncAttached) {
+      return
+    }
+
+    const textarea = gradioApp().getElementById('txt2img_prompt')?.querySelector('textarea')
+    if (!textarea) {
+      console.error('キャレット同期の配線に失敗しました: txt2img_prompt の textarea が見つかりません')
+      return
+    }
+
+    // isTrusted で人手の入力に限定する。textarea.value の代入はキャレットを末尾へ飛ばし、
+    // updateInput() が input を発火するため、拾うと moveTag / Undo / 97_98 の追加で
+    // 選択が最後のセクションへ化ける(補完確定だけは onConfirm から明示的に呼ぶ)
+    const onCaretEvent = (event) => {
+      if (!event.isTrusted) {
+        return
+      }
+      this.syncFromCaret(textarea)
+    }
+
+    textarea.addEventListener('input', onCaretEvent)
+    textarea.addEventListener('click', onCaretEvent)
+    textarea.addEventListener('keyup', (event) => {
+      // カーソル移動だけでも判定し直す
+      if (ETSPromptEditor.CARET_KEYS.includes(event.key)) {
+        onCaretEvent(event)
+      }
+    })
+
+    this.caretSyncAttached = true
+  }
+
   removeTag(targetSection) {
     if (!targetSection.isValid()) {
       return
