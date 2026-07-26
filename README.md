@@ -23,20 +23,20 @@ https://github.com/kidonaru/sdweb-easy-template-selector
 
 既存のテンプレートの読み込みには下記モデルが必要です
 
-| モデル | ファイル名 |
-| --- | --- |
-| Nova Anime XL v6.0 | `novaAnimeXL_ilV60` |
-| WAI-illustrious-SDXL v17.0 | `waiIllustriousSDXL_v170` |
+| モデル | ファイル名 | 配布元 |
+| --- | --- | --- |
+| Nova Anime XL v6.0 | `novaAnimeXL_ilV60` | [Civitai](https://civitai.com/models/376130/nova-anime-xl?modelVersionId=1610231) |
+| WAI-illustrious-SDXL v17.0 | `waiIllustriousSDXL_v170` | [Civitai](https://civitai.red/models/827184/wai-illustrious-sdxl?modelVersionId=2883731) |
 
 ## よく使うLoRA
 
 多くのテンプレートが下記のLoRAを参照しています (Civitaiでダウンロードできます)
 
-| タグ名 | ファイル名 |
-| --- | --- |
-| Smooth Detailer Booster v3 | `Smooth_Booster_v3` |
-| detaILeReij | `r-hrtdrp` |
-| MyTest | `MyTest` |
+| タグ名 | ファイル名 | 配布元 |
+| --- | --- | --- |
+| Smooth Detailer Booster v3 | `Smooth_Booster_v3` | [Civitai](https://civitai.com/models/1145743/smooth-detailer-booster-noobaiillustriouspony?modelVersionId=1784760) |
+| detaILeReij | `r-hrtdrp` | [Civitai](https://civitai.com/models/1031108/detailereij) |
+| MyTest | `MyTest` | [Civitai](https://civitai.com/models/1340344/mytest) |
 
 上記以外のLoRAを参照しているテンプレートもあるので、適宜インストールしてください
 
@@ -108,13 +108,25 @@ outdoors,
 
 - マウスでもクリックで確定できます
 - 候補が出ている間の `Enter` は確定に使われます。そのまま改行したいときは `Esc` で閉じてから押してください
-- 候補が閉じるのは `Esc`・確定・候補ゼロ・ポップアップとプロンプト欄の外をクリックした場合の4つです
+
+候補が閉じるタイミングは下記の4つです
+
+- `Esc` を押したとき
+- 候補を確定したとき
+- 候補が0件になったとき
+- ポップアップとプロンプト欄の外をクリックしたとき
 
 ### 検索対象
 
-- タグ名（日本語ラベル）・タグの中身（英語プロンプト）・カテゴリ名に加えて、確定後のコメント行と同じ `カテゴリ (タグ名)` の形式でも検索できます
+検索対象は下記の4種類です
+
+- タグ名（日本語ラベル）
+- タグの中身（英語プロンプト）
+- カテゴリ名
+- 確定後のコメント行と同じ `カテゴリ (タグ名)` の形式
   - 入力済みの行を打ち直すときは、そのままの形で打てば同じセクションが引けます
-- IMEの全角カッコ `（` と半角 `(`、大文字小文字は区別しません
+
+IMEの全角カッコ `（` と半角 `(`、大文字小文字は区別しません
 
 ### 確定時の動作
 
@@ -139,13 +151,16 @@ outdoors,       ← コメント行とタグ行がまとめて挿入される
 - `01_クオリティ:Model` / `99_ネガティブ:Model` の各グループ
 
 ## Hires CFG Scale の継承 (Forge Neo 向け)
-- reForge では `Hires CFG Scale: 0` は「本体の `CFG Scale` を継承する」という意味ですが、Forge Neo にはこの仕様がなく、0 がそのまま CFG 0 として扱われてしまいます
+- reForge では `Hires CFG Scale: 0` は「本体の `CFG Scale` を継承する」という意味を持ちます
+  - Forge Neo にはこの仕様がなく、0 はそのまま CFG 0 として扱われてしまいます
 - 本拡張機能は生成の直前に 0 を `CFG Scale` の値へ置き換えることで、reForge と同じ挙動を再現します
-  - あわせて `Hires CFG Scale` スライダーの下限を 0 に緩和し、`Hires negative prompt` も編集可能にしています
-- `Settings` - `Easy Template Selector` の `Hires CFG Scale が 0 のとき CFG Scale を継承する (reForge 互換)` でOFFにできます (反映にはブラウザの再読み込みが必要)
+  - あわせて `Hires CFG Scale` スライダーの下限を 0 に緩和しています (0 を入力できるようにするため)
+  - `Hires negative prompt` も編集可能にしています (継承後は 0 でもネガティブが効くため)
+- `Settings` - `Easy Template Selector` の `Hires CFG Scale が 0 のとき CFG Scale を継承する (reForge 互換)` でOFFにできます
+  - 反映にはブラウザの再読み込みが必要です
 - 同梱テンプレートの `Hires CFG Scale` は 0 のままにしてあります。`CFG Scale` を変更すると Hires 側も追従します
   - 0 のまま保存してほしいので、テンプレートを保存するときはテンプレート適用直後の状態から行ってください
-  - 生成画像のpnginfoには継承後の実値が焼かれるため、`PNG Info`から送った状態で保存すると 0 が実値で固定されてしまいます
+  - 生成画像のpnginfoには継承後の実値が焼き込まれます。そのため `PNG Info` から送った状態で保存すると、0 が実値のまま固定されてしまいます
 
 
 # UI
