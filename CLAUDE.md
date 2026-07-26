@@ -67,6 +67,12 @@ sdweb-easy-template-selector/
 - 確定処理は変更前と変更後の両方を Undo 履歴に積む。`textarea.value` の直代入でブラウザ標準の Undo が失われるため
 - 補完ポップアップを閉じるのは Esc・確定・候補ゼロ・**ポップアップと textarea の外の `pointerdown`** の 4 つ。スクロールとリサイズでは閉じずに `updatePosition()` で追従する。`blur` では閉じない（ポップアップのスクロールバー操作でも blur が飛ぶため）。外側判定は Shadow DOM での retarget を避けて `composedPath()` で行う
 - 落とし穴: 候補が出ている間の Enter は確定に使われる。普通に改行したいときは Esc で閉じてから
+- タグ情報ドロップダウン（選択中セクション）はポジティブ欄のキャレット行に追随する（`ETSPromptEditor.attachCaretSync()`）。同期しないのは「キャレットが範囲外」「セクションのコメント行が `#` で始まり `,` で終わる形でない」「`selectCurrent()` が弾く除外カテゴリ（`97_Color` / `98_特殊` / `99_ネガティブ`）」の 3 ケースで、いずれも直前の選択を維持する
+- 落とし穴: キャレット同期は `event.isTrusted` で人手の入力に限定している。`textarea.value` への代入は HTML 仕様上キャレットを末尾へ飛ばし、`updateInput()` が同期的に `input` を発火するため、これが無いと `moveTag()`・Undo/Redo・`97_Color` / `98_特殊` の追加・テンプレ適用後の Gradio の書き戻しで、選択が最後のセクションへ化ける
+- 補完の確定だけは例外で、`ETSCompletion` の `onConfirm` コールバック（配線は `EasyTemplateSelector` の constructor）から `syncFromCaret()` を明示的に呼んでいる。`confirm()` が `setSelectionRange()` を `updateInput()` より先に呼ぶ順序に依存しているので、ここを入れ替えないこと
+- 同期対象の判定に「コメント行が `,` で終わること」を使っているのは、補完で入力途中の行（`#細めた`）を `parseSection()` に通すと category が半端な `ETSSection` になり、上/下/削除ボタンが誤爆するため。`ETSCompletion.STOP_CHARS` と同じ規約に乗っている
+- ネガティブ欄を同期対象にしていないのは、ドロップダウンが `txt2img_prompt` のセクションしか列挙しないため（`updateTagInfo()`）
+- `updateTagInfo()` の選択復元はセクション全文ではなくヘッダー行で一致させる。手書きのプロンプトはタグ末尾のカンマや空白が揺れるため、全文一致だと内部状態が正しくてもドロップダウンだけ空表示になる
 
 ## Build & Test
 
