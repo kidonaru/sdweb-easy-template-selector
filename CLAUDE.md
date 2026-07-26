@@ -21,6 +21,8 @@ sdweb-easy-template-selector/
 │   ├── ets_prompt_editor.js      # ETSPromptEditor: タグ追加/削除/移動・選択管理
 │   ├── ets_template_manager.js   # ETSTemplateManager: テンプレート適用/保存・メタ情報
 │   ├── ets_history.js            # ETSHistory: Undo/Redo 履歴
+│   ├── ets_completion.js         # ETSCompletion: プロンプト欄の補完（トリガ判定・ポップアップ・確定）
+│   ├── ets_completion_index.js   # ETSCompletionIndex: 補完候補の平坦化と検索
 │   └── js-yaml.min.js            # YAML パーサ（vendored、編集禁止）
 ├── scripts/
 │   ├── easy_prompt_selector.py   # WebUI 拡張エントリ（テンプレート置換・Gradio 連携）
@@ -54,6 +56,11 @@ sdweb-easy-template-selector/
 - 本体は `Hires CFG Scale > 1.0` のときだけ `Hires negative prompt` を編集可能にする（本体 `modules/ui.py:61` の `use_cfg`）。0 は継承後に negative が効くため、`scripts/hr_cfg_ui.py` が `on_before_ui` で `modules.ui.use_cfg` を差し替え、0 も編集可能側に含めている（`create_ui()` の実行中に `fn=use_cfg` が評価されるので、その前に差し替える）。同じ関数は本体 `CFG Scale` 側（`modules/ui.py:244, 642`）にも使われるが、そちらの下限は 1.0 で 0 に到達しないため挙動は変わらない。`easy_template_inherit_hr_cfg` が OFF のときは 0 が文字通りの CFG 0 になるので、本体と同じ判定にフォールバックする
 - 落とし穴: 緩和により `step` 0.5 刻みで 0.5 も入力できるようになった。センチネルは **0 のみ**で、0.5 は明示指定として素通しされ CFG 0.5 で生成される
 - 落とし穴: 1.0 は Neo で「Hires のネガティブ無効」を意味する正規値。誤って 1.0 が入ると継承は発動せずログも出ないため、テンプレ側の値が 0 のままか目視で確認すること
+- プロンプト補完は行頭 `#` をトリガとする。tagcomplete も同じ textarea を見ているが、検索語がカンマ区切りで切り出され `#` ごと検索されるため danbooru タグには一致せず、tagcomplete 側のポップアップは出ない（`navigateInList()` は自分のポップアップが出ているときしかキーを消費しない）。この性質に依存しているので、tagcomplete 側の設定でパーサや翻訳を増やしたときは共存を再確認すること
+- 補完の keydown は `gradioApp()` の捕捉フェーズで受ける。textarea 自身に登録すると `eventPhase` が `AT_TARGET` になり、`capture: true` を付けても登録順でしか呼ばれないため、他拡張より先に処理できる保証がない
+- 補完の対象外は `00_テンプレート` / `90_モデル` / `96_解像度` の 3 カテゴリと、`01_クオリティ:Model` / `99_ネガティブ:Model` の 2 グループ。前者はテキスト挿入以外の副作用を持ち、後者は `applyModelTag()` が先頭 1 件だけを差し替える前提のためセクションが重複すると壊れる
+- 落とし穴: 補完のラベル検索は行に `(` が入った時点で止まるため、`マリー(体操服)` のようにカッコを含むラベルは `マリー` までしか打てない。前方部分で絞って候補から選ぶ
+- 落とし穴: 候補が出ている間の Enter は確定に使われる。普通に改行したいときは Esc で閉じてから
 
 ## Build & Test
 
@@ -69,6 +76,9 @@ python -c "import yaml, sys; yaml.safe_load(open(sys.argv[1], encoding='utf-8'))
 # WebUI 非依存モジュールの単体テスト（リポジトリルートで実行）
 PYTHONIOENCODING=utf-8 python tests/test_upscaler_aliases.py
 PYTHONIOENCODING=utf-8 python tests/test_hr_cfg_inherit.py
+
+# JavaScript の純粋モジュールの単体テスト（リポジトリルートで実行）
+node --test
 ```
 
 - Python 側の変更は WebUI 再起動が必要。JavaScript / YAML の変更は UI リロードで反映される。
