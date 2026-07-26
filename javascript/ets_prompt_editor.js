@@ -311,8 +311,11 @@ class ETSPromptEditor {
       tagInfoSelect.appendChild(optionElement)
     })
 
-    // 現在のセクションを選択
-    tagInfoSelect.value = this.currentSection.toString()
+    // 現在のセクションを選択。タグ本文ではなくヘッダー行で一致させる
+    // （手書きのプロンプトはカンマや空白の揺れでタグ本文が一致しないため）
+    const currentHeader = this.currentSection.getHeader()
+    tagInfoSelect.selectedIndex = Array.from(tagInfoSelect.options)
+      .findIndex(option => option.textContent === currentHeader)
   }
 
   selectCurrent(section) {
