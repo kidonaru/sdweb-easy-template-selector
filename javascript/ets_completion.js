@@ -46,6 +46,36 @@ class ETSCompletion {
     }
   }
 
+  // コメント行 [lineStart, lineEnd) から、それに続くタグ行の終端まで置換範囲を広げる。
+  // セクションは「コメント行 + タグ行」の 2 行構成（ETSPromptEditor.splitSections() と
+  // 同じモデル）なので、確定時に片方だけを置き換えると古いタグが取り残される。
+  // 広げないのは次の 2 ケース:
+  //   - 次行が空行: 区切り行とタグが空のセクションを区別できないため安全側に倒す
+  //   - 直前がコメント行: 既存セクションの間に挿入された行なので、次行は前のセクションのタグ
+  static extendToTagLine(value, lineStart, lineEnd) {
+    if (lineEnd >= value.length) {
+      return lineEnd
+    }
+
+    const prevStart = value.lastIndexOf('\n', lineStart - 2) + 1
+    if (lineStart > 0 && value.slice(prevStart, lineStart - 1).startsWith('#')) {
+      return lineEnd
+    }
+
+    const nextStart = lineEnd + 1
+    let nextEnd = value.indexOf('\n', nextStart)
+    if (nextEnd === -1) {
+      nextEnd = value.length
+    }
+
+    const nextLine = value.slice(nextStart, nextEnd)
+    if (nextLine.trim() === '' || nextLine.startsWith('#')) {
+      return lineEnd
+    }
+
+    return nextEnd
+  }
+
   constructor({ ids, history }) {
     this.ids = ids
     this.history = history
@@ -249,9 +279,18 @@ class ETSCompletion {
     }
 
     const section = new ETSSection(entry.comment, entry.tag, entry.category).toString()
-    const replacement = ETSCompletion.buildReplacement(textarea.value, range, section)
+    // 入力済みセクションの打ち直しでは、コメント行に続く古いタグ行ごと差し替える
+    const sectionRange = {
+      lineStart: range.lineStart,
+      lineEnd: ETSCompletion.extendToTagLine(textarea.value, range.lineStart, range.lineEnd),
+    }
+    const replacement = ETSCompletion.buildReplacement(textarea.value, sectionRange, section)
 
     this.close()
+
+    // 変更前の状態も履歴へ積む。textarea.value の直代入でブラウザ標準の Undo が
+    // 失われるため、これが無いと確定で消えたタグ行を戻す手段が無くなる
+    this.history.saveTextHistory()
 
     // setSelectionRange を updateInput より先に呼ぶ。
     // updateInput が投げる input イベントで refresh() が走るため、
