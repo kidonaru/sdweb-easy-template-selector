@@ -216,6 +216,10 @@ class ETSCompletion {
       case 'ArrowUp':
         this.move(-1)
         break
+      case 'Enter':
+      case 'Tab':
+        this.confirm()
+        break
       case 'Escape':
         this.close()
         break
@@ -227,8 +231,34 @@ class ETSCompletion {
     event.stopPropagation()
   }
 
-  // Task 4 で実装する
+  // 選択中の候補でカーソル行を置き換える
   confirm() {
+    const entry = this.entries[this.selectedIndex]
+    const textarea = this.textarea
+    if (!entry || !textarea) {
+      this.close()
+      return
+    }
+
+    const range = ETSCompletion.extractQuery(textarea.value, textarea.selectionStart)
+    if (!range) {
+      this.close()
+      return
+    }
+
+    const section = new ETSSection(entry.comment, entry.tag, entry.category).toString()
+    const replacement = ETSCompletion.buildReplacement(textarea.value, range, section)
+
     this.close()
+
+    // setSelectionRange を updateInput より先に呼ぶ。
+    // updateInput が投げる input イベントで refresh() が走るため、
+    // その時点でキャレットが挿入位置に無いと古いクエリのまま開き直すことがある
+    textarea.value = replacement.value
+    textarea.focus()
+    textarea.setSelectionRange(replacement.caret, replacement.caret)
+    updateInput(textarea)
+
+    this.history.saveTextHistory()
   }
 }
