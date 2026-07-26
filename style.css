@@ -8,3 +8,33 @@
 .easy_template_selector_button {
   flex: 1;
 }
+
+.easy_template_completion_popup {
+  position: fixed;
+  z-index: 1001;
+  max-height: 20em;
+  overflow-y: auto;
+  background-color: var(--input-background-fill, #1f2937);
+  border: 1px solid var(--block-border-color, #4b5563);
+  border-radius: var(--block-radius, 4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.easy_template_completion_item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 2px 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--body-text-color, #e5e7eb);
+}
+
+.easy_template_completion_item.selected {
+  background-color: var(--background-fill-secondary, #374151);
+}
+
+.easy_template_completion_tag {
+  opacity: 0.6;
+  font-size: 0.9em;
+}

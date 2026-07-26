@@ -11,7 +11,8 @@ class EasyTemplateSelector {
     APPLY_BUTTON: 'easy_template_selector_apply_button',
     UNDO_BUTTON: 'easy_template_selector_undo_button',
     REDO_BUTTON: 'easy_template_selector_redo_button',
-    CONTAINER: 'easy_template_selector_container'
+    CONTAINER: 'easy_template_selector_container',
+    COMPLETION_POPUP: 'easy_template_selector_completion_popup'
   }
 
   constructor(yaml, gradioApp) {
@@ -33,6 +34,10 @@ class EasyTemplateSelector {
       ids: EasyTemplateSelector.IDS,
       history: this.history,
       templateManager: this.templateManager,
+    })
+    this.completion = new ETSCompletion({
+      ids: EasyTemplateSelector.IDS,
+      history: this.history,
     })
     this.templateManager.setPromptEditor(this.promptEditor)
   }
@@ -63,9 +68,14 @@ class EasyTemplateSelector {
 
     this.tags = await this.fetchTags()
 
+    // Reload でタグが差し替わるのでインデックスを作り直す
+    this.completion.setIndex(new ETSCompletionIndex(this.tags))
+
     gradioApp()
       .getElementById('txt2img_toprow')
       .after(this.render())
+
+    this.completion.attach()
   }
 
   async readFile(filepath) {

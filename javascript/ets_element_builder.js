@@ -366,4 +366,43 @@ class ETSElementBuilder {
       }))
     }, 100)
   }
+
+  // 補完候補のポップアップ本体
+  static completionPopup(id) {
+    const popup = document.createElement('div')
+    popup.id = id
+    popup.classList.add('easy_template_completion_popup')
+    popup.style.display = 'none'
+
+    return popup
+  }
+
+  // 補完候補の 1 行
+  static completionItem(entry, selected, { onSelect, onHover }) {
+    const item = document.createElement('div')
+    item.classList.add('easy_template_completion_item')
+    if (selected) {
+      item.classList.add('selected')
+    }
+
+    const label = document.createElement('span')
+    label.classList.add('easy_template_completion_label')
+    label.textContent = `${entry.category} (${entry.comment})`
+
+    const tag = document.createElement('span')
+    tag.classList.add('easy_template_completion_tag')
+    tag.textContent = entry.tag
+
+    item.appendChild(label)
+    item.appendChild(tag)
+
+    // click だと先に textarea の blur が走ってポップアップが閉じるため mousedown を使う
+    item.addEventListener('mousedown', (event) => {
+      event.preventDefault()
+      onSelect()
+    })
+    item.addEventListener('mouseenter', onHover)
+
+    return item
+  }
 }
