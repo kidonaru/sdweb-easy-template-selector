@@ -118,7 +118,8 @@ class ETSCompletion {
           this.refresh(textarea, target)
         }
       })
-      textarea.addEventListener('blur', () => this.close())
+      // blur では閉じない。ポップアップのスクロールバー操作でも blur が飛ぶため、
+      // 「外をタップしたら閉じる」の判定は pointerdown 側に一本化する
       textarea.addEventListener('compositionstart', () => { this.composing = true })
       textarea.addEventListener('compositionend', () => { this.composing = false })
     }
@@ -128,9 +129,15 @@ class ETSCompletion {
     // 登録順でしか呼ばれず、tagcomplete より先に処理できる保証がないため
     gradioApp().addEventListener('keydown', (event) => this.onKeyDown(event), true)
 
-    // position: fixed なのでスクロール・リサイズには追従しない。ずれるより閉じる
-    window.addEventListener('scroll', () => this.close(), true)
-    window.addEventListener('resize', () => this.close())
+    // position: fixed なのでスクロール・リサイズでは自力で位置を追従させる。
+    // 捕捉フェーズなのでポップアップ自身の内部スクロールでも走るが、
+    // その場合も textarea の位置は変わらないので実害はない
+    window.addEventListener('scroll', () => this.reposition(), true)
+    window.addEventListener('resize', () => this.reposition())
+
+    // ポップアップ外のタップで閉じる。textarea 内のタップは click 側の refresh() が
+    // 判定し直すので対象外。ポップアップ内は候補の mousedown に任せる
+    document.addEventListener('pointerdown', (event) => this.onPointerDown(event), true)
 
     this.attached = true
   }
@@ -228,6 +235,31 @@ class ETSCompletion {
     this.popup.style.left = `${rect.left}px`
     this.popup.style.top = `${rect.bottom}px`
     this.popup.style.minWidth = `${rect.width}px`
+  }
+
+  // 開いている間だけ位置を追従させる
+  reposition() {
+    if (!this.isOpen() || !this.textarea) {
+      return
+    }
+
+    this.updatePosition()
+  }
+
+  // ポップアップと textarea の外を叩いたら閉じる
+  onPointerDown(event) {
+    if (!this.isOpen()) {
+      return
+    }
+
+    // event.target は Shadow DOM 越しだとホスト要素へ retarget されるため、
+    // 実際の経路を composedPath() で見る
+    const path = event.composedPath?.() ?? [event.target]
+    if (path.includes(this.popup) || path.includes(this.textarea)) {
+      return
+    }
+
+    this.close()
   }
 
   onKeyDown(event) {
