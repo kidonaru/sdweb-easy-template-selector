@@ -160,3 +160,55 @@ test('全角英数のクエリでも半角のタグに一致する', () => {
 
   assert.deepEqual(index.search('ｓｏｌｏ', 'positive').map((e) => e.comment), ['ソロ'])
 })
+
+// 入力済みのコメント行を打ち直すときは `カテゴリ (ラベル)` の形のまま打つため、
+// ヘッダー形式そのものも検索対象にする
+const HEADER_TAGS = {
+  '50_背景': { 'オリジナル': { 'ピンクのカジノ背景': 'casino, pink theme' } },
+}
+
+test('カテゴリ + カッコ + ラベルのヘッダー形式で引ける', () => {
+  const index = new ETSCompletionIndex(HEADER_TAGS)
+
+  assert.deepEqual(
+    index.search(' 50_背景:オリジナル (ピンクのカジノ', 'positive').map((e) => e.comment),
+    ['ピンクのカジノ背景'],
+  )
+})
+
+test('ヘッダー形式は空白の有無と全角カッコを問わない', () => {
+  const index = new ETSCompletionIndex(HEADER_TAGS)
+
+  for (const query of [
+    '50_背景:オリジナル(ピンクのカジノ',
+    '50_背景:オリジナル （ピンクのカジノ',
+    '50_背景:オリジナル (ピンクのカジノ背景)',
+  ]) {
+    assert.deepEqual(index.search(query, 'positive').map((e) => e.comment), ['ピンクのカジノ背景'], query)
+  }
+})
+
+test('カッコを開いた直後（ラベル未入力）でも候補が残る', () => {
+  const index = new ETSCompletionIndex(HEADER_TAGS)
+
+  assert.ok(index.search('50_背景:オリジナル (', 'positive').some((e) => e.comment === 'ピンクのカジノ背景'))
+})
+
+test('ランダムエントリはヘッダー形式でも引ける', () => {
+  const index = new ETSCompletionIndex(HEADER_TAGS)
+
+  assert.deepEqual(
+    index.search('50_背景:オリジナル (ランダム', 'positive').map((e) => e.tag),
+    ['@50_背景:オリジナル@'],
+  )
+})
+
+test('ラベル一致はヘッダー一致より上位に来る', () => {
+  const index = new ETSCompletionIndex({
+    '50_背景': { 'オリジナル': { 'カジノ': 'casino' } },
+    '65_その他': { 'なにか': 'カジノ' },
+  })
+
+  const result = index.search('カジノ', 'positive')
+  assert.equal(result[0].comment, 'カジノ')
+})

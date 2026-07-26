@@ -21,6 +21,7 @@ class ETSCompletionIndex {
         comment: ETSCompletionIndex.normalize(entry.comment),
         tag: ETSCompletionIndex.normalize(entry.tag),
         category: ETSCompletionIndex.normalize(entry.category),
+        header: ETSCompletionIndex.compact(ETSCompletionIndex.headerOf(entry)),
       },
     }))
   }
@@ -29,6 +30,20 @@ class ETSCompletionIndex {
   // ラベル側は半角で書かれているため NFKC で寄せてから比較する
   static normalize(text) {
     return (text ?? '').normalize('NFKC').toLowerCase()
+  }
+
+  // ヘッダー比較用の正規化。空白を落として `カテゴリ(ラベル` のように
+  // 空白を省いて打たれた場合も拾えるようにする
+  static compact(text) {
+    return ETSCompletionIndex.normalize(text).replace(/\s+/g, '')
+  }
+
+  // 確定後のコメント行と同じ `カテゴリ (ラベル)` 形式。
+  // 入力済みの行を打ち直すときはこの形のまま打つため、これも検索対象にする。
+  // ランダムエントリのラベルは ETSSection.toString() に合わせて「ランダム」
+  static headerOf(entry) {
+    const label = entry.tag?.startsWith('@') ? 'ランダム' : entry.comment
+    return `${entry.category} (${label})`
   }
 
   // タグツリーを { comment, tag, category } の配列へ平坦化する
@@ -85,6 +100,7 @@ class ETSCompletionIndex {
     if (!normalized) {
       return []
     }
+    const compacted = ETSCompletionIndex.compact(query)
 
     const wantNegative = target === 'negative'
     const ranked = []
@@ -95,7 +111,7 @@ class ETSCompletionIndex {
         continue
       }
 
-      const rank = ETSCompletionIndex.rankOf(entry, normalized)
+      const rank = ETSCompletionIndex.rankOf(entry, normalized, compacted)
       if (rank === null) {
         continue
       }
@@ -110,13 +126,16 @@ class ETSCompletionIndex {
   }
 
   // 一致の強さ。小さいほど上位。一致しない場合は null
-  // entry.normalized は constructor が前計算した検索用の値
-  static rankOf(entry, normalized) {
-    const { comment, tag, category } = entry.normalized
-    if (comment.startsWith(normalized)) return 0
-    if (comment.includes(normalized)) return 1
-    if (tag.includes(normalized)) return 2
-    if (category.includes(normalized)) return 3
+  // entry.normalized は constructor が前計算した検索用の値。
+  // query はそのままのクエリ、compactedQuery は空白を落としたクエリ（ヘッダー比較用）
+  static rankOf(entry, query, compactedQuery) {
+    const { comment, tag, category, header } = entry.normalized
+    if (comment.startsWith(query)) return 0
+    if (header.startsWith(compactedQuery)) return 1
+    if (comment.includes(query)) return 2
+    if (header.includes(compactedQuery)) return 3
+    if (tag.includes(query)) return 4
+    if (category.includes(query)) return 5
     return null
   }
 }
