@@ -93,9 +93,7 @@ test('positive 検索ではネガティブカテゴリが出ない', () => {
 test('negative 検索ではネガティブカテゴリのみ出る', () => {
   const index = new ETSCompletionIndex(TAGS)
 
-  assert.deepEqual(index.search('低品質', 'negative'), [
-    { comment: '低品質', tag: 'worst quality', category: '99_ネガティブ' },
-  ])
+  assert.deepEqual(index.search('低品質', 'negative').map((e) => e.comment), ['低品質'])
   assert.deepEqual(index.search('細めた目', 'negative'), [])
 })
 
@@ -146,4 +144,19 @@ test('タグが空でも例外にならない', () => {
 
   assert.deepEqual(index.search('目', 'positive'), [])
   assert.deepEqual(ETSCompletionIndex.flatten(undefined), [])
+})
+
+test('全角カッコのクエリでも半角カッコのラベルに一致する', () => {
+  const index = new ETSCompletionIndex({
+    '10_キャラ': { 'ブルアカ': { 'マリー(体操服)': 'mari, gym uniform' } },
+  })
+
+  assert.deepEqual(index.search('マリー（体操服', 'positive').map((e) => e.comment), ['マリー(体操服)'])
+  assert.deepEqual(index.search('マリー(体操服', 'positive').map((e) => e.comment), ['マリー(体操服)'])
+})
+
+test('全角英数のクエリでも半角のタグに一致する', () => {
+  const index = new ETSCompletionIndex({ '65_その他': { 'ソロ': 'solo' } })
+
+  assert.deepEqual(index.search('ｓｏｌｏ', 'positive').map((e) => e.comment), ['ソロ'])
 })

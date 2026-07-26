@@ -6,8 +6,10 @@ class ETSCompletion {
     { id: 'txt2img_neg_prompt', target: 'negative' },
   ]
 
-  // 行に含まれていたら補完を出さない文字（既存のコメント行と区別するため）
-  static STOP_CHARS = /[,()]/
+  // 行に含まれていたら補完を出さない文字。
+  // 確定済みのコメント行は必ず `,` で終わる（ETSSection.toString()）ので、これだけで
+  // 入力中の行と区別できる。カッコはラベル自体に含まれるため停止させない
+  static STOP_CHARS = /,/
 
   // カーソル行から補完クエリを取り出す。補完を出さない状況では null を返す
   static extractQuery(value, caret) {

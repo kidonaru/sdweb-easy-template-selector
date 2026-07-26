@@ -14,7 +14,21 @@ class ETSCompletionIndex {
   static MAX_RESULTS = 20
 
   constructor(tags) {
-    this.entries = ETSCompletionIndex.flatten(tags)
+    // 検索用の正規化はキー入力ごとに全件走るため、エントリ側は構築時に前計算する
+    this.entries = ETSCompletionIndex.flatten(tags).map((entry) => ({
+      ...entry,
+      normalized: {
+        comment: ETSCompletionIndex.normalize(entry.comment),
+        tag: ETSCompletionIndex.normalize(entry.tag),
+        category: ETSCompletionIndex.normalize(entry.category),
+      },
+    }))
+  }
+
+  // 検索用の正規化。IME 日本語入力では `(` が全角 `（` になるが、
+  // ラベル側は半角で書かれているため NFKC で寄せてから比較する
+  static normalize(text) {
+    return (text ?? '').normalize('NFKC').toLowerCase()
   }
 
   // タグツリーを { comment, tag, category } の配列へ平坦化する
@@ -67,7 +81,7 @@ class ETSCompletionIndex {
   // query に一致する候補を優先順に返す
   // target は 'positive' / 'negative' のいずれか
   search(query, target) {
-    const normalized = query.trim().toLowerCase()
+    const normalized = ETSCompletionIndex.normalize(query.trim())
     if (!normalized) {
       return []
     }
@@ -96,12 +110,13 @@ class ETSCompletionIndex {
   }
 
   // 一致の強さ。小さいほど上位。一致しない場合は null
+  // entry.normalized は constructor が前計算した検索用の値
   static rankOf(entry, normalized) {
-    const comment = entry.comment.toLowerCase()
+    const { comment, tag, category } = entry.normalized
     if (comment.startsWith(normalized)) return 0
     if (comment.includes(normalized)) return 1
-    if (entry.tag.toLowerCase().includes(normalized)) return 2
-    if (entry.category.toLowerCase().includes(normalized)) return 3
+    if (tag.includes(normalized)) return 2
+    if (category.includes(normalized)) return 3
     return null
   }
 }
