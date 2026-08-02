@@ -9,6 +9,7 @@ from modules.scripts import AlwaysVisible
 from modules import shared
 from scripts.setup import load_tags, get_tags
 from scripts.hr_cfg_inherit import resolve_hr_cfg
+from scripts.exclude_tags import apply_excludes_to_prompt_lists, parse_exclude_tags
 
 FILE_DIR = Path().absolute()
 
@@ -112,6 +113,9 @@ class Script(scripts.Script):
 
         image_info = gr.Textbox("", elem_id='easy_template_selector_image_info', interactive=True, visible=False)
         apply_button = gr.Button("", elem_id='easy_template_selector_apply_button', visible=False)
+        # 除外タグ。JS 側の 99_設定 テキストエリアが値を書き込む。
+        # 生成リクエストに同梱されて process() へ届くため、別経路で送る場合のような競合が起きない
+        exclude_tags = gr.Textbox("", elem_id='easy_template_selector_exclude_tags', interactive=True, visible=False)
 
         binding = parameters_copypaste.ParamBinding(
             paste_button=apply_button,
@@ -120,9 +124,21 @@ class Script(scripts.Script):
             source_tabname="txt2img")
         parameters_copypaste.register_paste_params_button(binding)
 
-        return [image_info, apply_button]
+        return [image_info, apply_button, exclude_tags]
 
-    def replace_template_tags(self, p):
+    def apply_exclude_tags(self, p, exclude_text):
+        """除外タグをポジティブ系プロンプトから取り除く。
+
+        ネガティブ側は対象外。消すと望まない要素が出るようになり、事故が分かりにくいため。
+        """
+        # Hires.fix が無効なとき本体は all_hr_prompts を None のままにするため、リスト側の有無で判定する
+        targets = [p.all_prompts]
+        if getattr(p, 'all_hr_prompts', None):
+            targets.append(p.all_hr_prompts)
+
+        apply_excludes_to_prompt_lists(targets, parse_exclude_tags(exclude_text))
+
+    def replace_template_tags(self, p, exclude_text=''):
         prompts = [
             [p.prompt, p.all_prompts, 'Input Prompt'],
             [p.negative_prompt, p.all_negative_prompts, 'Input NegativePrompt'],
@@ -141,6 +157,10 @@ class Script(scripts.Script):
 
                 replaced = "".join(replace_template(all_prompts[i], seed))
                 all_prompts[i] = replaced
+
+        # @...@ の展開後に消すのは、ランダム抽選で出たタグも除外対象にするため。
+        # format_prompt() より前に置くのは、空になった行を既存の空行削除に拾わせるため
+        self.apply_exclude_tags(p, exclude_text)
 
         # 本体のコメント除去（本文のみ削除・改行は残す）が本拡張より後に走るため、
         # ここでコメント行を落としておかないと空行削除をすり抜けて空行が復活する。
@@ -183,5 +203,9 @@ class Script(scripts.Script):
         print(f'[easy-template] Hires CFG Scale が 0 のため CFG Scale ({resolved}) を継承しました')
 
     def process(self, p, *args):
-        self.replace_template_tags(p)
+        # args は ui() の戻り値がそのまま位置で届く。args[2] = exclude_tags なので、
+        # ui() の戻り値の並びを変えたらここも直す。
+        # img2img では ui() が None を返して args が空になるため長さで防御する
+        exclude_text = args[2] if len(args) > 2 else ''
+        self.replace_template_tags(p, exclude_text)
         self.inherit_hr_cfg(p)

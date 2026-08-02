@@ -17,11 +17,17 @@ class EasyTemplateSelector {
     EDIT_CONTROLS: 'easy_template_selector_edit_controls',
     BATCH_CONTROLS: 'easy_template_selector_batch_controls',
     BATCH_RUN_BUTTON: 'easy_template_selector_batch_run_button',
-    BATCH_STOP_BUTTON: 'easy_template_selector_batch_stop_button'
+    BATCH_STOP_BUTTON: 'easy_template_selector_batch_stop_button',
+    // JS が描画する入力欄。Python 側の hidden Textbox (EXCLUDE_TAGS_BRIDGE) とは別物
+    EXCLUDE_TAGS: 'easy_template_selector_exclude_tags_input',
+    EXCLUDE_TAGS_BRIDGE: 'easy_template_selector_exclude_tags'
   }
 
   // 一括生成モードで選択中のテンプレボタンの見た目
   static BATCH_SELECTED_OUTLINE = '2px solid var(--color-accent, #ff7c00)'
+
+  // 除外タグの保存先。サーバ側に状態を持たせないためブラウザに置く
+  static EXCLUDE_TAGS_STORAGE_KEY = 'easy_template_exclude_tags'
 
   constructor(yaml, gradioApp) {
     this.yaml = yaml
@@ -49,6 +55,9 @@ class EasyTemplateSelector {
       onConfirm: (textarea) => this.promptEditor.syncFromCaret(textarea),
     })
     this.templateManager.setPromptEditor(this.promptEditor)
+
+    // 除外タグ。99_設定 は render() のたびに作り直されるため、値の保持元はここに置く
+    this.excludeTags = EasyTemplateSelector.loadExcludeTags()
 
     // 一括生成モードの状態。selection は「テンプレ名 → テンプレ本文」
     this.batchMode = false
@@ -381,6 +390,17 @@ class EasyTemplateSelector {
 
     fields.append(buttons)
 
+    // 除外タグ。生成時に Python 側がポジティブプロンプトから厳密一致で取り除く。
+    // 99_設定 は render() のたびに作り直されるので、初期値は this.excludeTags から入れる。
+    // 他のハンドラと違い guardBatchRunning() で包まないのは、実行中の抑止が
+    // syncBatchControls() の readOnly 側にあるため（入力そのものを止める）
+    fields.append(ETSElementBuilder.multilineTextarea(
+      EasyTemplateSelector.IDS.EXCLUDE_TAGS,
+      '除外タグ (例: black footwear, black pantyhose,)',
+      this.excludeTags,
+      { onInput: (value) => this.setExcludeTags(value) }
+    ))
+
     return fields
   }
 
@@ -619,7 +639,7 @@ class EasyTemplateSelector {
     this.updateBatchProgress(this.batchSelectionSummary())
   }
 
-  // 実行状態に応じて実行/停止ボタンを出し分ける（排他表示）
+  // 実行状態に応じて、実行/停止ボタンの出し分け（排他表示）と除外タグ欄の編集可否を同期する
   syncBatchControls() {
     const running = this.batchRunner.running
     const runButton = gradioApp().getElementById(EasyTemplateSelector.IDS.BATCH_RUN_BUTTON)
@@ -629,6 +649,15 @@ class EasyTemplateSelector {
     }
     if (stopButton) {
       stopButton.style.display = running ? '' : 'none'
+    }
+    // 実行中の編集は「テンプレごとに除外条件が変わる」事故になるため止める。
+    // プロンプト欄と同じく readOnly（disabled はフォーム送信への影響を避けて使わない）
+    const excludeInput = gradioApp()
+      .getElementById(EasyTemplateSelector.IDS.EXCLUDE_TAGS)
+      ?.querySelector('textarea')
+    if (excludeInput) {
+      excludeInput.readOnly = running
+      excludeInput.style.opacity = running ? '0.6' : ''
     }
   }
 
@@ -693,6 +722,40 @@ class EasyTemplateSelector {
     node.style.display = visible ? 'flex' : 'none'
   }
 
+  // 除外タグを localStorage から読む。読めない環境・壊れた値でも動作を止めない
+  static loadExcludeTags() {
+    try {
+      return localStorage.getItem(EasyTemplateSelector.EXCLUDE_TAGS_STORAGE_KEY) || ''
+    } catch (error) {
+      console.warn('除外タグの読み込みに失敗しました:', error)
+      return ''
+    }
+  }
+
+  // 除外タグを保持し、localStorage と Python へ渡す hidden Textbox の両方へ反映する
+  setExcludeTags(value) {
+    this.excludeTags = value
+    try {
+      localStorage.setItem(EasyTemplateSelector.EXCLUDE_TAGS_STORAGE_KEY, value)
+    } catch (error) {
+      console.warn('除外タグの保存に失敗しました:', error)
+    }
+    this.syncExcludeTagsBridge()
+  }
+
+  // hidden Gradio Textbox へ値を書き込む。updateInput() まで行わないとフロント状態に乗らず、
+  // 生成リクエストに古い値が送られる
+  syncExcludeTagsBridge() {
+    const bridge = gradioApp()
+      .getElementById(EasyTemplateSelector.IDS.EXCLUDE_TAGS_BRIDGE)
+      ?.querySelector('textarea')
+    if (!bridge) {
+      return
+    }
+    bridge.value = this.excludeTags
+    updateInput(bridge)
+  }
+
   async reload() {
     try {
       const response = await fetch('/easy-template/reload', {
@@ -732,4 +795,6 @@ onUiLoaded(async () => {
   container.appendChild(applyButton)*/
 
   await easyPromptSelector.init()
+  // 一度も入力しないまま生成しても localStorage の前回値が Python 側へ届くようにする
+  easyPromptSelector.syncExcludeTagsBridge()
 })

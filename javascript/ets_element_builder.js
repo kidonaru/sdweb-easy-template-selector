@@ -228,6 +228,25 @@ class ETSElementBuilder {
     return label
   }
 
+  // Gradio の Svelte はハッシュ付きクラス名でスタイルを当てるため、既存要素から拾って同じものを付ける。
+  // inputSelector は入力要素のタグ名（単一行なら 'input'、複数行なら 'textarea'）
+  static applySvelteClasses(container, label, input, inputSelector) {
+    const targets = [
+      [container, '.gradio-textbox'],
+      [label, '.gradio-textbox label'],
+      [input, `.gradio-textbox ${inputSelector}`]
+    ]
+
+    targets.forEach(([element, selector]) => {
+      const svelteClass = gradioApp().querySelector(selector)?.classList
+        .toString()
+        .match(/svelte-[a-z0-9]+/)?.[0]
+      if (svelteClass) {
+        element.classList.add(svelteClass)
+      }
+    })
+  }
+
   static textarea(id, placeholder, { onChange }) {
     const container = document.createElement('div')
     container.id = id
@@ -250,30 +269,45 @@ class ETSElementBuilder {
     input.placeholder = placeholder
     input.style.height = 'var(--size-7)'
 
-    // Svelteのクラス名を取得して追加
-    let svelteClass = gradioApp().querySelector('.gradio-textbox')?.classList
-      .toString()
-      .match(/svelte-[a-z0-9]+/)?.[0]
-    if (svelteClass) {
-      container.classList.add(svelteClass)
-    }
-
-    svelteClass = gradioApp().querySelector('.gradio-textbox label')?.classList
-      .toString()
-      .match(/svelte-[a-z0-9]+/)?.[0]
-    if (svelteClass) {
-      label.classList.add(svelteClass)
-    }
-
-    svelteClass = gradioApp().querySelector('.gradio-textbox input')?.classList
-      .toString()
-      .match(/svelte-[a-z0-9]+/)?.[0]
-    if (svelteClass) {
-      input.classList.add(svelteClass)
-    }
+    ETSElementBuilder.applySvelteClasses(container, label, input, 'input')
 
     input.addEventListener('input', () => {
       onChange(input.value)
+    })
+
+    label.appendChild(input)
+    container.appendChild(label)
+
+    return container
+  }
+
+  // 複数行入力用のテキストエリア。単一行の textarea() とは別物（あちらは <input type="text">）
+  static multilineTextarea(id, placeholder, value, { onInput }) {
+    const container = document.createElement('div')
+    container.id = id
+    container.classList.add('block', 'gradio-textbox', 'padded')
+    container.style.borderStyle = 'solid'
+    container.style.overflow = 'hidden'
+    container.style.width = '100%'
+    container.style.marginTop = '4px'
+    container.style.borderWidth = 'var(--block-border-width)'
+
+    const label = document.createElement('label')
+
+    const input = document.createElement('textarea')
+    input.setAttribute('data-testid', 'textbox')
+    input.classList.add('scroll-hide')
+    input.setAttribute('dir', 'ltr')
+    input.rows = 2
+    input.placeholder = placeholder
+    input.value = value
+    input.style.width = '100%'
+    input.style.resize = 'vertical'
+
+    ETSElementBuilder.applySvelteClasses(container, label, input, 'textarea')
+
+    input.addEventListener('input', () => {
+      onInput(input.value)
     })
 
     label.appendChild(input)

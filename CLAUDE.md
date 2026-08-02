@@ -27,6 +27,7 @@ sdweb-easy-template-selector/
 │   └── js-yaml.min.js            # YAML パーサ（vendored、編集禁止）
 ├── scripts/
 │   ├── easy_prompt_selector.py   # WebUI 拡張エントリ（テンプレート置換・Gradio 連携）
+│   ├── exclude_tags.py           # 除外タグのパースとプロンプトからの除去（WebUI 非依存）
 │   ├── hr_cfg_inherit.py         # Hires CFG Scale の 0 = CFG Scale 継承の解決（reForge 互換）
 │   ├── hr_cfg_ui.py              # Hires CFG Scale スライダーの下限緩和（0 センチネルの保持）
 │   ├── settings.py               # 拡張設定
@@ -96,6 +97,13 @@ sdweb-easy-template-selector/
 - 一括生成の待機・再試行の調整値は `ETSBatchRunner.TIMINGS` に集約する。実機の応答時間に依存するため、メソッド内に数値を直書きしない
 - 一括生成の実行中は UI 操作がプロンプト欄と競合するため、ハンドラを `guardBatchRunning()` でラップして無視する。テンプレ一覧やヘッダーに操作を追加するときはこのラップを忘れないこと（「■ 停止」ボタンだけは実行中に押すためガードしない）
 - `start()` は抽選プールの構築まで含めて `try` の内側で行う。`finally` の外で例外が出ると `running` が立ったままになり、上記ガードで拡張全体が操作不能になる
+- 除外タグは 99_設定 のテキストエリアに入力し、`Script.process` がポジティブ系プロンプト（`all_prompts` / `all_hr_prompts`）から厳密一致で取り除く。プロンプト欄は書き換えないため、補完・キャレット同期・一括生成の待機制御に干渉しない
+- 除外タグ欄の値は JS が localStorage（`easy_template_exclude_tags`）に持ち、入力のたびに hidden Gradio Textbox（`easy_template_selector_exclude_tags`）へ `updateInput()` 付きで書き込む。生成リクエストに同梱されるので、入力直後に生成しても古い値が使われる競合が起きない
+- 落とし穴: `Script.ui()` の戻り値は位置で `process(p, *args)` に届く。除外タグは `args[2]` なので、`ui()` の戻り値の順序を変えると壊れる。img2img は `ui()` が `None` を返して args が空になるため長さで防御している
+- 除去は `@...@` 展開の**後**、`format_prompt()` の**前**に行う。前者はランダム抽選で出たタグも対象にするため、後者は空になった行を既存の空行削除に拾わせるため
+- 除外のマッチングは厳密一致で、重み記法 `(tag:1.2)` と大文字小文字違いは残す。`black footwear` の指定で `black footwear focus` まで巻き込む事故を避けるため、部分一致にはしない
+- 除外タグ欄は `render()` のたびに作り直されるため、値の保持元は `this.excludeTags`。一括生成の実行中の `readOnly` 切り替えは `syncBatchControls()` に集約している（`render()` 直後にも `syncBatchModeUi()` 経由で走るため、作り直された要素にも反映される）
+- 落とし穴: 生成画像の infotext には除外**後**のプロンプトが焼かれる（`Hires CFG Scale` の継承と同型）。**生成画像を PNG Info から txt2img へ送った状態でテンプレを保存すると、除外したタグが欠けたテンプレになる**。テンプレを作り直すときはテンプレ適用直後の状態から保存すること
 
 ## Build & Test
 
@@ -111,6 +119,7 @@ python -c "import yaml, sys; yaml.safe_load(open(sys.argv[1], encoding='utf-8'))
 # WebUI 非依存モジュールの単体テスト（リポジトリルートで実行）
 PYTHONIOENCODING=utf-8 python tests/test_upscaler_aliases.py
 PYTHONIOENCODING=utf-8 python tests/test_hr_cfg_inherit.py
+PYTHONIOENCODING=utf-8 python tests/test_exclude_tags.py
 
 # JavaScript の純粋モジュールの単体テスト（リポジトリルートで実行）
 node --test
