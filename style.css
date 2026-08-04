@@ -38,3 +38,11 @@
   opacity: 0.6;
   font-size: 0.9em;
 }
+
+.easy_template_hint {
+  margin: 2px 0 2px 4px;
+  font-size: 0.85em;
+  line-height: 1.4;
+  opacity: 0.75;
+  color: var(--body-text-color, #e5e7eb);
+}

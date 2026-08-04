@@ -228,6 +228,20 @@ class ETSElementBuilder {
     return label
   }
 
+  // 説明・補足の小さめテキスト。見た目は style.css の .easy_template_hint に持たせる
+  static hintText(lines) {
+    const container = document.createElement('div')
+    container.classList.add('easy_template_hint')
+
+    lines.forEach((line) => {
+      const row = document.createElement('div')
+      row.textContent = line
+      container.appendChild(row)
+    })
+
+    return container
+  }
+
   // Gradio の Svelte はハッシュ付きクラス名でスタイルを当てるため、既存要素から拾って同じものを付ける。
   // inputSelector は入力要素のタグ名（単一行なら 'input'、複数行なら 'textarea'）
   static applySvelteClasses(container, label, input, inputSelector) {

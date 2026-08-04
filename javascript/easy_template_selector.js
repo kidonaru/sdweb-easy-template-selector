@@ -82,6 +82,38 @@ class EasyTemplateSelector {
       templateManager: this.templateManager,
       onProgress: (text) => this.updateBatchProgress(text),
     })
+
+    // 起動時の Preset 優先は最初の init() の 1 回だけ。reload() 経由の init() でも
+    // 効かせると、手動でプロファイルを選んだ直後に Preset へ巻き戻ってしまう
+    this.presetApplied = false
+
+    // reload() の多重実行ガード。並走すると fetch の応答順で状態が食い違う
+    this.reloading = false
+
+    // ヘッダーのプロファイル選択。初回 render() の時点ではまだ DOM に挿入されておらず
+    // gradioApp() から引けないため、要素そのものを保持する
+    this.profileSelect = null
+
+    // Forge Neo の UI Preset に追従する。Preset が「正」で、拡張から Neo へは反映しない
+    this.presetSync = new ETSPresetSync({
+      getProfiles: () => this.profiles,
+      getDefaultProfile: () => EasyTemplateSelector.DEFAULT_PROFILE,
+      // ETSPresetSync は同値でも毎回呼ぶ。ここで現在値と比べて差分だけ処理する。
+      // 実行中の切り替えは選択状態と生成を壊すので guardBatchRunning() で無視する
+      onApply: this.guardBatchRunning(async (profile) => {
+        if (profile === this.profile) {
+          return
+        }
+        // 再取得の最中は見送る。ここで setProfile() だけ済ませてしまうと、reload() が
+        // 多重実行ガードに弾かれてタグだけ前のプロファイルのまま取り残される。
+        // 見送っても次のポーリングが同じ値をもう一度通知するので取りこぼさない
+        if (this.reloading) {
+          return
+        }
+        this.setProfile(profile)
+        await this.reload()
+      }),
+    })
   }
 
   async init() {
@@ -120,6 +152,17 @@ class EasyTemplateSelector {
     // localStorage の値がもう存在しないプロファイルなら既定へ戻す
     if (!this.profiles.includes(this.profile)) {
       this.setProfile(EasyTemplateSelector.DEFAULT_PROFILE)
+    }
+
+    // UI Preset が読める環境（Forge Neo）では、初回だけ localStorage の前回値より Preset を
+    // 優先する。fetchTags() の前に決めることで、追従のための二重取得を避ける。
+    // 2 回目以降（reload() 経由）で効かせると手動のプロファイル切替を打ち消してしまう
+    if (!this.presetApplied) {
+      this.presetApplied = true
+      const presetProfile = this.presetSync.currentProfile()
+      if (presetProfile && presetProfile !== this.profile) {
+        this.setProfile(presetProfile)
+      }
     }
 
     this.tags = await this.fetchTags()
@@ -204,6 +247,7 @@ class EasyTemplateSelector {
       })
       profileSelect.value = this.profile
       profileSelect.style.minWidth = '110px'
+      this.profileSelect = profileSelect
 
       const undoButton = ETSElementBuilder.undoButton({
         onClick: this.guardBatchRunning(() => this.history.undoLastAction())
@@ -289,8 +333,20 @@ class EasyTemplateSelector {
 
     this.history.updateUndoRedoButtons()
     this.syncBatchModeUi()
+    this.syncProfileSelectAvailability()
 
     return container
+  }
+
+  // UI Preset に追従する環境では手動選択を無効化する。選んでも Preset 側へ引き戻されるため、
+  // 操作できるままだと「変えたのに戻る」ように見えて分かりにくい
+  syncProfileSelectAvailability() {
+    if (!this.profileSelect) {
+      return
+    }
+    const followsPreset = ETSPresetSync.available()
+    this.profileSelect.disabled = followsPreset
+    this.profileSelect.title = followsPreset ? 'Forge Neo の UI Preset に追従します' : ''
   }
 
   renderTabs() {
@@ -440,6 +496,15 @@ class EasyTemplateSelector {
     buttons.append(batchModeCheckbox)
 
     fields.append(buttons)
+
+    // 一括生成モードは操作が変わる（ボタンが選択トグルになる）ので、ON の間だけ手順を出す
+    if (this.batchMode) {
+      fields.append(ETSElementBuilder.hintText([
+        'テンプレと差し替えタグを選んで ▶一括生成。',
+        'クリックで選択をトグル。グループ名のボタンは配下をまとめて選択。',
+        '選んだテンプレごとに、選んだタグから 1 件ずつ抽選して差し替えます。',
+      ]))
+    }
 
     // 除外タグ。生成時に Python 側がポジティブプロンプトから厳密一致で取り除く。
     // 99_設定 は render() のたびに作り直されるので、初期値は this.excludeTags から入れる。
@@ -821,6 +886,10 @@ class EasyTemplateSelector {
   // プロファイルを保持し、localStorage と Python へ渡す hidden Textbox の両方へ反映する
   setProfile(value) {
     this.profile = value
+    // ヘッダーは初回しか構築されないので、外部（UI Preset 追従）からの変更を表示へ反映する
+    if (this.profileSelect) {
+      this.profileSelect.value = value
+    }
     try {
       localStorage.setItem(EasyTemplateSelector.PROFILE_STORAGE_KEY, value)
     } catch (error) {
@@ -858,6 +927,12 @@ class EasyTemplateSelector {
   }
 
   async reload() {
+    // 並走すると fetch の応答順で this.tags / this.profile が食い違うため、進行中は無視する。
+    // Preset 追従のポーリングが reload() の完了前に次の変更を拾いうるので必要
+    if (this.reloading) {
+      return
+    }
+    this.reloading = true
     try {
       const response = await fetch('/easy-template/reload', {
         method: 'POST',
@@ -874,6 +949,8 @@ class EasyTemplateSelector {
       await this.init()
     } catch (error) {
       console.error('更新エラー:', error)
+    } finally {
+      this.reloading = false
     }
   }
 
@@ -900,4 +977,8 @@ onUiLoaded(async () => {
   easyPromptSelector.syncExcludeTagsBridge()
   easyPromptSelector.syncProfileBridge()
   easyPromptSelector.syncTemplateNameBridge()
+  // UI Preset の監視。init() は reload() からも呼ばれるためここで 1 回だけ開始する
+  easyPromptSelector.presetSync.start()
+  // UI Preset 側が遅れてマウントされた場合に備え、全要素が揃ったここでも無効化を取り直す
+  easyPromptSelector.syncProfileSelectAvailability()
 })

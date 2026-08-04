@@ -111,6 +111,12 @@ sdweb-easy-template-selector/
 - BREAK の置換で改行を消費しない（`\s` ではなく `[ \t]` を使う）。改行を跨いで消費するとカテゴリコメント行が前の行へ連結され、コメント除去とパーサが壊れる。単独行の BREAK は空行になり、既存の空行削除が拾う
 - `remove_break` は BREAK 由来以外のカンマに触らない。2 つの設定を独立トグルとして機能させるため（片方 OFF がもう片方に上書きされない）
 - 落とし穴: 生成画像の infotext には整形**後**のプロンプトが焼かれる（除外タグと同型）。**PNG Info から txt2img へ送った状態でテンプレを保存すると、整形済みの形が固定される**
+- 拡張のプロファイルは Forge Neo の UI Preset（`#forge_ui_preset`）に追従する（`javascript/ets_preset_sync.js`）。Preset 名と同名のプロファイルがあればそれ、無ければ既定の `illustrious`。同期は一方向で、拡張から Neo の Preset は変えない。追従が効く環境ではヘッダーのプロファイル `<select>` を `disabled` にする（選んでも引き戻されるため）
+- 変化検知はポーリング（`ETSPresetSync.POLL_INTERVAL_MS`）。Gradio 4 の Dropdown は値が変わっても input へ `change` を飛ばさないことを実機で確認済み。イベントで置き換えないこと
+- `ETSPresetSync` は前回値を持たず、解決結果を毎回通知する。差分で判定すると、一括生成中に無視した変更へ実行終了後に追いつけなくなるため
+- 一括生成の実行中は Preset 追従を無視する（`reload()` がプロンプト欄と選択状態を壊すため）。終了後は次のポーリングで追いつく
+- 起動時の Preset 優先は `presetApplied` で最初の `init()` の 1 回だけに限定する。`init()` は `reload()` からも呼ばれる（リフレッシュ・テンプレ保存・プロファイル `<select>` の `onChange` 自身）ため、毎回効かせると手動で選んだプロファイルが即座に巻き戻る
+- 落とし穴: Preset が「正」なので、手動でプロファイルを変えてもページ再読み込みで Preset 側の値に戻る。localStorage の値は UI Preset が読めない環境（reForge / A1111）でのみ効く
 
 ## Build & Test
 
