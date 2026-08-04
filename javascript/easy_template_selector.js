@@ -82,6 +82,8 @@ class EasyTemplateSelector {
       templateManager: this.templateManager,
       onProgress: (text) => this.updateBatchProgress(text),
     })
+    // Generate ボタンのインターセプトは init() が reload() からも呼ばれるため一度だけ登録する
+    this.generateInterceptAttached = false
 
     // 起動時の Preset 優先は最初の init() の 1 回だけ。reload() 経由の init() でも
     // 効かせると、手動でプロファイルを選んだ直後に Preset へ巻き戻ってしまう
@@ -176,6 +178,7 @@ class EasyTemplateSelector {
 
     this.promptEditor.attachCaretSync()
     this.completion.attach()
+    this.attachGenerateIntercept()
   }
 
   async readFile(filepath) {
@@ -775,6 +778,35 @@ class EasyTemplateSelector {
       excludeInput.readOnly = running
       excludeInput.style.opacity = running ? '0.6' : ''
     }
+  }
+
+  // 一括生成モード中の Generate ボタン押下を一括生成の開始に差し替える。
+  // ETSBatchRunner 自身が発火する合成クリック（isTrusted: false）は素通しし、
+  // 人手のクリックだけを捕捉フェーズで先回りして本体の生成を止める。
+  // Ctrl+Enter は本体がプログラム的に click() するため isTrusted が false になり
+  // 差し替え対象外（通常生成が走る）。ここは既知の抜け道として許容する
+  attachGenerateIntercept() {
+    if (this.generateInterceptAttached) {
+      return
+    }
+    this.generateInterceptAttached = true
+    // guardBatchRunning() でラップしないのは意図的。ラップすると実行中はハンドラごと無視され、
+    // 下の stopPropagation() まで効かなくなって通常生成が二重に走ってしまう
+    gradioApp().addEventListener('click', (event) => {
+      if (!this.batchMode || !event.isTrusted) {
+        return
+      }
+      // ボタンは子要素を持ちうるので target 比較ではなく composedPath() で判定する
+      const generateButton = gradioApp().getElementById('txt2img_generate')
+      if (!generateButton || !event.composedPath().includes(generateButton)) {
+        return
+      }
+      // 実行中でも本体の生成は止める（生クリックで通常生成が二重に走るのを防ぐ）。
+      // 実行中に開始しないことは startBatch() 側のガードに任せる
+      event.preventDefault()
+      event.stopPropagation()
+      this.startBatch()
+    }, { capture: true })
   }
 
   // 一括生成モードの ON/OFF でヘッダーとプロンプト欄の状態を切り替える。
