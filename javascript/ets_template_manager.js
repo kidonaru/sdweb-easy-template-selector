@@ -99,6 +99,9 @@ class ETSTemplateManager {
 
     // テンプレート名を設定
     metaDataMap['Template name'] = templateName
+    // 他のメタ情報と違い pnginfo の貼り付けが書き戻す欄ではないので、遅延を待たず即時に反映する。
+    // 下の setTimeout まで待つと、適用直後に生成したときファイル名の [template_name] が前回の値になる
+    this.applyMeta('Template name', templateName)
 
     // Hiresが有効か
     metaDataMap['Hires visible'] = 'Hires upscaler' in metaDataMap ? 'true' : 'false'

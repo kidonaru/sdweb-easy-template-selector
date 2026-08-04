@@ -12,8 +12,13 @@ from scripts.hr_cfg_inherit import resolve_hr_cfg
 from scripts.exclude_tags import apply_excludes_to_prompt_lists, parse_exclude_tags
 from scripts.tag_profiles import DEFAULT_PROFILE
 from scripts.prompt_format import ANIMA_PROFILE, insert_space_after_comma, remove_break
+from scripts.template_name_filename import register_filename_pattern
 
 FILE_DIR = Path().absolute()
+
+# ファイル名パターンのキーワード [template_name] を本体へ登録する。
+# replacements はクラス変数なので、拡張の読み込み時に一度足せば以降ずっと効く
+register_filename_pattern()
 
 def find_tag(tags, location):
     if type(location) == str:
@@ -121,6 +126,9 @@ class Script(scripts.Script):
         # プロファイル。JS 側のドロップダウンが値を書き込む。
         # サーバー側の @...@ ランダム展開が profile のタグセットを引くために生成リクエストに同梱する
         profile = gr.Textbox("", elem_id='easy_template_selector_profile', interactive=True, visible=False)
+        # テンプレート名。JS 側のヘッダの入力欄が値を書き込む。
+        # ファイル名パターンの [template_name] が使うため生成リクエストに同梱する
+        template_name = gr.Textbox("", elem_id='easy_template_selector_template_name_bridge', interactive=True, visible=False)
 
         binding = parameters_copypaste.ParamBinding(
             paste_button=apply_button,
@@ -129,7 +137,7 @@ class Script(scripts.Script):
             source_tabname="txt2img")
         parameters_copypaste.register_paste_params_button(binding)
 
-        return [image_info, apply_button, exclude_tags, profile]
+        return [image_info, apply_button, exclude_tags, profile, template_name]
 
     def apply_exclude_tags(self, p, exclude_text):
         """除外タグをポジティブ系プロンプトから取り除く。
@@ -239,10 +247,13 @@ class Script(scripts.Script):
         print(f'[easy-template] Hires CFG Scale が 0 のため CFG Scale ({resolved}) を継承しました')
 
     def process(self, p, *args):
-        # args は ui() の戻り値がそのまま位置で届く。args[2] = exclude_tags, args[3] = profile。
+        # args は ui() の戻り値がそのまま位置で届く。
+        # args[2] = exclude_tags, args[3] = profile, args[4] = template_name。
         # ui() の戻り値の並びを変えたらここも直す。
         # img2img では ui() が None を返して args が空になるため長さで防御する
         exclude_text = args[2] if len(args) > 2 else ''
         profile = args[3] if len(args) > 3 else ''
+        # ファイル名パターンの [template_name] が p から読む
+        p.ets_template_name = args[4] if len(args) > 4 else ''
         self.replace_template_tags(p, exclude_text, profile or DEFAULT_PROFILE)
         self.inherit_hr_cfg(p)

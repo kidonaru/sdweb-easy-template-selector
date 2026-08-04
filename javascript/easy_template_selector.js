@@ -23,7 +23,9 @@ class EasyTemplateSelector {
     EXCLUDE_TAGS_BRIDGE: 'easy_template_selector_exclude_tags',
     PROFILE_SELECT: 'easy_template_selector_profile_select',
     // Python 側の hidden Textbox。ドロップダウンとは別物
-    PROFILE_BRIDGE: 'easy_template_selector_profile'
+    PROFILE_BRIDGE: 'easy_template_selector_profile',
+    // Python 側の hidden Textbox。ヘッダの入力欄 (TEMPLATE_NAME) とは別物
+    TEMPLATE_NAME_BRIDGE: 'easy_template_selector_template_name_bridge'
   }
 
   // 一括生成モードで選択中のテンプレボタンの見た目
@@ -214,7 +216,7 @@ class EasyTemplateSelector {
       redoButton.id = EasyTemplateSelector.IDS.REDO_BUTTON
 
       const templateNameArea = ETSElementBuilder.textarea(EasyTemplateSelector.IDS.TEMPLATE_NAME, "テンプレート名", {
-        onChange: () => {}
+        onChange: () => this.syncTemplateNameBridge()
       })
 
       const saveButton = ETSElementBuilder.saveButton({
@@ -839,6 +841,22 @@ class EasyTemplateSelector {
     updateInput(bridge)
   }
 
+  // ヘッダのテンプレート名欄の値を hidden Textbox へ書き込む（生成リクエストに同梱される）。
+  // テンプレ適用時も applyMeta() の updateInput() が input イベントを起こすので同じ経路で拾える
+  syncTemplateNameBridge() {
+    const input = gradioApp()
+      .getElementById(EasyTemplateSelector.IDS.TEMPLATE_NAME)
+      ?.querySelector('input')
+    const bridge = gradioApp()
+      .getElementById(EasyTemplateSelector.IDS.TEMPLATE_NAME_BRIDGE)
+      ?.querySelector('textarea')
+    if (!input || !bridge) {
+      return
+    }
+    bridge.value = input.value
+    updateInput(bridge)
+  }
+
   async reload() {
     try {
       const response = await fetch('/easy-template/reload', {
@@ -881,4 +899,5 @@ onUiLoaded(async () => {
   // 一度も入力しないまま生成しても localStorage の前回値が Python 側へ届くようにする
   easyPromptSelector.syncExcludeTagsBridge()
   easyPromptSelector.syncProfileBridge()
+  easyPromptSelector.syncTemplateNameBridge()
 })
