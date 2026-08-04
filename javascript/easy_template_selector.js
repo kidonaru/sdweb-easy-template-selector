@@ -20,7 +20,10 @@ class EasyTemplateSelector {
     BATCH_STOP_BUTTON: 'easy_template_selector_batch_stop_button',
     // JS が描画する入力欄。Python 側の hidden Textbox (EXCLUDE_TAGS_BRIDGE) とは別物
     EXCLUDE_TAGS: 'easy_template_selector_exclude_tags_input',
-    EXCLUDE_TAGS_BRIDGE: 'easy_template_selector_exclude_tags'
+    EXCLUDE_TAGS_BRIDGE: 'easy_template_selector_exclude_tags',
+    PROFILE_SELECT: 'easy_template_selector_profile_select',
+    // Python 側の hidden Textbox。ドロップダウンとは別物
+    PROFILE_BRIDGE: 'easy_template_selector_profile'
   }
 
   // 一括生成モードで選択中のテンプレボタンの見た目
@@ -28,6 +31,10 @@ class EasyTemplateSelector {
 
   // 除外タグの保存先。サーバ側に状態を持たせないためブラウザに置く
   static EXCLUDE_TAGS_STORAGE_KEY = 'easy_template_exclude_tags'
+
+  // プロファイルの保存先。除外タグと同じくブラウザに置く
+  static PROFILE_STORAGE_KEY = 'easy_template_profile'
+  static DEFAULT_PROFILE = 'illustrious'
 
   constructor(yaml, gradioApp) {
     this.yaml = yaml
@@ -37,11 +44,15 @@ class EasyTemplateSelector {
     this.tags = undefined
     this.currentTab = null
     this.history = new ETSHistory({ ids: EasyTemplateSelector.IDS })
-    // this.tags は init() 完了後に再代入されるため、値ではなく getter を渡す
+    // モデル系統プロファイル。タグ・テンプレの取得と保存先を切り替える
+    this.profile = EasyTemplateSelector.loadProfile()
+    this.profiles = [EasyTemplateSelector.DEFAULT_PROFILE]
     this.templateManager = new ETSTemplateManager({
       ids: EasyTemplateSelector.IDS,
       history: this.history,
+      // this.tags は init() 完了後に再代入されるため、値ではなく getter を渡す
       getTags: () => this.tags,
+      getProfile: () => this.profile,
       reinit: async () => await this.init(),
     })
     this.promptEditor = new ETSPromptEditor({
@@ -95,6 +106,20 @@ class EasyTemplateSelector {
     `
     document.head.appendChild(style)
 
+    // プロファイル一覧。取得に失敗しても既定プロファイルのみで動作を続ける
+    try {
+      const response = await fetch('/easy-template/profiles')
+      if (response.ok) {
+        this.profiles = await response.json()
+      }
+    } catch (error) {
+      console.error('プロファイル一覧の取得に失敗しました:', error)
+    }
+    // localStorage の値がもう存在しないプロファイルなら既定へ戻す
+    if (!this.profiles.includes(this.profile)) {
+      this.setProfile(EasyTemplateSelector.DEFAULT_PROFILE)
+    }
+
     this.tags = await this.fetchTags()
 
     // Reload でタグが差し替わるのでインデックスを作り直す
@@ -117,7 +142,8 @@ class EasyTemplateSelector {
   async fetchTags() {
     try {
       // テンプレートの取得
-      const templateResponse = await fetch('/easy-template/templates');
+      const query = `?profile=${encodeURIComponent(this.profile)}`
+      const templateResponse = await fetch('/easy-template/templates' + query);
       if (!templateResponse.ok) {
         throw new Error('テンプレートの取得に失敗しました');
       }
@@ -125,7 +151,7 @@ class EasyTemplateSelector {
       const tags = { '00_テンプレート': templates };
 
       // タグの取得
-      const tagResponse = await fetch('/easy-template/tags');
+      const tagResponse = await fetch('/easy-template/tags' + query);
       if (!tagResponse.ok) {
         throw new Error('タグの取得に失敗しました');
       }
@@ -154,6 +180,28 @@ class EasyTemplateSelector {
       const reloadButton = ETSElementBuilder.reloadButton({
         onClick: this.guardBatchRunning(() => this.reload())
       })
+
+      // プロファイル切り替え。変更でタグ・テンプレ・補完を作り直す（プロンプト欄は触らない）
+      const profileSelect = ETSElementBuilder.dropDown(
+        EasyTemplateSelector.IDS.PROFILE_SELECT,
+        [],
+        {
+          onChange: this.guardBatchRunning(async (value) => {
+            if (value === this.profile) return
+            this.setProfile(value)
+            await this.reload()
+          })
+        }
+      )
+      // dropDown は option を生成しないため自前で追加する
+      this.profiles.forEach((name) => {
+        const option = document.createElement('option')
+        option.value = name
+        option.textContent = name
+        profileSelect.appendChild(option)
+      })
+      profileSelect.value = this.profile
+      profileSelect.style.minWidth = '110px'
 
       const undoButton = ETSElementBuilder.undoButton({
         onClick: this.guardBatchRunning(() => this.history.undoLastAction())
@@ -207,6 +255,7 @@ class EasyTemplateSelector {
       editControls.appendChild(downButton)
       editControls.appendChild(deleteButton)
 
+      container.header.appendChild(profileSelect)
       container.header.appendChild(reloadButton)
       container.header.appendChild(undoButton)
       container.header.appendChild(redoButton)
@@ -756,6 +805,40 @@ class EasyTemplateSelector {
     updateInput(bridge)
   }
 
+  // プロファイルを localStorage から読む。読めない環境・壊れた値でも動作を止めない
+  static loadProfile() {
+    try {
+      return localStorage.getItem(EasyTemplateSelector.PROFILE_STORAGE_KEY)
+        || EasyTemplateSelector.DEFAULT_PROFILE
+    } catch (error) {
+      console.warn('プロファイルの読み込みに失敗しました:', error)
+      return EasyTemplateSelector.DEFAULT_PROFILE
+    }
+  }
+
+  // プロファイルを保持し、localStorage と Python へ渡す hidden Textbox の両方へ反映する
+  setProfile(value) {
+    this.profile = value
+    try {
+      localStorage.setItem(EasyTemplateSelector.PROFILE_STORAGE_KEY, value)
+    } catch (error) {
+      console.warn('プロファイルの保存に失敗しました:', error)
+    }
+    this.syncProfileBridge()
+  }
+
+  // hidden Textbox へ現在のプロファイルを書き込む（生成リクエストに同梱される）
+  syncProfileBridge() {
+    const bridge = gradioApp()
+      .getElementById(EasyTemplateSelector.IDS.PROFILE_BRIDGE)
+      ?.querySelector('textarea')
+    if (!bridge) {
+      return
+    }
+    bridge.value = this.profile
+    updateInput(bridge)
+  }
+
   async reload() {
     try {
       const response = await fetch('/easy-template/reload', {
@@ -797,4 +880,5 @@ onUiLoaded(async () => {
   await easyPromptSelector.init()
   // 一度も入力しないまま生成しても localStorage の前回値が Python 側へ届くようにする
   easyPromptSelector.syncExcludeTagsBridge()
+  easyPromptSelector.syncProfileBridge()
 })

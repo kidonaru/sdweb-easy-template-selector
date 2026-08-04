@@ -1,0 +1,10 @@
+# anima プロファイルで除外するカテゴリ（stem）。
+# illustrious 用 LoRA は anima モデルでは効かないため丸ごと外す
+- 10_キャラ_LoRA
+- 10_キャラ_ブルアカ_LoRA
+- 13_衣装_LoRA
+- 30_ポーズ_LoRA
+- 70_スタイルLoRA
+- 71_ディテールLoRA
+- 72_体LoRA
+- 75_その他LoRA

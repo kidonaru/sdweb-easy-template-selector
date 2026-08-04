@@ -17,6 +17,9 @@ import sys
 
 import yaml
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from scripts.tag_profiles import DEFAULT_PROFILE, EXCLUDE_FILE, list_profiles, resolve_tag_files
+
 # Windows のコンソールは既定で cp932 になり得るため、日本語の出力
 # （結果・警告メッセージの両方）が文字化けしないよう明示的に UTF-8 へ固定する。
 sys.stdout.reconfigure(encoding="utf-8")
@@ -44,20 +47,15 @@ def flatten(node, filename, group=None):
     return entries
 
 
-def load_entries(tags_dir):
-    """tags_dir 配下の全 yml ファイルを読み込み、(ファイル名, グループ, ラベル, タグ文字列) のリストを返す。
+def load_files(stem_path_pairs):
+    """(stem, パス) の列を読み込み、(ファイル名, グループ, ラベル, タグ文字列) のリストを返す。
 
     構文エラーのファイルや、トップレベルが辞書形式でない（リスト等の）
     ファイルは標準エラー出力に警告を出した上でスキップし、他ファイルの
     検索は継続する。
     """
-    if not os.path.isdir(tags_dir):
-        print(f"エラー: tags ディレクトリが見つかりません: {tags_dir}", file=sys.stderr)
-        sys.exit(1)
-
     entries = []
-    for path in sorted(glob.glob(os.path.join(tags_dir, "*.yml"))):
-        filename = os.path.splitext(os.path.basename(path))[0]
+    for filename, path in stem_path_pairs:
         try:
             with open(path, encoding="utf-8") as f:
                 data = yaml.safe_load(f)
@@ -73,6 +71,41 @@ def load_entries(tags_dir):
         for group, label, tags in flatten(data, filename):
             entries.append((filename, group, label, tags))
     return entries
+
+
+def load_entry_groups(tags_dir, profile=None):
+    """(見出し, エントリリスト) のグループを返す。
+
+    profile 指定時: そのプロファイルのマージ済みセットのみ（見出し None の 1 グループ）。
+    未指定時: ベース（見出し None）+ 各プロファイルの差し替え分
+    （見出し「プロファイル名」）の全プロファイル横断。
+    エントリの filename は常に stem。出力の貼り付け可能な形式を守るため、
+    由来の区別は見出し側で行う。
+    """
+    if not os.path.isdir(tags_dir):
+        print(f"エラー: tags ディレクトリが見つかりません: {tags_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    def merged_pairs(name):
+        return [(stem, str(path)) for stem, path in resolve_tag_files(tags_dir, name).items()]
+
+    if profile is not None:
+        return [(None, load_files(merged_pairs(profile)))]
+
+    groups = [(None, load_files(merged_pairs(DEFAULT_PROFILE)))]
+    for name in list_profiles(tags_dir):
+        if name == DEFAULT_PROFILE:
+            continue
+        profile_dir = os.path.join(tags_dir, name)
+        pairs = []
+        for path in sorted(glob.glob(os.path.join(profile_dir, "*.yml"))):
+            # 除外判定は tag_profiles と同じ基準にする（片方だけずれると列挙結果が食い違う）
+            if os.path.basename(path) == EXCLUDE_FILE:
+                continue
+            pairs.append((os.path.splitext(os.path.basename(path))[0], path))
+        if pairs:
+            groups.append((name, load_files(pairs)))
+    return groups
 
 
 def format_comment(filename, group, label):
@@ -144,22 +177,30 @@ def main():
             "10_キャラ_ブルアカ.yml などをまとめて除外する"
         ),
     )
+    parser.add_argument(
+        "--profile",
+        help="プロファイル名（例: anima）。指定時はそのプロファイルのマージ済みセットだけを検索する",
+    )
     args = parser.parse_args()
 
-    entries = load_entries(args.tags_dir)
-    if args.exclude_category:
-        entries = [
-            e for e in entries
-            if not any(e[0].startswith(prefix) for prefix in args.exclude_category)
-        ]
-    results = search(entries, args.queries, args.mode, args.exact)
+    found = False
+    for heading, entries in load_entry_groups(args.tags_dir, args.profile):
+        if args.exclude_category:
+            entries = [
+                e for e in entries
+                if not any(e[0].startswith(prefix) for prefix in args.exclude_category)
+            ]
+        results = search(entries, args.queries, args.mode, args.exact)
+        if not results:
+            continue
+        found = True
+        if heading is not None:
+            print(f"## プロファイル: {heading}（差し替え分）")
+        for filename, group, label, tags in results:
+            print(f"{format_comment(filename, group, label)} {tags}")
 
-    if not results:
+    if not found:
         print("一致するタグは見つかりませんでした。")
-        return
-
-    for filename, group, label, tags in results:
-        print(f"{format_comment(filename, group, label)} {tags}")
 
 
 if __name__ == "__main__":

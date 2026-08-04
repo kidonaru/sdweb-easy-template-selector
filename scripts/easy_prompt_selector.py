@@ -10,6 +10,7 @@ from modules import shared
 from scripts.setup import load_tags, get_tags
 from scripts.hr_cfg_inherit import resolve_hr_cfg
 from scripts.exclude_tags import apply_excludes_to_prompt_lists, parse_exclude_tags
+from scripts.tag_profiles import DEFAULT_PROFILE
 
 FILE_DIR = Path().absolute()
 
@@ -36,10 +37,10 @@ def find_tag(tags, location):
 
     return value
 
-def replace_template(prompt, seed = None):
+def replace_template(prompt, seed = None, profile = DEFAULT_PROFILE):
     random.seed(seed)
 
-    tags = get_tags()
+    tags = get_tags(profile)
     count = 0
     while count < 100:
         if not '@' in prompt:
@@ -116,6 +117,9 @@ class Script(scripts.Script):
         # 除外タグ。JS 側の 99_設定 テキストエリアが値を書き込む。
         # 生成リクエストに同梱されて process() へ届くため、別経路で送る場合のような競合が起きない
         exclude_tags = gr.Textbox("", elem_id='easy_template_selector_exclude_tags', interactive=True, visible=False)
+        # プロファイル。JS 側のドロップダウンが値を書き込む。
+        # サーバー側の @...@ ランダム展開が profile のタグセットを引くために生成リクエストに同梱する
+        profile = gr.Textbox("", elem_id='easy_template_selector_profile', interactive=True, visible=False)
 
         binding = parameters_copypaste.ParamBinding(
             paste_button=apply_button,
@@ -124,7 +128,7 @@ class Script(scripts.Script):
             source_tabname="txt2img")
         parameters_copypaste.register_paste_params_button(binding)
 
-        return [image_info, apply_button, exclude_tags]
+        return [image_info, apply_button, exclude_tags, profile]
 
     def apply_exclude_tags(self, p, exclude_text):
         """除外タグをポジティブ系プロンプトから取り除く。
@@ -138,7 +142,7 @@ class Script(scripts.Script):
 
         apply_excludes_to_prompt_lists(targets, parse_exclude_tags(exclude_text))
 
-    def replace_template_tags(self, p, exclude_text=''):
+    def replace_template_tags(self, p, exclude_text='', profile=DEFAULT_PROFILE):
         prompts = [
             [p.prompt, p.all_prompts, 'Input Prompt'],
             [p.negative_prompt, p.all_negative_prompts, 'Input NegativePrompt'],
@@ -155,7 +159,7 @@ class Script(scripts.Script):
 
                 self.save_prompt_to_pnginfo(p, prompt, raw_prompt_param_name)
 
-                replaced = "".join(replace_template(all_prompts[i], seed))
+                replaced = "".join(replace_template(all_prompts[i], seed, profile))
                 all_prompts[i] = replaced
 
         # @...@ の展開後に消すのは、ランダム抽選で出たタグも除外対象にするため。
@@ -203,9 +207,10 @@ class Script(scripts.Script):
         print(f'[easy-template] Hires CFG Scale が 0 のため CFG Scale ({resolved}) を継承しました')
 
     def process(self, p, *args):
-        # args は ui() の戻り値がそのまま位置で届く。args[2] = exclude_tags なので、
+        # args は ui() の戻り値がそのまま位置で届く。args[2] = exclude_tags, args[3] = profile。
         # ui() の戻り値の並びを変えたらここも直す。
         # img2img では ui() が None を返して args が空になるため長さで防御する
         exclude_text = args[2] if len(args) > 2 else ''
-        self.replace_template_tags(p, exclude_text)
+        profile = args[3] if len(args) > 3 else ''
+        self.replace_template_tags(p, exclude_text, profile or DEFAULT_PROFILE)
         self.inherit_hr_cfg(p)

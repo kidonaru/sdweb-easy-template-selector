@@ -15,6 +15,9 @@ import sys
 
 import yaml
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from scripts.tag_profiles import DEFAULT_PROFILE, list_profiles, resolve_tag_files
+
 TAGS_DIR = 'tags'
 TEMPLATES_DIR = 'templates'
 
@@ -34,17 +37,14 @@ def normalize(value):
     return ','.join(sorted(t.strip() for t in value.split(',') if t.strip())).lower()
 
 
-def load_tags(tags_dir=TAGS_DIR):
-    """tags/*.yml を読み込み {(カテゴリ, グループ, ラベル): タグ文字列} を返す。
+def load_tags(tags_dir=TAGS_DIR, profile=DEFAULT_PROFILE):
+    """profile のマージ済みタグセットを読み込み {(カテゴリ, グループ, ラベル): タグ文字列} を返す。
 
     98_特殊.yml のようなリスト形式のファイルはカテゴリコメントを持たないため対象外。
     """
     entries = {}
-    for name in sorted(os.listdir(tags_dir)):
-        if not name.endswith('.yml'):
-            continue
-        category = name[:-4]
-        with open(os.path.join(tags_dir, name), encoding='utf-8') as fp:
+    for category, path in resolve_tag_files(tags_dir, profile).items():
+        with open(path, encoding='utf-8') as fp:
             data = yaml.safe_load(fp) or {}
         if not isinstance(data, dict):
             continue
@@ -87,14 +87,32 @@ def iter_comments(templates_dir=TEMPLATES_DIR):
                 yield path, index + 1, matched.group(1).strip(), matched.group(2).strip(), next_line
 
 
+def profile_of(path, templates_dir, profiles):
+    """テンプレパスの先頭ディレクトリからプロファイルを判定する。"""
+    rel = os.path.relpath(path, templates_dir)
+    head = rel.replace(os.sep, '/').split('/')[0]
+    return head if head in profiles else DEFAULT_PROFILE
+
+
 def audit(tags_dir=TAGS_DIR, templates_dir=TEMPLATES_DIR):
-    entries = load_tags(tags_dir)
-    by_value = collections.defaultdict(list)
-    for key, value in entries.items():
-        by_value[normalize(value)].append(key)
+    profiles = list_profiles(tags_dir)
+    # プロファイルごとのタグセットと逆引き表を遅延構築する
+    entries_by_profile = {}
+    by_value_by_profile = {}
+
+    def tables(profile):
+        if profile not in entries_by_profile:
+            entries = load_tags(tags_dir, profile)
+            by_value = collections.defaultdict(list)
+            for key, value in entries.items():
+                by_value[normalize(value)].append(key)
+            entries_by_profile[profile] = entries
+            by_value_by_profile[profile] = by_value
+        return entries_by_profile[profile], by_value_by_profile[profile]
 
     findings = []
     for path, lineno, head, label, tag in iter_comments(templates_dir):
+        entries, by_value = tables(profile_of(path, templates_dir, profiles))
         # 「@カテゴリ@」記法はランダム指定でラベルが「ランダム」固定になる仕様のため除外する
         if tag.startswith('@'):
             continue

@@ -2,8 +2,9 @@
 __pycache__/
 
 # 末尾が _ のファイルはローカル専用（tags は git 管理下）
-tags/*_.yml
-templates/*_
+# プロファイルのサブディレクトリ（tags/anima/ など）配下にも効くよう ** で書く
+tags/**/*_.yml
+templates/**/*_
 
 # Danbooru タグ検索キャッシュ（danbooru.csv から自動生成、再生成可能なため管理外）
 tools/.cache/

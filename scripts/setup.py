@@ -7,6 +7,13 @@ import yaml
 from modules import scripts, script_callbacks, shared
 
 from scripts.upscaler_aliases import to_display, to_storage
+from scripts.tag_profiles import (
+    DEFAULT_PROFILE,
+    list_profiles,
+    resolve_tag_files,
+    template_root,
+    iter_template_files,
+)
 
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(scripts.basedir())
@@ -17,27 +24,29 @@ TEMPLATE_DIR = BASE_DIR.joinpath('templates')
 
 os.makedirs(TEMP_DIR, exist_ok=True)
 
-def tag_files():
-    return TAGS_DIR.rglob("*.yml")
-
-def template_files():
-    return TEMPLATE_DIR.rglob("*.txt")
-
+# プロファイル名 → {stem: パース済み YAML}。load_tags() が構築する
 tags = {}
 
 def load_tags():
     global tags
     tags = {}
 
-    for filepath in tag_files():
-        with open(filepath, "r", encoding="utf-8") as file:
-            yml = yaml.safe_load(file)
-            tags[filepath.stem] = yml
+    for profile in list_profiles(TAGS_DIR):
+        profile_tags = {}
+        for stem, filepath in resolve_tag_files(TAGS_DIR, profile).items():
+            with open(filepath, "r", encoding="utf-8") as file:
+                profile_tags[stem] = yaml.safe_load(file)
+        tags[profile] = profile_tags
 
     return tags
 
-def get_tags():
-    return tags
+def get_tags(profile=DEFAULT_PROFILE):
+    # 未知プロファイルはベースへフォールバック（生成を止めない）。
+    # `or` で書くと空辞書（全カテゴリ除外）まで巻き込むため None 判定にする
+    profile_tags = tags.get(profile)
+    if profile_tags is None:
+        profile_tags = tags.get(DEFAULT_PROFILE, {})
+    return profile_tags
 
 def available_upscaler_names():
     """現在の環境で Hires upscaler として選択できる名前の一覧
@@ -66,18 +75,35 @@ class EasyTemplateError(Exception):
 def error_handler(error: EasyTemplateError) -> dict:
     return {"error": error.message}, error.status_code
 
+def validated_profile(profile):
+    """クエリ由来のプロファイル名を既知の値へ丸める。
+
+    パス結合に使う値なので、実在するプロファイル以外は既定へ寄せる
+    （tag_profiles 側の名前検証と二重の防御。読み取り系は 400 を返さず既定で応答する）。
+    """
+    if profile in list_profiles(TAGS_DIR):
+        return profile
+    print(f'[easy-template] 不明なプロファイル "{profile}" のため既定プロファイルで応答します')
+    return DEFAULT_PROFILE
+
 def api_networks(_: gr.Blocks, app: FastAPI):
     app.add_exception_handler(EasyTemplateError, error_handler)
 
+    @app.get("/easy-template/profiles")
+    async def get_profiles():
+        return list_profiles(TAGS_DIR)
+
     @app.get("/easy-template/templates")
-    async def get_templates():
+    async def get_templates(profile: str = DEFAULT_PROFILE):
+        profile = validated_profile(profile)
         try:
             templates = {}
             upscaler_names = available_upscaler_names()
             unresolved_upscalers = set()
-            for filepath in template_files():
+            root = template_root(TEMPLATE_DIR, profile)
+            for filepath in iter_template_files(TEMPLATE_DIR, profile, list_profiles(TAGS_DIR)):
                 # 相対パスを取得
-                rel_path = filepath.relative_to(TEMPLATE_DIR)
+                rel_path = filepath.relative_to(root)
                 parts = rel_path.parts
                 
                 # 階層構造を作成
@@ -110,13 +136,16 @@ def api_networks(_: gr.Blocks, app: FastAPI):
         except Exception as e:
             raise EasyTemplateError(f"テンプレートの取得に失敗しました: {str(e)}")
 
+    # 関数名が module 関数 get_tags と衝突するため API 側は get_tags_api とする
+    # （ルーティングはパスで決まるので改名の影響は無い）
     @app.get("/easy-template/tags")
-    async def get_tags():
+    async def get_tags_api(profile: str = DEFAULT_PROFILE):
+        profile = validated_profile(profile)
         try:
             tags = {}
-            for filepath in tag_files():
+            for stem, filepath in resolve_tag_files(TAGS_DIR, profile).items():
                 with open(filepath, 'r', encoding='utf-8') as f:
-                    tags[filepath.stem] = f.read()
+                    tags[stem] = f.read()
             return tags
         except Exception as e:
             raise EasyTemplateError(f"タグの取得に失敗しました: {str(e)}")
@@ -152,14 +181,22 @@ def api_networks(_: gr.Blocks, app: FastAPI):
     async def save_template(request: dict):
         filename = request.get('templatename')
         content = request.get('content')
-        
+        profile = request.get('profile') or DEFAULT_PROFILE
+
         if not filename or not content:
             raise EasyTemplateError("テンプレート名と内容が必要です", 400)
+        if profile not in list_profiles(TAGS_DIR):
+            raise EasyTemplateError(f"不明なプロファイルです: {profile}", 400)
 
+        root = template_root(TEMPLATE_DIR, profile)
         try:
-            # ファイル名からパスを生成して、TEMPLATE_DIR内にあることを確認
-            template_path = TEMPLATE_DIR.joinpath(filename)
-            template_path.resolve().relative_to(TEMPLATE_DIR.resolve())
+            # ファイル名からパスを生成して、プロファイルのテンプレルート内にあることを確認
+            template_path = root.joinpath(filename)
+            relative = template_path.resolve().relative_to(root.resolve())
+            # 既定プロファイルのルートは templates/ 全体なので、上のチェックだけでは
+            # templatename に他プロファイル名を含めて別プロファイルのツリーへ書き込めてしまう
+            if relative.parts[0] in [p for p in list_profiles(TAGS_DIR) if p != DEFAULT_PROFILE]:
+                raise ValueError('他プロファイルのディレクトリ')
         except Exception as e:
             raise EasyTemplateError("無効なテンプレート名です", 400)
 

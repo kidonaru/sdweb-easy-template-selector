@@ -1,9 +1,11 @@
 // テンプレートの適用・保存とメタ情報（モデル・解像度等）の読み書き
 class ETSTemplateManager {
-  constructor({ ids, history, getTags, reinit }) {
+  constructor({ ids, history, getTags, getProfile, reinit }) {
     this.ids = ids
     this.history = history
     this.getTags = getTags
+    // 現在のプロファイル名。保存先ディレクトリの決定にサーバ側で使う
+    this.getProfile = getProfile
     this.reinit = reinit
     this.promptEditor = null
 
@@ -336,7 +338,8 @@ class ETSTemplateManager {
         },
         body: JSON.stringify({
           templatename: templateName + '.txt',
-          content: template
+          content: template,
+          profile: this.getProfile ? this.getProfile() : undefined
         })
       })
 
