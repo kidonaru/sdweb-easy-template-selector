@@ -8,8 +8,11 @@ LoRA:
 オリジナル:
   柔らかな照明の寝室: bedroom setting with soft lighting
   ピンクのカジノ背景: pink casino background
+  カジノの室内: casino,indoors
   濡れたタイルに反射する陽光,青く澄んだプール: sunlight glinting off wet tiles,blue pool water nearby
   路地裏: Back Alley,neon lighting,simple background
+  路地裏2: alley,neon lights,simple background
+  明るいリビング: living room,wooden floor,window,indoors
   奴隷の牢屋: slave,jail,dirty prison
   屋外: outdoor
   トレンディなバー: indoors,trendy bar,night,club,dim lighting,dark
@@ -32,3 +35,15 @@ LoRA:
   陽当たりの良い居心地の良い寝室: cozy sunlit bedroom
   ホテルの窓とカーテン: window,curtain
   窓のある散らかった部屋: in messy room with window
+  花園2: blue sky,petals,outdoors
+  窓のある散らかった部屋2: messy room,window,indoors
+  トレンディなバー2: indoors,bar \(place\),nightclub,night,dim lighting,dark
+  濡れたプールサイドのタイル: pool,water,tile floor,wet floor,reflection,sunlight
+  パステルブルーのグラデ背景(白枠): gradient background,blue background,pastel colors,white border
+  古代ギリシャ風レリーフ: greco-roman architecture,relief,pillar
+  花と葉2: flower,leaf
+  ピンクのグラデーション背景に白枠2: gradient background,pink background,white border
+  対称的な雲: cloud,symmetry
+  雪に覆われた廃墟の街2: ruins,cityscape,snow,snowing
+  銀河と流れ星2: galaxy,starry sky,light particles,shooting star
+  奴隷の牢屋2: slave,prison,prison cell,dirty

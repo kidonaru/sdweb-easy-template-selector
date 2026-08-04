@@ -37,4 +37,16 @@
 泡: bubble
 背景のぼかし: blurry background
 ボケ・浅い被写界深度・リムライト: bokeh,shallow depth of field,rim light
+ボケ・被写界深度・逆光: bokeh,depth of field,backlighting
+月明かりの塵: dust,moonlight,light particles
+被写界深度/光線: depth of field,light rays
+暗い逆光と被写界深度: dark,backlighting,depth of field,light rays,vignetting
 腰振りの残像: humping afterimage
+水面の照り返しと風: caustics,light rays,floating hair,wind
+室内光の塵: dust,light particles
+残像モーションライン: motion lines,afterimage
+ハート: heart
+きらめく光の粒子: sparkle,light particles
+ハートエフェクト2: heart,spoken heart
+濡れたレンズ/水滴: wet lens,water drop
+飛沫2: splashing

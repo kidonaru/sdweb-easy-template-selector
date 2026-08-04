@@ -9,6 +9,11 @@ Model:
   Unholy Desire Mix v5.0: bad quality,worst quality,worst detail,sketch,censor
   KonpaEvo Mix: lowres,worst quality,low quality,simple background,bad anatomy,bad hands,signature,text,watermark
   LunarCherryMix: lowres, worst quality, bad quality, bad anatomy, sketch, jpeg artifacts, signature, watermark, old, oldest.
+  Nova Anime AM v3.0A: worst quality, low quality, early, old, score_1, score_2, score_3, cartoon, graphic, painting, crayon, graphite, abstract, glitch, deformed, mutated, ugly, disfigured, long body, bad anatomy, bad hands, missing fingers, extra fingers, extra digits, fewer digits, cropped, very displeasing, artist name, blurry, jpeg artifacts, lowres, censor
+  WAI ANIMA v1.0 Base: worst quality, low quality, score_1, score_2, score_3, artist name,blurry, jpeg artifacts, lowres,censor
+  Nya-Iris Anima Base1 v2.1: score_1, score_2, score_3, worst quality, low quality, blurry, lowres, extra fingers, bad feets, bad eyes, logo, noisy, watermark, signature
+  Anime Bulldozer Anima: worst quality,low quality,score_1,score_2,score_3,blurry,jpeg artifacts,sepia,muscular female
+  JANIMA v1.0: worst quality, low quality, early, old, score_1, score_2, score_3, cartoon, graphic, painting, crayon, graphite, abstract, glitch, deformed, mutated, ugly, disfigured, long body, bad anatomy, bad hands, missing fingers, extra fingers, extra digits, fewer digits, cropped, very displeasing, artist name, blurry, jpeg artifacts, lowres, censor
 
 Embeddings:
   badhandv4: badhandv4

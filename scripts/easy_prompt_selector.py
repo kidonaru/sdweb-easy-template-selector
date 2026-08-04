@@ -11,6 +11,7 @@ from scripts.setup import load_tags, get_tags
 from scripts.hr_cfg_inherit import resolve_hr_cfg
 from scripts.exclude_tags import apply_excludes_to_prompt_lists, parse_exclude_tags
 from scripts.tag_profiles import DEFAULT_PROFILE
+from scripts.prompt_format import ANIMA_PROFILE, insert_space_after_comma, remove_break
 
 FILE_DIR = Path().absolute()
 
@@ -142,6 +143,33 @@ class Script(scripts.Script):
 
         apply_excludes_to_prompt_lists(targets, parse_exclude_tags(exclude_text))
 
+    def apply_anima_format(self, p, profile):
+        """anima プロファイルのとき、プロンプトを Anima の規約に合わせて整形する。
+
+        ネガティブも含む全リストが対象（カンマ詰め・BREAK はどこにでも現れうるため）。
+        """
+        if profile != ANIMA_PROFILE:
+            return
+
+        add_space_after_comma = shared.opts.easy_template_anima_space_after_comma
+        strip_break = shared.opts.easy_template_anima_remove_break
+        if not (add_space_after_comma or strip_break):
+            return
+
+        targets = [p.all_prompts, p.all_negative_prompts]
+        # Hires.fix が無効なとき本体は all_hr_prompts を None のままにするため、リスト側の有無で判定する
+        if getattr(p, 'all_hr_prompts', None):
+            targets.append(p.all_hr_prompts)
+        if getattr(p, 'all_hr_negative_prompts', None):
+            targets.append(p.all_hr_negative_prompts)
+
+        for prompts in targets:
+            for i in range(len(prompts)):
+                if strip_break:
+                    prompts[i] = remove_break(prompts[i])
+                if add_space_after_comma:
+                    prompts[i] = insert_space_after_comma(prompts[i])
+
     def replace_template_tags(self, p, exclude_text='', profile=DEFAULT_PROFILE):
         prompts = [
             [p.prompt, p.all_prompts, 'Input Prompt'],
@@ -165,6 +193,10 @@ class Script(scripts.Script):
         # @...@ の展開後に消すのは、ランダム抽選で出たタグも除外対象にするため。
         # format_prompt() より前に置くのは、空になった行を既存の空行削除に拾わせるため
         self.apply_exclude_tags(p, exclude_text)
+
+        # @...@ 展開・除外タグ除去の後、format_prompt() の前に整形する。
+        # 抽選で出たタグも対象にし、BREAK 単独行が空行になった分を既存の空行削除に拾わせるため
+        self.apply_anima_format(p, profile)
 
         # 本体のコメント除去（本文のみ削除・改行は残す）が本拡張より後に走るため、
         # ここでコメント行を落としておかないと空行削除をすり抜けて空行が復活する。

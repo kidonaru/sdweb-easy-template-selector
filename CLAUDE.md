@@ -104,6 +104,10 @@ sdweb-easy-template-selector/
 - 除外のマッチングは厳密一致で、重み記法 `(tag:1.2)` と大文字小文字違いは残す。`black footwear` の指定で `black footwear focus` まで巻き込む事故を避けるため、部分一致にはしない
 - 除外タグ欄は `render()` のたびに作り直されるため、値の保持元は `this.excludeTags`。一括生成の実行中の `readOnly` 切り替えは `syncBatchControls()` に集約している（`render()` 直後にも `syncBatchModeUi()` 経由で走るため、作り直された要素にも反映される）
 - 落とし穴: 生成画像の infotext には除外**後**のプロンプトが焼かれる（`Hires CFG Scale` の継承と同型）。**生成画像を PNG Info から txt2img へ送った状態でテンプレを保存すると、除外したタグが欠けたテンプレになる**。テンプレを作り直すときはテンプレ適用直後の状態から保存すること
+- anima プロファイルでの生成時は、`scripts/prompt_format.py` がカンマ後スペース挿入と BREAK のカンマ置換を `Script.process` で適用する（設定 `easy_template_anima_space_after_comma` / `easy_template_anima_remove_break`）。除外タグと同じく除去は `@...@` 展開の**後**・`format_prompt()` の**前**。プロンプト欄は書き換えないため補完・キャレット同期・一括生成に干渉しない
+- BREAK の置換で改行を消費しない（`\s` ではなく `[ \t]` を使う）。改行を跨いで消費するとカテゴリコメント行が前の行へ連結され、コメント除去とパーサが壊れる。単独行の BREAK は空行になり、既存の空行削除が拾う
+- `remove_break` は BREAK 由来以外のカンマに触らない。2 つの設定を独立トグルとして機能させるため（片方 OFF がもう片方に上書きされない）
+- 落とし穴: 生成画像の infotext には整形**後**のプロンプトが焼かれる（除外タグと同型）。**PNG Info から txt2img へ送った状態でテンプレを保存すると、整形済みの形が固定される**
 
 ## Build & Test
 

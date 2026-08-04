@@ -146,8 +146,9 @@ class ETSPromptEditor {
       { file: '99_ネガティブ', textareaId: 'txt2img_neg_prompt' },
     ]
     for (const { file, textareaId } of targets) {
+      // 空文字は「タグを付けない」指定なので差し替え対象に含める(未定義のみスキップ)
       const modelTag = tags?.[file]?.['Model']?.[modelName]
-      if (!modelTag) {
+      if (modelTag == null) {
         continue
       }
       entryFound = true
