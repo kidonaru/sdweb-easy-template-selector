@@ -21,22 +21,38 @@ https://github.com/kidonaru/sdweb-easy-template-selector
 
 ## 必要なモデル
 
-既存のテンプレートの読み込みには下記モデルが必要です
+`templates` 直下のテンプレート (Illustrious 系) には下記モデルが必要です
 
 | モデル | ファイル名 | 配布元 |
 | --- | --- | --- |
 | Nova Anime XL v6.0 | `novaAnimeXL_ilV60` | [Civitai](https://civitai.com/models/376130/nova-anime-xl?modelVersionId=1610231) |
 | WAI-illustrious-SDXL v17.0 | `waiIllustriousSDXL_v170` | [Civitai](https://civitai.red/models/827184/wai-illustrious-sdxl?modelVersionId=2883731) |
 
+`templates/anima` 以下のテンプレート (Anima 系) には下記モデルが必要です
+
+| モデル | ファイル名 | 配布元 |
+| --- | --- | --- |
+| Nova Anime AM v3.0 A | `novaAnimeAM_v30A` | [Civitai](https://civitai.com/models/2604424?modelVersionId=3145814) |
+
 ## よく使うLoRA
 
 多くのテンプレートが下記のLoRAを参照しています (Civitaiでダウンロードできます)
+
+Illustrious 系テンプレート用
 
 | タグ名 | ファイル名 | 配布元 |
 | --- | --- | --- |
 | Smooth Detailer Booster v3 | `Smooth_Booster_v3` | [Civitai](https://civitai.com/models/1145743/smooth-detailer-booster-noobaiillustriouspony?modelVersionId=1784760) |
 | detaILeReij | `r-hrtdrp` | [Civitai](https://civitai.com/models/1031108/detailereij) |
 | MyTest | `MyTest` | [Civitai](https://civitai.com/models/1340344/mytest) |
+
+Anima 系テンプレート用
+
+| タグ名 | ファイル名 | 配布元 |
+| --- | --- | --- |
+| Anima Highres/Aesthetic Boost | `anima-highres-aesthetic-boost` | [Civitai](https://civitai.com/models/2540444?modelVersionId=2855073) |
+| Anima Detail Tweaker (background) | `background_detailer_v1-step00000200` | [Civitai](https://civitai.com/models/2620171?modelVersionId=3026718) |
+| VöqiÐ \| by UTdT69 | `Voqid` | [Civitai](https://civitai.com/models/2718862?modelVersionId=3055236) |
 
 上記以外のLoRAを参照しているテンプレートもあるので、適宜インストールしてください
 
