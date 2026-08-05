@@ -376,4 +376,20 @@ class ETSTemplateManager {
     }
     return ''
   }
+
+  // パラメータ行から Seed 項目を取り除く。
+  // pnginfo の貼り付けはキーが無い項目の欄を触らない（本体 modules/infotext_utils.py の
+  // _parse_info() が gr.skip() を返し、_populate_defaults() も Seed は補完しない）ため、
+  // これでテンプレの Seed をシード欄へ書き込ませずに済む
+  static stripSeedParam(template) {
+    return template.split('\n').map((line) => {
+      // パラメータ行の判定は parseMetaText() と同じ規約に合わせる
+      if (!line.startsWith('Steps:')) {
+        return line
+      }
+      // 値にカンマを含む項目は無い前提（parseMetaText() も同じ前提でカンマ分割している）
+      const items = line.split(',').filter((item) => item.split(':')[0].trim() !== 'Seed')
+      return items.join(',')
+    }).join('\n')
+  }
 }
