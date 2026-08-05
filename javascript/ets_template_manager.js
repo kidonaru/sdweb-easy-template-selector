@@ -12,6 +12,9 @@ class ETSTemplateManager {
     // テンプレート適用時にモデル（checkpoint）を切り替えるか（セッション限り、永続化しない）
     this.applyModel = true
 
+    // テンプレート適用時に Seed を反映するか（セッション限り、永続化しない）
+    this.applySeed = true
+
     this.metaInfoMap = [
       { key: 'Template name', id: ids.TEMPLATE_NAME, type: 'input' },
       { key: 'Steps', id: 'txt2img_steps', type: 'input' },
@@ -106,6 +109,14 @@ class ETSTemplateManager {
     // Hiresが有効か
     metaDataMap['Hires visible'] = 'Hires upscaler' in metaDataMap ? 'true' : 'false'
 
+    // シード反映が OFF のときは、遅延反映ループの対象から外し、
+    // 貼り付け用テキストからも Seed 項目を落としてシード欄を現在値のまま残す
+    let pasteText = template
+    if (!this.applySeed) {
+      delete metaDataMap['Seed']
+      pasteText = ETSTemplateManager.stripSeedParam(template)
+    }
+
     textarea.value = prompt.trim()
     updateInput(textarea)
 
@@ -120,7 +131,7 @@ class ETSTemplateManager {
     const applyButton = gradioApp().getElementById(this.ids.APPLY_BUTTON)
 
     if (imageInfo && applyButton) {
-      imageInfo.value = template
+      imageInfo.value = pasteText
       updateInput(imageInfo)
 
       applyButton.dispatchEvent(new MouseEvent('click', {
