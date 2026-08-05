@@ -398,7 +398,9 @@ class ETSTemplateManager {
       if (!line.startsWith('Steps:')) {
         return line
       }
-      // 値にカンマを含む項目は無い前提（parseMetaText() も同じ前提でカンマ分割している）
+      // 値にカンマを含む項目は無い前提（parseMetaText() も同じ前提でカンマ分割している）。
+      // 除去は `Seed` の完全一致のみ。`Variation seed` などは metaInfoMap に無く
+      // 本拡張が保存するテンプレには現れないため、意図的に対象外にしている
       const items = line.split(',').filter((item) => item.split(':')[0].trim() !== 'Seed')
       return items.join(',')
     }).join('\n')
