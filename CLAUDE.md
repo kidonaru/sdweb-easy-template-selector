@@ -48,6 +48,8 @@ sdweb-easy-template-selector/
 - `javascript/` 配下の各ファイルは、トップレベルで他ファイルのクラスを参照しないこと（WebUI はアルファベット順に読み込むため、クラス参照は `onUiLoaded` 以降の実行時に限る）。
 - テンプレート `.txt` の `Hires upscaler` は、モデルファイルの stem（拡張子を除いたファイル名）を正規形として保存する。reForge の組み込み表示名（`R-ESRGAN 4x+ Anime6B` など）で書かない。環境差の吸収は `scripts/upscaler_aliases.py` が行い、`GET /easy-template/templates` の配信時に実行環境の表示名へ解決し、`POST /easy-template/save-template` の保存時に正規形へ戻す
 - `UPSCALER_ALIASES` に載せるのは reForge / A1111 側にだけ存在する別名に限る。実機で確認していない別名は追加しない（誤変換は素通しより状況が悪い）
+- テンプレ適用時の `Seed` 反映は `ETSTemplateManager#applySeed`（`99_設定` の「シード値反映」）で制御する。OFF のときは `metaDataMap` から `Seed` を落とすだけでなく、`stripSeedParam()` で**貼り付けテキストからも `Seed:` 項目を除く**。pnginfo の貼り付けが直接シード欄を書き戻すため、遅延反映ループを止めるだけでは防げない
+- 上記が成立する根拠は本体側の実装。`modules/infotext_utils.py` の `_populate_defaults()` は `Seed` に既定値を補完せず、`_parse_info()` はキーが無いとき `gr.skip()` を返して欄を触らない。本体のこの 2 箇所が変わると壊れる
 - テンプレート `.txt` の `Hires CFG Scale: 0` は reForge 固有の「本体 CFG Scale を継承する」センチネル値。Forge Neo にはこの仕様が無く 0 がそのまま CFG 0 としてサンプラーへ渡るため、`scripts/hr_cfg_inherit.py` が生成直前（`Script.process`）に実値へ展開する。設定 `easy_template_inherit_hr_cfg` で OFF にできる
 - テンプレート側の `Hires CFG Scale: 0` は書き換えない。0 のままにしておくことで `CFG Scale` を変えたときに Hires 側も追従する（reForge と同じ挙動）
 - 落とし穴: 生成画像の infotext には継承後の実値が焼かれる。**生成画像を PNG Info から txt2img へ送った状態でテンプレを保存すると、`Hires CFG Scale` が 0 ではなく実値で固定される**（センチネルが失われる）。テンプレを作り直すときはテンプレ適用直後の状態から保存すること
