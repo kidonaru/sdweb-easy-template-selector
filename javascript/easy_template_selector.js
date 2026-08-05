@@ -482,6 +482,14 @@ class EasyTemplateSelector {
     })
     buttons.append(applyModelCheckbox)
 
+    // テンプレート適用時に Seed を反映するかのトグル
+    const applySeedCheckbox = ETSElementBuilder.checkbox('シード値反映', this.templateManager.applySeed, {
+      onChange: this.guardBatchRunning((checked) => {
+        this.templateManager.applySeed = checked
+      })
+    })
+    buttons.append(applySeedCheckbox)
+
     // 一括生成モードのトグル。ON の間はテンプレ・タグのボタンが選択トグルになる。
     // 実行中に OFF にすると停止ボタンごと消えて止められなくなるのでガードする
     const batchModeCheckbox = ETSElementBuilder.checkbox('一括生成モード', this.batchMode, {
